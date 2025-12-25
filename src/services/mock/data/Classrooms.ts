@@ -1,0 +1,88 @@
+import { daysAgo, futureDate } from '../utils/helper';
+import { ClassroomDto } from '@/types/api/classroom';
+
+export const mockClassrooms: ClassroomDto[] = [
+  {
+    id: "classroom-1",
+    course_id: "course-1",
+    code: "IELTS-2025-A",
+    title: "IELTS Spring 2025 - Class A",
+    description:
+      "Monday & Wednesday evening class, 7-9 PM. Focus on all 4 skills with weekly mock tests.",
+    status: "active",
+    language: "bilingual",
+    timezone: "Asia/Ho_Chi_Minh",
+    start_date: daysAgo(14),
+    end_date: futureDate(70),
+    created_at: daysAgo(30),
+  },
+  {
+    id: "classroom-2",
+    course_id: "course-2",
+    code: "TOEIC-2025-B",
+    title: "TOEIC Spring 2025 - Class B",
+    description:
+      "Tuesday & Thursday evening class, 7-9 PM. Intensive practice with real test materials.",
+    status: "active",
+    language: "bilingual",
+    timezone: "Asia/Ho_Chi_Minh",
+    start_date: daysAgo(14),
+    end_date: futureDate(42),
+    created_at: daysAgo(45),
+  },
+  {
+    id: "classroom-3",
+    course_id: "course-1",
+    code: "IELTS-2025-B",
+    title: "IELTS Spring 2025 - Class B",
+    description:
+      "Saturday & Sunday morning class, 9-11 AM. Weekend intensive program.",
+    status: "upcoming",
+    language: "english",
+    timezone: "Asia/Ho_Chi_Minh",
+    start_date: futureDate(7),
+    end_date: futureDate(91),
+    created_at: daysAgo(15),
+  },
+  {
+    id: "classroom-4",
+    course_id: "course-4",
+    code: "BIZ-ENG-2025-A",
+    title: "Business English Q1 2025",
+    description:
+      "Monday, Wednesday, Friday morning, 8-10 AM. For working professionals.",
+    status: "active",
+    language: "english",
+    timezone: "Asia/Ho_Chi_Minh",
+    start_date: daysAgo(30),
+    end_date: futureDate(90),
+    created_at: daysAgo(60),
+  },
+  {
+    id: "classroom-5",
+    course_id: "course-5",
+    code: "VN-FRGN-2025-A",
+    title: "Vietnamese for Foreigners - Spring 2025",
+    description:
+      "Tuesday & Thursday evening, 6-8 PM. Small group with personalized attention.",
+    status: "active",
+    language: "vietnamese",
+    timezone: "Asia/Ho_Chi_Minh",
+    start_date: daysAgo(20),
+    end_date: futureDate(50),
+    created_at: daysAgo(40),
+  },
+  {
+    id: "classroom-6",
+    course_id: "course-6",
+    code: "KIDS-ENG-2025-A",
+    title: "Kids English - Saturday Class",
+    description: "Saturday afternoon, 2-4 PM. Fun learning for kids aged 6-10.",
+    status: "active",
+    language: "bilingual",
+    timezone: "Asia/Ho_Chi_Minh",
+    start_date: daysAgo(21),
+    end_date: futureDate(63),
+    created_at: daysAgo(35),
+  },
+];
