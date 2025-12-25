@@ -137,7 +137,7 @@ export const FreeVideos = () => {
                 {t('freeVideos.subscribeDesc')}
               </p>
               <a
-                href="https://youtube.com/@skyacademic"
+                href="https://www.youtube.com/@tienganhsky"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-colors"

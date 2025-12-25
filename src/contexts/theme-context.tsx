@@ -18,7 +18,7 @@ interface ThemeContextValue {
   toggleTheme: () => void;
 }
 
-const THEME_STORAGE_KEY = "skyacademic-theme";
+const THEME_STORAGE_KEY = "skyacademy-theme";
 
 const getStoredPreference = (): ThemePreference => {
   if (typeof window === "undefined") {

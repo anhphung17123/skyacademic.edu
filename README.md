@@ -1,6 +1,6 @@
-# SkyAcademic Static Public Portal
+# SkyAcademy Static Public Portal
 
-A static version of the SkyAcademic English Learning Platform public website. This project provides a complete UI/UX showcase with mock data, perfect for demos, presentations, and frontend development.
+A static version of the SkyAcademy English Learning Platform public website. This project provides a complete UI/UX showcase with mock data, perfect for demos, presentations, and frontend development.
 
 ## 🚀 Features
 
@@ -180,4 +180,4 @@ The output will be in the `dist/` directory, ready for static hosting.
 
 ## 📄 License
 
-Private - SkyAcademic © 2024
+Private - SkyAcademy © 2025
