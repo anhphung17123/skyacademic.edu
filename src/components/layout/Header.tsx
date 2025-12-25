@@ -10,6 +10,7 @@ import {
 import { ThemeToggle } from '@/components/common/theme-toggle';
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
 import { useTheme } from '@/contexts/theme-context';
+import logoImage from '@/images/logo.png';
 
 interface NavItem {
   label: string;
@@ -81,8 +82,12 @@ export const Header = () => {
         <nav className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-600/25 group-hover:shadow-primary-600/40 transition-shadow">
-              <span className="text-white font-bold text-lg md:text-xl">SA</span>
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-lg shadow-primary-600/25 group-hover:shadow-primary-600/40 transition-shadow overflow-hidden">
+              <img 
+                src={logoImage} 
+                alt="SkyAcademy Logo" 
+                className="w-full h-full object-contain"
+              />
             </div>
             <div className="hidden sm:block">
               <span className={`text-xl font-display font-bold transition-colors ${
