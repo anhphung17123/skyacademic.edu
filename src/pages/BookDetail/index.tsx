@@ -281,6 +281,7 @@ export const BookDetail = () => {
                       src={book.thumbnail}
                       alt={book.title}
                       className="w-full h-auto aspect-[3/4] object-cover group-hover:scale-105 transition-transform duration-700"
+                      loading="eager"
                     />
                     {/* Format Badge */}
                     {book.format && (
@@ -664,6 +665,7 @@ export const BookDetail = () => {
                                 src={imageSrc}
                                 alt={`Sample page ${page}`}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy"
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                               <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">

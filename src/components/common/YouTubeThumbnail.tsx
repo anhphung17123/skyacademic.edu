@@ -57,6 +57,7 @@ export const YouTubeThumbnail = ({
       alt={alt}
       className={className}
       onError={handleImageError}
+      loading="lazy"
     />
   );
 };
