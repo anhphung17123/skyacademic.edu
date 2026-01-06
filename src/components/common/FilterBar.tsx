@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef, type ReactNode } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { clsx } from 'clsx';

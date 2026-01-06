@@ -27,7 +27,6 @@ import { FreeVideosSection } from "./components/FreeVideosSection";
 import { FAQSection } from "./components/FAQSection";
 import { HomeworkSection } from "./components/HomeworkSection";
 import { PaymentInfo } from "@/components/payment/PaymentInfo";
-import { ContactInfo } from "@/components/common/ContactInfo";
 import { useTheme } from "@/contexts/theme-context";
 
 export const CourseDetail = () => {
@@ -151,56 +150,58 @@ export const CourseDetail = () => {
 
         {/* Course Features */}
         <Section
-          padding="md"
-          background="default"
+          padding="none"
+          background="transparent"
           className="relative -mt-8 z-10"
         >
-          <Container>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {courseFeatures.map((feature, index) => {
-                const Icon = feature.icon;
-                return (
-                  <div
-                    key={index}
-                    className="group relative bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden"
-                  >
-                    {/* Background gradient on hover */}
+          <div className="bg-white dark:bg-gray-900 pt-8 sm:pt-12 pb-0">
+            <Container>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {courseFeatures.map((feature, index) => {
+                  const Icon = feature.icon;
+                  return (
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                    />
-
-                    {/* Icon container */}
-                    <div
-                      className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-xl`}
+                      key={index}
+                      className="group relative bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden"
                     >
-                      <Icon className="w-8 h-8 text-white" />
-                      {/* Shine effect */}
-                      <div className="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      {/* Background gradient on hover */}
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
+                      />
+
+                      {/* Icon container */}
+                      <div
+                        className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-xl`}
+                      >
+                        <Icon className="w-8 h-8 text-white" />
+                        {/* Shine effect */}
+                        <div className="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      </div>
+
+                      {/* Content */}
+                      <h3 className="font-bold text-gray-900 dark:text-white mb-2 text-lg group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
+                        {feature.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                        {feature.description}
+                      </p>
+
+                      {/* Decorative corner */}
+                      <div
+                        className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 rounded-bl-full transition-opacity duration-500`}
+                      />
                     </div>
-
-                    {/* Content */}
-                    <h3 className="font-bold text-gray-900 dark:text-white mb-2 text-lg group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                      {feature.description}
-                    </p>
-
-                    {/* Decorative corner */}
-                    <div
-                      className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 rounded-bl-full transition-opacity duration-500`}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </Container>
+                  );
+                })}
+              </div>
+            </Container>
+          </div>
         </Section>
 
         {/* Navigation Tabs */}
         <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-16 z-20 shadow-md">
           <Container>
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide py-2">
               {tabs.map((tab) => {
                 const isActive = activeTab === tab.id;
                 return (
@@ -211,7 +212,7 @@ export const CourseDetail = () => {
                         tab.id as "overview" | "instructor" | "homework" | "faq"
                       )
                     }
-                    className={`relative flex items-center gap-3 px-8 py-5 font-semibold transition-all duration-300 rounded-t-xl ${
+                    className={`relative flex items-center gap-3 px-8 py-3 font-semibold transition-all duration-300 rounded-t-xl ${
                       isActive
                         ? "text-primary-600 dark:text-primary-400 bg-gradient-to-b from-primary-50 to-transparent dark:from-primary-900/20 dark:to-transparent"
                         : "text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700/50"

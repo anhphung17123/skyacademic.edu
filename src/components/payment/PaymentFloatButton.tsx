@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CreditCard, Heart, X } from "lucide-react";
+import { CreditCard, Heart } from "lucide-react";
 import { PaymentModal } from "./PaymentModal";
 import { clsx } from "clsx";
 
