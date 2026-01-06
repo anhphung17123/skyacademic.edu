@@ -7,9 +7,8 @@ import {
   useCallback,
   useState,
 } from "react";
-
-export type ThemeMode = "light" | "dark";
-export type ThemePreference = ThemeMode | "system";
+import { ThemeMode, ThemePreference } from '@/types/core';
+import { STORAGE_KEYS, DEFAULT_VALUES } from '@/constants';
 
 interface ThemeContextValue {
   theme: ThemePreference;
@@ -18,11 +17,11 @@ interface ThemeContextValue {
   toggleTheme: () => void;
 }
 
-const THEME_STORAGE_KEY = "skyacademy-theme";
+const THEME_STORAGE_KEY = STORAGE_KEYS.THEME;
 
 const getStoredPreference = (): ThemePreference => {
   if (typeof window === "undefined") {
-    return "light";
+    return DEFAULT_VALUES.THEME as ThemePreference;
   }
   const storedPreference = localStorage.getItem(THEME_STORAGE_KEY);
   if (
@@ -30,9 +29,9 @@ const getStoredPreference = (): ThemePreference => {
     storedPreference === "dark" ||
     storedPreference === "system"
   ) {
-    return storedPreference;
+    return storedPreference as ThemePreference;
   }
-  return "system";
+  return DEFAULT_VALUES.THEME as ThemePreference;
 };
 
 const getSystemTheme = (): ThemeMode => {

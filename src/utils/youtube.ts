@@ -1,5 +1,11 @@
 /**
  * Extract YouTube video ID from a URL
+ * Supports various YouTube URL formats:
+ * - youtube.com/watch?v=VIDEO_ID
+ * - youtube.com/embed/VIDEO_ID
+ * - youtube.com/shorts/VIDEO_ID
+ * - youtu.be/VIDEO_ID
+ * 
  * @param url - YouTube URL string
  * @returns YouTube video ID or null if not found
  */
@@ -54,3 +60,4 @@ export const getYoutubeThumbnailWithFallback = (videoId: string | null): {
     },
   };
 };
+

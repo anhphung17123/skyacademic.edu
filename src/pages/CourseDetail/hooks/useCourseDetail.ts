@@ -1,13 +1,30 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { courseApi } from '@/services/api/course-service';
 import { classroomApi } from '@/services/api/classroom-service';
 import { freeVideoApi } from '@/services/api/free-video-service';
 import { Course } from '@/types';
 import { ClassroomDto, FreeVideoDto } from '@/types/api';
 
-export const useCourseDetail = () => {
+interface UseCourseDetailReturn {
+  course: Course | null;
+  courseClassrooms: ClassroomDto[];
+  selectedClassroomId: string | null;
+  setSelectedClassroomId: (id: string | null) => void;
+  selectedClassroom: ClassroomDto | null;
+  courseFreeVideos: FreeVideoDto[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+/**
+ * Custom hook for fetching and managing course detail data
+ * @returns Course detail data and state management functions
+ */
+export const useCourseDetail = (): UseCourseDetailReturn => {
   const { slug } = useParams<{ slug: string; language: string }>();
+  const { t } = useTranslation();
   const [course, setCourse] = useState<Course | null>(null);
   const [classrooms, setClassrooms] = useState<ClassroomDto[]>([]);
   const [videos, setVideos] = useState<FreeVideoDto[]>([]);
@@ -15,50 +32,54 @@ export const useCourseDetail = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedClassroomId, setSelectedClassroomId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!slug) return;
-    let isMounted = true;
+  const fetchCourseData = useCallback(async () => {
+    if (!slug) {
+      setIsLoading(false);
+      return;
+    }
 
-    const fetchCourseData = async () => {
-      try {
-        setIsLoading(true);
-        // Try to find course by slug first, then by ID
-        let fullCourse = await courseApi.getCourseBySlug(slug);
-        if (!fullCourse) {
-          fullCourse = await courseApi.getCourse(slug);
-        }
-        
-        const courseId = fullCourse?.id || slug;
-        const [courseClassrooms, courseVideos] = await Promise.all([
-          classroomApi.fetchClassrooms({ courseId }),
-          freeVideoApi.fetchVideos({ search: courseId }),
-        ]);
-        if (isMounted) {
-          setCourse(fullCourse);
-          setClassrooms(courseClassrooms);
-          setVideos(courseVideos);
-          setError(null);
-        }
-      } catch {
-        if (isMounted) {
-          setCourse(null);
-          setClassrooms([]);
-          setVideos([]);
-          setError('Course details could not be loaded from the server.');
-        }
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // Try to find course by slug first, then by ID
+      let fullCourse = await courseApi.getCourseBySlug(slug);
+      if (!fullCourse) {
+        fullCourse = await courseApi.getCourse(slug);
       }
-    };
 
+      if (!fullCourse) {
+        setError(t('courseDetail.notFound'));
+        setIsLoading(false);
+        return;
+      }
+
+      const courseId = fullCourse.id;
+      const [courseClassrooms, courseVideos] = await Promise.all([
+        classroomApi.fetchClassrooms({ courseId }),
+        freeVideoApi.fetchVideos({ search: courseId }),
+      ]);
+
+      setCourse(fullCourse);
+      setClassrooms(courseClassrooms);
+      setVideos(courseVideos);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : t('courseDetail.loadError');
+      setError(errorMessage);
+      setCourse(null);
+      setClassrooms([]);
+      setVideos([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [slug, t]);
+
+  useEffect(() => {
     void fetchCourseData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [slug]);
+  }, [fetchCourseData]);
 
   const courseClassrooms = useMemo(
     () => (course ? classrooms.filter((classroom) => classroom.course_id === course.id) : []),

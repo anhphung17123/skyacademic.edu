@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
@@ -33,6 +33,14 @@ export const PreviewGalleryModal = ({
     };
   }, [isOpen, startIndex]);
 
+  const handlePrevious = useCallback(() => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+  }, [images.length]);
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+  }, [images.length]);
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -55,7 +63,7 @@ export const PreviewGalleryModal = ({
       document.removeEventListener('keydown', handleEscape);
       document.removeEventListener('keydown', handleArrowKeys);
     };
-  }, [isOpen, currentIndex, images.length]);
+  }, [isOpen, handleNext, handlePrevious, onClose]);
 
   useEffect(() => {
     if (isOpen && imageRefs.current[currentIndex]) {
@@ -66,14 +74,6 @@ export const PreviewGalleryModal = ({
       });
     }
   }, [currentIndex, isOpen]);
-
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
-  };
 
   const handleImageClick = (index: number) => {
     setCurrentIndex(index);

@@ -1,5 +1,5 @@
-import { daysAgo } from '../utils/helper';
-import { FreeVideoDto } from '@/types/api/misc';
+import { daysAgo } from '../utils/date-helpers';
+import { FreeVideoDto } from '@/types/api/free-video';
 
 export const mockFreeVideos: FreeVideoDto[] = [
   {

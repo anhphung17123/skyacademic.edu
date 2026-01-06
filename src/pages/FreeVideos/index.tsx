@@ -1,13 +1,20 @@
-import { Loading } from '@/components/common/Loading';
 import { useFreeVideos } from './hooks/useFreeVideos';
 import { VideoFilters } from './components/VideoFilters';
 import { VideoGrid } from './components/VideoGrid';
 import { useTranslation } from 'react-i18next';
-import { Youtube, Bell, ExternalLink, Play, Sparkles } from 'lucide-react';
+import { Youtube, Bell, ExternalLink, Sparkles, Video } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { VideoPlayerPopup } from '@/components/common/VideoPlayerPopup';
 import { FreeVideoDto } from '@/types/api';
+import { PageHero } from '@/components/common/PageHero';
+import { Loading } from '@/components/common/Loading';
+import { EmptyState } from '@/components/common/EmptyState';
+import { ResultsInfo } from '@/components/common/ResultsInfo';
+import { Container } from '@/components/layout/Container';
+import { Section } from '@/components/layout/Section';
+import { PaymentInfo } from '@/components/payment/PaymentInfo';
+import { PaymentFloatButton } from '@/components/payment/PaymentFloatButton';
 
 export const FreeVideos = () => {
   const { t, i18n } = useTranslation();
@@ -25,199 +32,177 @@ export const FreeVideos = () => {
     videos,
   } = useFreeVideos();
 
+  const heroStats = useMemo(
+    () => [
+      { value: "100+", label: t("freeVideos.totalVideos") },
+      { value: "50K+", label: t("freeVideos.totalViews") },
+      { value: "4.9", label: t("freeVideos.avgRating") },
+    ],
+    [t]
+  );
+
+  const subscribeCTA = useMemo(
+    () => (
+      <div className="bg-black/40 backdrop-blur-md rounded-2xl p-8 border border-white/30 text-center shadow-xl">
+        <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <Youtube className="w-10 h-10 text-white" />
+        </div>
+        <h3 className="text-white text-xl font-bold mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+          {t("freeVideos.subscribeTitle")}
+        </h3>
+        <p className="text-white/95 text-sm mb-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]">
+          {t("freeVideos.subscribeDesc")}
+        </p>
+        <a
+          href="https://www.youtube.com/@tienganhsky"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 dark:from-red-500 dark:to-red-600 hover:from-red-700 hover:to-red-600 dark:hover:from-red-400 dark:hover:to-red-500 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg dark:shadow-[0_8px_24px_-4px_rgba(239,68,68,0.4)] shadow-[0_4px_12px_-2px_rgba(220,38,38,0.3)] hover:shadow-xl dark:hover:shadow-[0_12px_32px_-4px_rgba(239,68,68,0.5)] hover:shadow-[0_8px_20px_-4px_rgba(220,38,38,0.4)] hover:scale-105 border border-red-500/30 dark:border-red-400/40 hover:border-red-500/40 dark:hover:border-red-400/50"
+        >
+          <Bell className="w-5 h-5" />
+          {t("freeVideos.subscribe")}
+          <ExternalLink className="w-4 h-4" />
+        </a>
+      </div>
+    ),
+    [t]
+  );
+
   // Check for video ID in URL and open modal
   useEffect(() => {
-    const videoId = searchParams.get('video');
-    
-    // If no video ID in URL, close modal
+    const videoId = searchParams.get("video");
     if (!videoId) {
       setSelectedVideo(null);
       return;
     }
-
-    // If videos are still loading, wait
-    if (isLoading || videos.length === 0) {
+    if (isLoading || !videos || videos.length === 0) {
       return;
     }
-
-    // Find video by ID
     const video = videos.find((v) => v.id === videoId);
-    
     if (video) {
       setSelectedVideo(video);
     } else {
-      // Video not found, remove param from URL
       const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.delete('video');
+      newSearchParams.delete("video");
       setSearchParams(newSearchParams, { replace: true });
       setSelectedVideo(null);
     }
   }, [searchParams, videos, isLoading, setSearchParams]);
 
   const handleCloseVideo = useCallback(() => {
-    // Remove video param from URL - useEffect will handle closing the modal
     const newSearchParams = new URLSearchParams(searchParams);
-    newSearchParams.delete('video');
+    newSearchParams.delete("video");
     setSearchParams(newSearchParams, { replace: true });
   }, [searchParams, setSearchParams]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-red-600 via-red-500 to-orange-500 py-12 md:py-16 overflow-hidden">
-        {/* Subtle Background decorations */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-white/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-yellow-500/10 rounded-full blur-3xl" />
-        </div>
-        
-        {/* Subtle Play button decorations */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
-          {[...Array(4)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute"
-              style={{
-                left: `${15 + i * 20}%`,
-                top: `${25 + (i % 2) * 30}%`,
-              }}
-            >
-              <Play className="w-8 h-8 text-white" fill="currentColor" />
+    <>
+      <PageHero
+        title={t("freeVideos.title")}
+        badge={t("freeVideos.badge")}
+        badgeIcon={Sparkles}
+        gradient="red"
+        stats={heroStats}
+        rightContent={subscribeCTA}
+      />
+
+      <Section padding="lg" background="gradient">
+        <Container>
+          {/* Filters */}
+          <VideoFilters
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            categories={categories}
+          />
+
+          {/* Content */}
+          {isLoading ? (
+            <div className="flex justify-center py-20">
+              <Loading />
             </div>
-          ))}
-        </div>
-        
-        <div className="container-custom relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-            <div className="flex-1 text-center lg:text-left space-y-3">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-xs font-medium">
-                <Sparkles className="w-4 h-4" />
-                <span>{t('freeVideos.badge')}</span>
+          ) : filteredVideos.length === 0 ? (
+            <EmptyState
+              icon={Video}
+              title={t('freeVideos.noVideosTitle')}
+              description={t('freeVideos.noVideos')}
+            />
+          ) : (
+            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+              {/* Left Column - Videos */}
+              <div className="flex-1 w-full min-w-0">
+                {/* Results count */}
+                <ResultsInfo
+                  count={filteredVideos.length}
+                  resultsLabel={t('freeVideos.videosLabel')}
+                  additionalInfo={
+                    selectedCategory !== 'all' ? (
+                      <span>
+                        {t('common.in')}{' '}
+                        <span className="font-semibold text-primary-600 dark:text-primary-400">
+                          {t(`freeVideos.category.${selectedCategory}`)}
+                        </span>
+                      </span>
+                    ) : undefined
+                  }
+                  onClearFilter={
+                    selectedCategory !== 'all' ? () => setSelectedCategory('all') : undefined
+                  }
+                />
+                <VideoGrid videos={filteredVideos} />
               </div>
-              
-              {/* Title */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-                {t('freeVideos.title')}
-              </h1>
-              
-              {/* Subtitle */}
-              <p className="text-lg md:text-xl text-white/85 leading-relaxed max-w-xl">
-                {t('freeVideos.subtitle')}
-              </p>
-              
-              {/* Stats */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-4 mt-4">
-                <div className="text-center px-4 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl">
-                  <div className="text-xl font-bold">100+</div>
-                  <div className="text-white/70 text-xs">{t('freeVideos.totalVideos')}</div>
-                </div>
-                <div className="w-px h-8 bg-white/30" />
-                <div className="text-center px-4 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl">
-                  <div className="text-xl font-bold">50K+</div>
-                  <div className="text-white/70 text-xs">{t('freeVideos.totalViews')}</div>
-                </div>
-                <div className="w-px h-8 bg-white/30" />
-                <div className="text-center px-4 py-2.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl">
-                  <div className="text-xl font-bold">4.9</div>
-                  <div className="text-white/70 text-xs">{t('freeVideos.avgRating')}</div>
+
+              {/* Right Column - Payment Info - Desktop only */}
+              <div className="hidden lg:block w-96 flex-shrink-0">
+                <div className="sticky top-24">
+                  <PaymentInfo 
+                    showQrCode={true} 
+                    showContactInfo={true} 
+                    isDonation={true}
+                  />
                 </div>
               </div>
             </div>
-            
-            {/* YouTube Subscribe CTA */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 text-center">
-              <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <Youtube className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-white text-xl font-bold mb-2">
-                {t('freeVideos.subscribeTitle')}
-              </h3>
-              <p className="text-white/70 text-sm mb-4">
-                {t('freeVideos.subscribeDesc')}
+          )}
+
+          {/* Video Popup */}
+          {selectedVideo && (
+            <VideoPlayerPopup
+              isOpen={!!selectedVideo}
+              onClose={handleCloseVideo}
+              videoUrl={selectedVideo.youtube_url}
+              title={
+                currentLang === 'vi' && selectedVideo.title_vi
+                  ? selectedVideo.title_vi
+                  : selectedVideo.title
+              }
+            />
+          )}
+
+          {/* Bottom CTA */}
+          <div className="mt-12 rounded-2xl bg-gradient-to-r from-primary-600 to-secondary-600 p-8 text-center text-white lg:mt-16 lg:p-12 relative overflow-hidden shadow-xl">
+            {/* Enhanced overlay for better text contrast */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20 pointer-events-none"></div>
+            <div className="relative z-10">
+              <h2 className="mb-4 text-2xl font-bold lg:text-3xl drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)]">{t('freeVideos.wantMore')}</h2>
+              <p className="mx-auto mb-6 max-w-2xl text-white/95 drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]">
+                {t('freeVideos.wantMoreDesc')}
               </p>
               <a
-                href="https://www.youtube.com/@tienganhsky"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-colors"
+                href="/courses"
+                className="inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 font-bold text-primary-700 transition-all duration-200 hover:bg-gray-50 hover:shadow-lg hover:scale-105 active:scale-100"
               >
-                <Bell className="w-5 h-5" />
-                {t('freeVideos.subscribe')}
-                <ExternalLink className="w-4 h-4" />
+                {t('freeVideos.exploreCourses')}
+                <ExternalLink className="h-5 w-5" />
               </a>
             </div>
           </div>
-        </div>
-        
-        {/* Wave separator */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" className="fill-gray-50 dark:fill-gray-900"/>
-          </svg>
-        </div>
-      </div>
+        </Container>
+      </Section>
 
-      <div className="container-custom py-12">
-        {/* Filters */}
-        <VideoFilters
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-          categories={categories}
-        />
-        
-        {/* Content */}
-        {isLoading ? (
-          <div className="flex justify-center py-20">
-            <Loading />
-          </div>
-        ) : (
-          <>
-            {/* Results count */}
-            <div className="mb-6">
-              <p className="text-gray-600 dark:text-gray-400">
-                {t('common.showing')} <span className="font-semibold text-gray-900 dark:text-white">{filteredVideos.length}</span> {t('freeVideos.videosLabel')}
-                {selectedCategory !== 'all' && (
-                  <span> {t('common.in')} <span className="font-semibold text-primary-600">{t(`freeVideos.category.${selectedCategory}`)}</span></span>
-                )}
-              </p>
-            </div>
-            
-            <VideoGrid videos={filteredVideos} />
-          </>
-        )}
-        
-        {/* Video Popup */}
-        {selectedVideo && (
-          <VideoPlayerPopup
-            isOpen={!!selectedVideo}
-            onClose={handleCloseVideo}
-            videoUrl={selectedVideo.youtube_url}
-            title={currentLang === 'vi' && selectedVideo.title_vi ? selectedVideo.title_vi : selectedVideo.title}
-          />
-        )}
-        
-        {/* Bottom CTA */}
-        <div className="mt-16 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-2xl p-8 lg:p-12 text-center text-white">
-          <h2 className="text-2xl lg:text-3xl font-bold mb-4">
-            {t('freeVideos.wantMore')}
-          </h2>
-          <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-            {t('freeVideos.wantMoreDesc')}
-          </p>
-          <a
-            href="/courses"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-100 transition-colors"
-          >
-            {t('freeVideos.exploreCourses')}
-            <ExternalLink className="w-5 h-5" />
-          </a>
-        </div>
-      </div>
-    </div>
+      {/* Payment Float Button - Mobile/Tablet only */}
+      <PaymentFloatButton isDonation={true} />
+    </>
   );
 };
-
-

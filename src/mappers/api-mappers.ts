@@ -1,8 +1,9 @@
 import { Book, Course, Language } from '@/types';
 import { BackendLanguage, BookDto, CourseDto } from '@/types/api';
+import { DEFAULT_VALUES } from '@/constants';
 
-const DEFAULT_THUMBNAIL = 'https://via.placeholder.com/640x360?text=Course';
-const DEFAULT_BOOK_COVER = 'https://via.placeholder.com/320x480?text=Book';
+const DEFAULT_THUMBNAIL = DEFAULT_VALUES.THUMBNAIL;
+const DEFAULT_BOOK_COVER = DEFAULT_VALUES.BOOK_COVER;
 
 const mapBackendLanguageToUi = (language?: BackendLanguage): Language => {
   if (language === 'english') {
@@ -83,7 +84,7 @@ export const mapBookDtoToBook = (dto: BookDto): Book => {
     categoryVi: dto.category_vi,
     stock: dto.stock_quantity,
     stockQuantity: dto.stock_quantity,
-    rating: 0,
+    rating: dto.rating ?? 0,
     downloadUrl: dto.download_url,
     createdAt: dto.created_at,
     author: dto.author,
@@ -91,5 +92,6 @@ export const mapBookDtoToBook = (dto: BookDto): Book => {
     publisher: dto.publisher,
     isbn: dto.isbn ?? undefined,
     publishedDate: dto.published_date,
+    publishedDateVi: dto.published_date_vi,
   };
 };

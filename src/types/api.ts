@@ -2,5 +2,5 @@
 export * from './api/common';
 export * from './api/course';
 export * from './api/classroom';
-export * from './api/book-order';
-export * from './api/misc';
+export * from './api/book';
+export * from './api/free-video';

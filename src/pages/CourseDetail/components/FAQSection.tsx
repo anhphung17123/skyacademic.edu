@@ -16,9 +16,9 @@ export const FAQSection = () => {
         </h2>
       </div>
 
-      <div className="space-y-6">
-        <div className="text-center py-8">
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+      <div className="">
+        <div className="text-center pb-8">
+          <p className="text-gray-600 dark:text-gray-400">
             {t('courseDetail.faqEmpty')}
           </p>
         </div>

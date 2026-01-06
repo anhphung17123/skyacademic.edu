@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useClickOutside } from '@/hooks/use-click-outside';
+import { STORAGE_KEYS } from '@/constants';
 
 export const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
@@ -10,19 +12,19 @@ export const LanguageSwitcher = () => {
 
   const languages = [
     { code: 'en', label: 'English', flag: '🇺🇸' },
-    { code: 'vi', label: 'Tiếng Việt', flag: '🇻🇳' },
+    { code: 'vi', label: 'Tiếng Việt', flag: '🇻🇮' },
   ];
 
-  const changeLanguage = async (langCode: string) => {
+  const changeLanguage = useCallback(async (langCode: string) => {
     try {
       await i18n.changeLanguage(langCode);
-      localStorage.setItem('language', langCode);
+      localStorage.setItem(STORAGE_KEYS.LANGUAGE, langCode);
       setCurrentLang(langCode);
       setIsOpen(false);
     } catch (error) {
       console.error('Error changing language:', error);
     }
-  };
+  }, [i18n]);
 
   useEffect(() => {
     const handleLanguageChange = (lng: string) => {
@@ -36,26 +38,16 @@ export const LanguageSwitcher = () => {
     };
   }, [i18n]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
+  useClickOutside(dropdownRef, () => {
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      setIsOpen(false);
     }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
+  });
 
   const currentLanguage = languages.find((lang) => lang.code === currentLang) || languages[0];
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative overflow-visible" ref={dropdownRef}>
       <button
         type="button"
         onClick={(e) => {
@@ -72,7 +64,7 @@ export const LanguageSwitcher = () => {
 
       {isOpen && (
         <div 
-          className="absolute right-0 z-20 mt-2 w-44 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-900/50 p-1.5 animate-in fade-in slide-in-from-top-2"
+          className="absolute right-0 z-[100] mt-2 w-44 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-900/50 p-1.5 animate-in fade-in slide-in-from-top-2"
           onClick={(e) => e.stopPropagation()}
         >
           {languages.map((lang) => {

@@ -1,3 +1,4 @@
+import { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Play, Clock, Eye, Youtube, Video } from 'lucide-react';
 import { FreeVideoDto } from '@/types/api';
@@ -8,14 +9,14 @@ interface VideoGridProps {
   videos: FreeVideoDto[];
 }
 
-export const VideoGrid = ({ videos }: VideoGridProps) => {
+export const VideoGrid = memo(({ videos }: VideoGridProps) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const currentLang = i18n.language;
 
-  const handleVideoClick = (video: FreeVideoDto) => {
+  const handleVideoClick = useCallback((video: FreeVideoDto) => {
     navigate(`/free-videos?video=${video.id}`);
-  };
+  }, [navigate]);
 
   if (videos.length === 0) {
     return (
@@ -34,13 +35,11 @@ export const VideoGrid = ({ videos }: VideoGridProps) => {
   }
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {videos.map((video, index) => {
-        return (
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+      {videos.map((video) => (
           <div 
             key={video.id} 
-            className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 dark:border-gray-700 hover:-translate-y-2 animate-scale-in"
-            style={{ animationDelay: `${index * 50}ms` }}
+            className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 dark:border-gray-700 hover:-translate-y-2 flex flex-col h-full"
           >
             {/* Thumbnail */}
             <div className="relative aspect-video bg-gray-200 dark:bg-gray-700 overflow-hidden">
@@ -95,16 +94,22 @@ export const VideoGrid = ({ videos }: VideoGridProps) => {
             </div>
             
             {/* Content */}
-            <div className="p-5">
-              <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                {currentLang === 'vi' && video.title_vi ? video.title_vi : video.title}
-              </h3>
+            <div className="p-5 flex flex-col flex-1">
+              <div className="min-h-[3.5rem] mb-2">
+                <h3 className="font-bold text-lg text-gray-900 dark:text-white line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                  {currentLang === 'vi' && video.title_vi ? video.title_vi : video.title}
+                </h3>
+              </div>
               
-              {video.description && (
-                <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 mb-4">
-                  {currentLang === 'vi' && video.description_vi ? video.description_vi : video.description}
-                </p>
-              )}
+              <div className="min-h-[2.5rem] mb-4">
+                {video.description ? (
+                  <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2">
+                    {currentLang === 'vi' && video.description_vi ? video.description_vi : video.description}
+                  </p>
+                ) : (
+                  <div className="text-sm">&nbsp;</div>
+                )}
+              </div>
               
               {/* Stats row - placeholder */}
               <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400 mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
@@ -117,17 +122,18 @@ export const VideoGrid = ({ videos }: VideoGridProps) => {
               {/* Watch button */}
               <button
                 onClick={() => handleVideoClick(video)}
-                className="w-full py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                className="w-full py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg mt-auto"
               >
                 <Play className="w-5 h-5" />
                 {t('freeVideos.watchVideo')}
               </button>
             </div>
           </div>
-        );
-      })}
+        ))}
     </div>
   );
-};
+});
+
+VideoGrid.displayName = 'VideoGrid';
 
 

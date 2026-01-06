@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { extractYoutubeId, getYoutubeThumbnailWithFallback } from '@/helpers/common';
+import { extractYoutubeId, getYoutubeThumbnailWithFallback } from '@/utils/youtube';
 
 interface YouTubeThumbnailProps {
   url: string;
@@ -57,6 +57,7 @@ export const YouTubeThumbnail = ({
       alt={alt}
       className={className}
       onError={handleImageError}
+      loading="lazy"
     />
   );
 };

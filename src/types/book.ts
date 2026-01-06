@@ -28,6 +28,7 @@ export interface Book {
   isbn?: string;
   publisher?: string;
   publishedDate?: string;
+  publishedDateVi?: string;
   rating?: number;
   downloadUrl?: string;
   createdAt?: string;

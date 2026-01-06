@@ -26,4 +26,6 @@ export interface BookDto {
   publisher?: string;
   isbn?: string;
   published_date?: string;
+  published_date_vi?: string;
+  rating?: number;
 }
