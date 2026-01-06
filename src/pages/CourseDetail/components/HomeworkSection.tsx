@@ -17,17 +17,17 @@ export const HomeworkSection = () => {
               <FileText className="w-7 h-7" />
             </div>
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
                 {t('courseDetail.homeworkTitle')}
               </h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">
+              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 font-semibold">
                 {t('courseDetail.homeworkSubtitle')}
               </p>
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-primary-50/80 to-secondary-50/80 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-2xl p-8 border-l-4 border-primary-500 shadow-inner">
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+          <div className="bg-gradient-to-r from-primary-50/80 to-secondary-50/80 dark:from-primary-900/20 dark:to-secondary-900/20 rounded-2xl p-6 md:p-8 border-l-4 border-primary-600 dark:border-primary-400 shadow-lg">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
               {t('courseDetail.homeworkDescription')}
             </p>
           </div>

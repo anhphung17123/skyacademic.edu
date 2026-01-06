@@ -1,54 +1,66 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { freeVideoApi } from '@/services/api/free-video-service';
 import { FreeVideoDto } from '@/types/api';
+import { useDataFetch, useDebounce } from '@/hooks';
 
 export const useFreeVideos = () => {
-  const [videos, setVideos] = useState<FreeVideoDto[]>([]);
-  const [filteredVideos, setFilteredVideos] = useState<FreeVideoDto[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [categories, setCategories] = useState<string[]>([]);
 
-  useEffect(() => {
-    loadVideos();
-  }, []);
-
-  useEffect(() => {
-    filterVideos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videos, searchTerm, selectedCategory]);
-
-  const loadVideos = async () => {
-    setIsLoading(true);
-    try {
-      const data = await freeVideoApi.fetchVideos();
-      setVideos(data);
-      const uniqueCategories = Array.from(new Set(data.map((v) => v.category).filter(Boolean)));
-      setCategories(uniqueCategories as string[]);
-    } catch (error) {
-      console.error('Failed to load videos:', error);
-    } finally {
-      setIsLoading(false);
+  const {
+    data: videosData,
+    isLoading,
+  } = useDataFetch<FreeVideoDto[]>(
+    () => freeVideoApi.fetchVideos(),
+    {
+      immediate: true,
+      onError: (err) => {
+        console.error('Failed to load videos:', err);
+      },
     }
-  };
+  );
 
-  const filterVideos = () => {
-    let filtered = [...videos];
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter((video) => video.category === selectedCategory);
+  const videos = useMemo(() => videosData ?? [], [videosData]);
+
+  const categories = useMemo(() => {
+    if (!videos || videos.length === 0) {
+      return [];
     }
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(
-        (video) =>
-          video.title.toLowerCase().includes(term) ||
-          video.description?.toLowerCase().includes(term) ||
-          video.category?.toLowerCase().includes(term)
-      );
+    const uniqueCategories = Array.from(
+      new Set(videos.map((v) => v.category).filter(Boolean))
+    );
+    return uniqueCategories as string[];
+  }, [videos]);
+
+  const filteredVideos = useMemo(() => {
+    if (!videos || videos.length === 0) {
+      return [];
     }
-    setFilteredVideos(filtered);
-  };
+
+    const searchTermLower = debouncedSearchTerm.toLowerCase();
+    const hasSearch = searchTermLower.length > 0;
+    const hasCategoryFilter = selectedCategory !== 'all';
+
+    // Combine filters in a single pass
+    return videos.filter((video) => {
+      // Category filter
+      if (hasCategoryFilter && video.category !== selectedCategory) {
+        return false;
+      }
+
+      // Search filter
+      if (hasSearch) {
+        const matchesSearch =
+          video.title.toLowerCase().includes(searchTermLower) ||
+          video.description?.toLowerCase().includes(searchTermLower) ||
+          video.category?.toLowerCase().includes(searchTermLower);
+        if (!matchesSearch) return false;
+      }
+
+      return true;
+    });
+  }, [videos, debouncedSearchTerm, selectedCategory]);
 
   return {
     filteredVideos,

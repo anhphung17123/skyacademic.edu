@@ -1,4 +1,5 @@
 import i18n from '@/i18n';
+import { DEFAULT_VALUES, LANGUAGE_MAP } from '@/constants';
 
 /**
  * Format currency based on currency code and current language
@@ -9,21 +10,14 @@ import i18n from '@/i18n';
  */
 const formatCurrency = (
   amount: number,
-  currency: string = 'USD',
+  currency: string = DEFAULT_VALUES.CURRENCY,
   options?: {
     locale?: string;
     showSymbol?: boolean;
   }
 ): string => {
-  const currentLang = i18n.language || 'en';
-  
-  // Map language to locale
-  const localeMap: Record<string, string> = {
-    'en': 'en-US',
-    'vi': 'vi-VN',
-  };
-  
-  const locale = options?.locale || localeMap[currentLang] || 'en-US';
+  const currentLang = i18n.language || DEFAULT_VALUES.LANGUAGE;
+  const locale = options?.locale || LANGUAGE_MAP[currentLang as keyof typeof LANGUAGE_MAP] || 'en-US';
   
   // For VND, use Vietnamese locale and format
   if (currency === 'VND') {
@@ -63,11 +57,11 @@ const formatCurrency = (
  * Format price with currency symbol based on currency code
  * @param amount - The amount to format
  * @param currency - Currency code (USD, VND, etc.)
- * @returns Formatted price string with symbol or "Free" if amount is 0
+ * @returns Formatted price string with symbol or translated "Free" if amount is 0
  */
 export const formatPrice = (amount: number, currency: string = 'USD'): string => {
   if (amount === 0) {
-    return 'Free';
+    return i18n.t('common.free');
   }
   return formatCurrency(amount, currency, { showSymbol: true });
 };

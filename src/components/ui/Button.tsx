@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { clsx } from 'clsx';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -22,18 +23,19 @@ export const Button = ({
   disabled,
   ...props
 }: ButtonProps) => {
+  const { t } = useTranslation();
   const baseStyles =
-    'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed';
+    'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background dark:focus:ring-offset-background-dark disabled:opacity-50 disabled:cursor-not-allowed border border-border-subtle dark:border-border-subtle-dark';
 
   const variants = {
     primary:
-      'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-sm hover:shadow',
+      'bg-accent-primary text-surface hover:bg-accent-secondary focus:ring-accent-primary shadow-sm hover:shadow dark:bg-accent-primary-dark dark:text-surface-dark dark:hover:bg-accent-secondary-dark dark:focus:ring-accent-primary-dark',
     secondary:
-      'bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500 shadow-sm hover:shadow',
+      'bg-accent-secondary text-surface hover:bg-accent-primary focus:ring-accent-secondary shadow-sm hover:shadow dark:bg-accent-secondary-dark dark:text-surface-dark dark:hover:bg-accent-primary-dark dark:focus:ring-accent-secondary-dark',
     ghost:
-      'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-500 dark:text-gray-300 dark:hover:bg-gray-800',
+      'bg-transparent text-text-primary hover:bg-elevated focus:ring-border-strong dark:text-text-primary-dark dark:hover:bg-elevated-dark dark:focus:ring-border-strong-dark',
     danger:
-      'bg-danger-600 text-white hover:bg-danger-700 focus:ring-danger-500 shadow-sm hover:shadow',
+      'bg-error text-surface hover:bg-error focus:ring-error shadow-sm hover:shadow dark:bg-error-dark dark:text-surface-dark dark:hover:bg-error-dark dark:focus:ring-error-dark',
   };
 
   const sizes = {
@@ -76,7 +78,7 @@ export const Button = ({
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             />
           </svg>
-          Loading...
+          {t('common.loading')}
         </>
       ) : (
         <>

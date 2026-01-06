@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { extractYoutubeId, getYoutubeThumbnailWithFallback } from '@/helpers/common';
+import { extractYoutubeId, getYoutubeThumbnailWithFallback } from '@/utils/youtube';
 
 interface YouTubeThumbnailProps {
   url: string;

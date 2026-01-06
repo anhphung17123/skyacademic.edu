@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Moon, Sun, Monitor } from "lucide-react";
-import { ThemePreference, useTheme } from "@/contexts/theme-context";
+import { ThemePreference } from "@/types/core";
+import { useTheme } from "@/contexts/theme-context";
 
 export const ThemeToggle = () => {
   const { t } = useTranslation();
@@ -19,8 +20,11 @@ export const ThemeToggle = () => {
     setMenuOpen(false);
   };
 
+  const currentTheme = themeOptions.find((opt) => opt.value === theme) || themeOptions[0];
+  const CurrentIcon = currentTheme.icon;
+
   return (
-    <div className="relative">
+    <div className="relative overflow-visible">
       <button
         type="button"
         onClick={() => setMenuOpen((prev) => !prev)}
@@ -28,8 +32,7 @@ export const ThemeToggle = () => {
         aria-label={t('common.toggleTheme')}
         title={t('common.toggleTheme')}
       >
-        <Sun className="w-5 h-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-        <Moon className="absolute w-5 h-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <CurrentIcon className="w-5 h-5" />
         <span className="sr-only">{t('common.toggleTheme')}</span>
       </button>
       {menuOpen && (
@@ -38,7 +41,7 @@ export const ThemeToggle = () => {
             className="fixed inset-0 z-10"
             onClick={() => setMenuOpen(false)}
           />
-          <div className="absolute right-0 z-20 mt-2 w-36 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-900/50 p-1 animate-in fade-in slide-in-from-top-2">
+          <div className="absolute right-0 z-[100] mt-2 w-36 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-900/50 p-1 animate-in fade-in slide-in-from-top-2">
             {themeOptions.map((option) => {
               const OptionIcon = option.icon;
               const isActive = option.value === theme;
@@ -67,3 +70,4 @@ export const ThemeToggle = () => {
     </div>
   );
 };
+

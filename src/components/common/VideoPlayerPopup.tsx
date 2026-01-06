@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, Maximize2, Minimize2, Volume2, VolumeX } from 'lucide-react';
-import { extractYoutubeId } from '@/helpers/common';
+import { extractYoutubeId } from '@/utils/youtube';
 
 interface VideoPlayerPopupProps {
   isOpen: boolean;

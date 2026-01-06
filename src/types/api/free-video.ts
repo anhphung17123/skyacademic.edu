@@ -13,3 +13,4 @@ export interface FreeVideoDto {
   duration?: string;
   created_at?: string;
 }
+

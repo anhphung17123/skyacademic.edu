@@ -1,46 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { courseApi } from '@/services/api/course-service';
 import { bookApi } from '@/services/api/book-service';
 import { Course, Book } from '@/types';
+import { useDataFetch } from '@/hooks';
+
+interface HomeData {
+  courses: Course[];
+  books: Book[];
+}
 
 export const useHome = () => {
   const { t } = useTranslation();
-  const [featuredCourses, setFeaturedCourses] = useState<Course[]>([]);
-  const [popularBooks, setPopularBooks] = useState<Book[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let isMounted = true;
+  const {
+    data: homeData,
+    isLoading,
+    error: fetchError,
+  } = useDataFetch<HomeData>(
+    async () => {
+      const [courses, books] = await Promise.all([
+        courseApi.fetchCourses(),
+        bookApi.fetchBooks(),
+      ]);
+      return { courses, books };
+    },
+    {
+      immediate: true,
+      onError: (err) => {
+        console.error('Failed to fetch home content:', err);
+      },
+    }
+  );
 
-    const fetchContent = async () => {
-      try {
-        setIsLoading(true);
-        const [courses, books] = await Promise.all([courseApi.fetchCourses(), bookApi.fetchBooks()]);
+  const featuredCourses = useMemo(
+    () => homeData?.courses.slice(0, 3) ?? [],
+    [homeData?.courses]
+  );
 
-        if (isMounted) {
-          setFeaturedCourses(courses.slice(0, 3));
-          setPopularBooks(books.slice(0, 3));
-          setError(null);
-        }
-      } catch {
-        if (isMounted) {
-          setError(t('home.loadError'));
-        }
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
+  const popularBooks = useMemo(
+    () => homeData?.books.slice(0, 3) ?? [],
+    [homeData?.books]
+  );
 
-    void fetchContent();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const error = fetchError ? (fetchError.message || t('home.loadError')) : null;
 
   return {
     featuredCourses,

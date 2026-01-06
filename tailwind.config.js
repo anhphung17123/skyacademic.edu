@@ -8,67 +8,92 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Semantic color tokens for light/dark mode
+        background: {
+          DEFAULT: '#F7F8FA', // light neutral
+          dark: '#181A1B',    // deep neutral
+        },
+        surface: {
+          DEFAULT: '#FFFFFF', // card/surface
+          dark: '#1C1F22',    // deeper neutral for dark cards
+        },
+        elevated: {
+          DEFAULT: '#F0F1F3', // more elevated
+          dark: '#232627',    // slightly brighter than surface-dark
+        },
+        text: {
+          primary: {
+            DEFAULT: '#1A2233', // high contrast text
+            dark: '#F3F4F6',    // not pure white
+          },
+          secondary: {
+            DEFAULT: '#5A6473', // reduced emphasis
+            dark: '#AEB4C2',    // readable
+          },
+          muted: {
+            DEFAULT: '#AEB4C2', // muted text
+            dark: '#6B7280',    // muted in dark
+          },
+        },
+        border: {
+          subtle: {
+            DEFAULT: '#E3E6EA',
+            dark: '#2C3136',
+          },
+          strong: {
+            DEFAULT: '#C1C7D0',
+            dark: '#3A3F44',
+          },
+        },
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
         },
         secondary: {
-          50: '#fdf4ff',
-          100: '#fae8ff',
-          200: '#f5d0fe',
-          300: '#f0abfc',
-          400: '#e879f9',
-          500: '#d946ef',
-          600: '#c026d3',
-          700: '#a21caf',
-          800: '#86198f',
-          900: '#701a75',
-          950: '#4a044e',
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#f97316',
+          600: '#ea580c',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
+        },
+        accent: {
+          primary: {
+            DEFAULT: '#2563EB', // blue, accessible
+            dark: '#3B82F6',    // strong blue for dark CTA
+          },
+          secondary: {
+            DEFAULT: '#F59E42', // orange
+            dark: '#FBBF24',
+          },
         },
         success: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#166534',
-          900: '#14532d',
+          DEFAULT: '#22C55E',
+          dark: '#4ADE80',
         },
         warning: {
-          50: '#fffbeb',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-          700: '#b45309',
-          800: '#92400e',
-          900: '#78350f',
+          DEFAULT: '#FACC15',
+          dark: '#FDE047',
         },
-        danger: {
-          50: '#fef2f2',
-          100: '#fee2e2',
-          200: '#fecaca',
-          300: '#fca5a5',
-          400: '#f87171',
-          500: '#ef4444',
-          600: '#dc2626',
-          700: '#b91c1c',
-          800: '#991b1b',
-          900: '#7f1d1d',
+        error: {
+          DEFAULT: '#EF4444',
+          dark: '#F87171',
+        },
+        disabled: {
+          DEFAULT: '#E5E7EB',
+          dark: '#374151',
         },
       },
       fontFamily: {
@@ -78,6 +103,9 @@ export default {
       boxShadow: {
         'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
         'medium': '0 4px 25px -3px rgba(0, 0, 0, 0.1), 0 10px 30px -2px rgba(0, 0, 0, 0.05)',
+        'light-soft': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(59, 130, 246, 0.08), 0 8px 24px -4px rgba(0, 0, 0, 0.04)',
+        'light-medium': '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 10px 20px -4px rgba(59, 130, 246, 0.12), 0 20px 40px -8px rgba(0, 0, 0, 0.06)',
+        'light-colored': '0 4px 12px -2px rgba(59, 130, 246, 0.15), 0 8px 24px -4px rgba(168, 85, 247, 0.1)',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
