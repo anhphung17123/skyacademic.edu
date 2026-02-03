@@ -27,139 +27,8 @@ import type { BookProduct } from "@/types";
 import { PaymentInfo } from "@/components/payment/PaymentInfo";
 import { PreviewGalleryModal } from "@/components/book/PreviewGalleryModal";
 import { ContactInfo } from "@/components/common/ContactInfo";
-
-// Import preview images for Wishes Under the Winter Sky
-import preview1 from "@/images/preview-Wishes-Under-the-Winter-Sky/1.png";
-import preview2 from "@/images/preview-Wishes-Under-the-Winter-Sky/2.png";
-import preview3 from "@/images/preview-Wishes-Under-the-Winter-Sky/3.png";
-import preview4 from "@/images/preview-Wishes-Under-the-Winter-Sky/4.png";
-import preview5 from "@/images/preview-Wishes-Under-the-Winter-Sky/5.png";
-import preview6 from "@/images/preview-Wishes-Under-the-Winter-Sky/6.png";
-import preview7 from "@/images/preview-Wishes-Under-the-Winter-Sky/7.png";
-import preview8 from "@/images/preview-Wishes-Under-the-Winter-Sky/8.png";
-import preview9 from "@/images/preview-Wishes-Under-the-Winter-Sky/9.png";
-import preview10 from "@/images/preview-Wishes-Under-the-Winter-Sky/10.png";
-
-const previewImages: Record<number, string> = {
-  1: preview1,
-  2: preview2,
-  3: preview3,
-  4: preview4,
-  5: preview5,
-  6: preview6,
-  7: preview7,
-  8: preview8,
-  9: preview9,
-  10: preview10,
-};
-
-interface TableOfContentsItem {
-  type: "title" | "chapter" | "section";
-  text: string;
-  chapterNumber?: number;
-}
-
-const WISHES_BOOK_TABLE_OF_CONTENTS: TableOfContentsItem[] = [
-  { type: "title", text: "Title Page" },
-  { type: "title", text: "Dedication" },
-  { type: "title", text: "Table of Contents" },
-  {
-    type: "chapter",
-    text: "Chapter 1 — The First Snowflake",
-    chapterNumber: 1,
-  },
-  { type: "section", text: "Snow Over the Meadow" },
-  { type: "section", text: "Grandma's Old Scarf" },
-  { type: "section", text: "Soup on a Winter Morning" },
-  { type: "section", text: "Footprints in the White Rice Field" },
-  { type: "section", text: "Little Wish Lantern" },
-  { type: "section", text: "The Window of Warm Light" },
-  {
-    type: "chapter",
-    text: "Chapter 2 — Preparing for Christmas",
-    chapterNumber: 2,
-  },
-  { type: "section", text: "Paper Stars" },
-  { type: "section", text: "The Red Sweater" },
-  { type: "section", text: "Sweeping the Yard" },
-  { type: "section", text: "The Cookie Tray" },
-  { type: "section", text: "Wrapping Gifts" },
-  { type: "section", text: "The Christmas List" },
-  {
-    type: "chapter",
-    text: "Chapter 3 — The Night Before Christmas",
-    chapterNumber: 3,
-  },
-  { type: "section", text: "Lantern on the Porch" },
-  { type: "section", text: "The Quiet Street" },
-  { type: "section", text: "The Crickets' Choir" },
-  { type: "section", text: "Grandma's Whisper" },
-  { type: "section", text: "Midnight Rice Cooker" },
-  { type: "section", text: "Waiting for Morning" },
-  { type: "chapter", text: "Chapter 4 — Christmas Morning", chapterNumber: 4 },
-  { type: "section", text: "Morning Footsteps" },
-  { type: "section", text: "The Rice Porridge Pot" },
-  { type: "section", text: "The Gift Beside the Pillow" },
-  { type: "section", text: "Laughter Down the Hallway" },
-  { type: "section", text: "The Bicycle Bell Outside" },
-  { type: "section", text: "The Christmas Table" },
-  { type: "chapter", text: "Chapter 5 — The Gifts We Give", chapterNumber: 5 },
-  { type: "section", text: "Gift of the Tangerine" },
-  { type: "section", text: "The Little Red Envelope" },
-  { type: "section", text: "A Scarf for the Neighbor" },
-  { type: "section", text: "Bread for the Road" },
-  { type: "section", text: "The Song We Gave" },
-  { type: "section", text: "Hands That Help" },
-  { type: "chapter", text: "Chapter 6 — Winter Adventures", chapterNumber: 6 },
-  { type: "section", text: "Snowball Lesson" },
-  { type: "section", text: "Mist on the River" },
-  { type: "section", text: "The Bicycle Race" },
-  { type: "section", text: "The Roof-Top Fort" },
-  { type: "section", text: "The Hidden Orchard" },
-  { type: "section", text: "The Night Walk Home" },
-  {
-    type: "chapter",
-    text: "Chapter 7 — Family and Firelight",
-    chapterNumber: 7,
-  },
-  { type: "section", text: "Grandma's Story of the Tide" },
-  { type: "section", text: "The Mending Table" },
-  { type: "section", text: "Warm Rice, Warm Hands" },
-  { type: "section", text: "The Lantern in the Window" },
-  { type: "section", text: "Old Photographs" },
-  { type: "section", text: "The Quiet Chorus" },
-  {
-    type: "chapter",
-    text: "Chapter 8 — Winter in the Countryside",
-    chapterNumber: 8,
-  },
-  { type: "section", text: "Buffalo Breath" },
-  { type: "section", text: "The Morning Market" },
-  { type: "section", text: "The Pagoda Bell" },
-  { type: "section", text: "Bamboo Shadows" },
-  { type: "section", text: "The Sugarcane Gift" },
-  { type: "section", text: "Fog Over the River" },
-  { type: "chapter", text: "Chapter 9 — Wishes and Dreams", chapterNumber: 9 },
-  { type: "section", text: "The Letter to the Sky" },
-  { type: "section", text: "Lanterns Over the Water" },
-  { type: "section", text: "A Wish for Grandma" },
-  { type: "section", text: "Dreams in the Rice Field" },
-  { type: "section", text: "The Secret Pocket" },
-  { type: "section", text: "The Promise of the Sky" },
-  {
-    type: "chapter",
-    text: "Chapter 10 — Under the Winter Sky",
-    chapterNumber: 10,
-  },
-  { type: "section", text: "The Bicycle by the Gate" },
-  { type: "section", text: "Thank-You to the Land" },
-  { type: "section", text: "A Child's Quiet Prayer" },
-  { type: "section", text: "Memories Like Lanterns" },
-  { type: "section", text: "The Road That Bends Back Home" },
-  { type: "section", text: "Last Light" },
-  { type: "title", text: "Acknowledgments" },
-  { type: "title", text: "About the Author (Ms. Song)" },
-];
+import { getBookPreviewImages } from "@/services/mock/data/Books";
+import { BOOK_TABLE_OF_CONTENTS } from "@/services/mock/data/BookTableOfContents";
 
 interface BookDetailContentProps {
   book: BookProduct;
@@ -179,6 +48,15 @@ export const BookDetailContent = ({ book }: BookDetailContentProps) => {
   const [previewStartIndex, setPreviewStartIndex] = useState(0);
   const previewSectionRef = useRef<HTMLDivElement>(null);
 
+  const bookSlug = book.slug ?? '';
+  const previewImages =
+    book.previewImages?.[bookSlug]?.length
+      ? book.previewImages[bookSlug]
+      : getBookPreviewImages(bookSlug);
+  const tableOfContents =
+    book.tableOfContents?.length
+      ? book.tableOfContents
+      : BOOK_TABLE_OF_CONTENTS[bookSlug] ?? [];
   const tabs = [
     { id: "description", label: t("bookDetail.tabDescription") },
     { id: "details", label: t("bookDetail.tabDetails") },
@@ -260,7 +138,7 @@ export const BookDetailContent = ({ book }: BookDetailContentProps) => {
                       </div>
                     )}
                   </div>
-                  {/* Preview Button */}
+                  {previewImages.length > 0 && (
                   <button
                     onClick={() => {
                       previewSectionRef.current?.scrollIntoView({
@@ -273,6 +151,7 @@ export const BookDetailContent = ({ book }: BookDetailContentProps) => {
                     <FileText className="w-4 h-4" />
                     {t("bookDetail.preview")}
                   </button>
+                  )}
                 </div>
 
                 {/* Book Info */}
@@ -538,8 +417,8 @@ export const BookDetailContent = ({ book }: BookDetailContentProps) => {
                     </div>
                     <div className="p-6">
                       <div className="space-y-2 max-h-[600px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
-                        {book.id === "book-1" ? (
-                          WISHES_BOOK_TABLE_OF_CONTENTS.map((item, idx) => {
+                        {tableOfContents.length > 0 ? (
+                          tableOfContents.map((item, idx) => {
                             if (item.type === "title") {
                               return (
                                 <div
@@ -587,7 +466,8 @@ export const BookDetailContent = ({ book }: BookDetailContentProps) => {
                   </div>
                 )}
 
-                {/* Sample Pages Preview */}
+                {/* Sample Pages Preview – only when book has preview images (from mock by slug) */}
+                {previewImages.length > 0 && (
                 <div
                   ref={previewSectionRef}
                   className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-600 overflow-hidden"
@@ -609,54 +489,51 @@ export const BookDetailContent = ({ book }: BookDetailContentProps) => {
                   </div>
                   <div className="p-6">
                     <div className="grid sm:grid-cols-3 gap-4">
-                      {(book.id === "book-1" ? [1, 2, 3] : [1, 2, 3]).map(
-                        (page) => {
-                          const imageSrc =
-                            book.id === "book-1"
-                              ? previewImages[page] ||
-                                `https://images.unsplash.com/photo-154499795${page}0-fa07a98d237f?w=300&h=400&fit=crop`
-                              : `https://images.unsplash.com/photo-154499795${page}0-fa07a98d237f?w=300&h=400&fit=crop`;
-
-                          return (
-                            <div
-                              key={page}
-                              onClick={() => {
-                                setPreviewStartIndex(page - 1);
-                                setIsPreviewModalOpen(true);
-                              }}
-                              className="group relative aspect-[3/4] rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer"
-                            >
-                              <img
-                                src={imageSrc}
-                                alt={`Sample page ${page}`}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                loading="lazy"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                              <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span className="px-2 py-1 bg-white/90 rounded-md text-xs font-medium text-gray-900">
-                                  Page {page}
-                                </span>
-                              </div>
+                      {(previewImages.length > 0
+                        ? [0, 1, 2].filter((i) => i < previewImages.length)
+                        : []
+                      ).map((pageIndex) => {
+                        const imageSrc =
+                          previewImages[pageIndex] ??
+                          `https://images.unsplash.com/photo-154499795${pageIndex + 1}0-fa07a98d237f?w=300&h=400&fit=crop`;
+                        return (
+                          <div
+                            key={pageIndex}
+                            onClick={() => {
+                              setPreviewStartIndex(pageIndex);
+                              setIsPreviewModalOpen(true);
+                            }}
+                            className="group relative aspect-[3/4] rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer"
+                          >
+                            <img
+                              src={imageSrc}
+                              alt={`Sample page ${pageIndex + 1}`}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <span className="px-2 py-1 bg-white/90 rounded-md text-xs font-medium text-gray-900">
+                                Page {pageIndex + 1}
+                              </span>
                             </div>
-                          );
-                        }
-                      )}
+                          </div>
+                        );
+                      })}
                     </div>
-                    {book.id === "book-1" ? (
-                      <button
-                        onClick={() => {
-                          setPreviewStartIndex(0);
-                          setIsPreviewModalOpen(true);
-                        }}
-                        className="w-full mt-4 py-3 rounded-xl font-medium bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                      >
-                        <FileText className="w-5 h-5" />
-                        {t("bookDetail.viewMorePages")}
-                      </button>
-                    ) : null}
+                    <button
+                      onClick={() => {
+                        setPreviewStartIndex(0);
+                        setIsPreviewModalOpen(true);
+                      }}
+                      className="w-full mt-4 py-3 rounded-xl font-medium bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                    >
+                      <FileText className="w-5 h-5" />
+                      {t("bookDetail.viewMorePages")}
+                    </button>
                   </div>
                 </div>
+                )}
               </div>
 
               {/* Right Column - Purchase */}
@@ -740,22 +617,11 @@ export const BookDetailContent = ({ book }: BookDetailContentProps) => {
         </Section>
 
         {/* Preview Gallery Modal */}
-        {book.id === "book-1" && (
+        {previewImages.length > 0 && (
           <PreviewGalleryModal
             isOpen={isPreviewModalOpen}
             onClose={() => setIsPreviewModalOpen(false)}
-            images={[
-              preview1,
-              preview2,
-              preview3,
-              preview4,
-              preview5,
-              preview6,
-              preview7,
-              preview8,
-              preview9,
-              preview10,
-            ]}
+            images={previewImages}
             startIndex={previewStartIndex}
           />
         )}

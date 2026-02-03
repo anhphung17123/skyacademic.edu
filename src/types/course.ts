@@ -17,13 +17,10 @@ export interface Course {
   level: Level;
   language?: Language;
   thumbnail?: string;
-  coverImage?: string;
-  heroImage?: string;
   category?: string;
   categoryVi?: string;
   deliveryMode?: DeliveryMode;
   currency?: string;
-  trailerUrl?: string;
   youtubePlaylistUrl?: string;
   type?: CourseType;
   supportEmail?: string;

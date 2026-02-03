@@ -1,120 +1,113 @@
-import { memo, useState } from 'react';
-import { X } from 'lucide-react';
+import { memo, useCallback, useState } from 'react';
+import { clsx } from 'clsx';
 import type { FlashcardTopic } from '@/types';
 
 interface FlashcardPreviewGalleryProps {
   topics: FlashcardTopic[];
+  images: Record<string, string>;
+  /** 'modal' = thẻ to hơn, dùng trong modal xem trước */
+  size?: 'default' | 'modal';
 }
 
 /**
- * Gallery of flashcard samples; modal to view front/back.
- * Can be extended later with flip animation and audio.
+ * Gallery mẫu thẻ (3 thẻ): bấm vào thẻ để lật xem mặt sau (hiệu ứng 3D flip).
+ * Layout tối ưu cho 3 thẻ: 1 cột mobile (thẻ to), 3 cột desktop.
  */
-export const FlashcardPreviewGallery = memo(({ topics }: FlashcardPreviewGalleryProps) => {
-  const [modalCard, setModalCard] = useState<{
-    front: string;
-    back: string;
-    frontImage?: string;
-    backImage?: string;
-  } | null>(null);
+export const FlashcardPreviewGallery = memo(({ topics, images, size = 'default' }: FlashcardPreviewGalleryProps) => {
+  const [flippedIds, setFlippedIds] = useState<Set<string>>(new Set());
+  const isModal = size === 'modal';
+
+  const toggleFlip = useCallback((cardId: string) => {
+    setFlippedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(cardId)) next.delete(cardId);
+      else next.add(cardId);
+      return next;
+    });
+  }, []);
 
   const allCards = topics.flatMap((t) => t.cards);
 
   return (
-    <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-        {allCards.slice(0, 8).map((card) => (
+    <div
+      className={isModal
+        ? 'grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-10 max-w-5xl mx-auto'
+        : 'grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto'
+      }
+    >
+      {allCards.map((card) => {
+        const frontUrl = images[card.front];
+        const backUrl = images[card.back];
+        const isFlipped = flippedIds.has(card.id);
+        return (
           <button
             key={card.id}
             type="button"
-            onClick={() =>
-              setModalCard({
-                front: card.front.sentence,
-                back: card.back.sentence,
-                frontImage: card.front.image,
-                backImage: card.back.image,
-              })
-            }
-            className="text-left rounded-xl border border-gray-200 dark:border-gray-600 overflow-hidden bg-white dark:bg-gray-800 shadow-md hover:shadow-xl hover:border-violet-300 dark:hover:border-violet-500/50 transition-all duration-200 hover:-translate-y-1 active:scale-[0.98]"
+            onClick={() => toggleFlip(card.id)}
+            className="rounded-2xl border-2 border-gray-200 dark:border-gray-600 overflow-hidden bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl hover:border-violet-300 dark:hover:border-violet-500/50 transition-all duration-200 hover:-translate-y-1 active:scale-[0.98] w-full max-w-sm mx-auto sm:max-w-none [perspective:1200px]"
+            aria-pressed={isFlipped}
+            aria-label={isFlipped ? 'Flip card to front' : 'Flip card to back'}
           >
-            <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-700 overflow-hidden">
-              {card.front.image && (
-                <img
-                  src={card.front.image}
-                  alt=""
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
+            <div
+              className={clsx(
+                'relative w-full aspect-[3/4] bg-gray-100 dark:bg-gray-700 [transform-style:preserve-3d]',
+                isModal ? 'min-h-[260px] sm:min-h-[340px]' : 'min-h-[220px] sm:min-h-[280px]'
               )}
-            </div>
-            <div className="p-3">
-              <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
-                {card.front.sentence}
-              </p>
-              <p className="text-xs text-violet-600 dark:text-violet-400 font-medium line-clamp-2 mt-1.5">
-                {card.back.sentence}
-              </p>
+              style={{ perspectiveOrigin: 'center center' }}
+            >
+              <div
+                className="absolute inset-0 w-full h-full [transform-style:preserve-3d]"
+                style={{
+                  transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                  transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  willChange: 'transform',
+                }}
+              >
+                {/* Mặt trước */}
+                <div
+                  className="absolute inset-0 w-full h-full rounded-xl overflow-hidden backface-hidden"
+                  style={{ backfaceVisibility: 'hidden', transform: 'rotateY(0deg)' }}
+                >
+                  {frontUrl ? (
+                    <img
+                      src={frontUrl}
+                      alt=""
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-200 dark:bg-gray-600" />
+                  )}
+                </div>
+                {/* Mặt sau */}
+                <div
+                  className="absolute inset-0 w-full h-full rounded-xl overflow-hidden backface-hidden"
+                  style={{
+                    backfaceVisibility: 'hidden',
+                    transform: 'rotateY(180deg)',
+                  }}
+                >
+                  {backUrl ? (
+                    <img
+                      src={backUrl}
+                      alt=""
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-200 dark:bg-gray-600" />
+                  )}
+                </div>
+              </div>
             </div>
           </button>
-        ))}
-      </div>
-
-      {modalCard && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-          onClick={() => setModalCard(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Flashcard preview"
-        >
-          <div
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex justify-end p-2">
-              <button
-                type="button"
-                onClick={() => setModalCard(null)}
-                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-6 space-y-6">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-violet-600 dark:text-violet-400 mb-1.5">
-                  Front (EN)
-                </p>
-                {modalCard.frontImage && (
-                  <img
-                    src={modalCard.frontImage}
-                    alt=""
-                    className="w-full aspect-video object-cover rounded-lg mb-2"
-                  />
-                )}
-                <p className="text-gray-900 dark:text-white">{modalCard.front}</p>
-              </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-violet-600 dark:text-violet-400 mb-1.5">
-                  Back (VI)
-                </p>
-                {modalCard.backImage && (
-                  <img
-                    src={modalCard.backImage}
-                    alt=""
-                    className="w-full aspect-video object-cover rounded-lg mb-2"
-                  />
-                )}
-                <p className="text-gray-900 dark:text-white">{modalCard.back}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+        );
+      })}
+    </div>
   );
 });
 

@@ -5,30 +5,22 @@
 
 import { Book } from './book';
 
-/** Discriminated union: product type */
-export type ProductType = 'book' | 'flashcard';
-
 /** Book as a product (for /products list and /products/:slug) */
 export interface BookProduct extends Omit<Book, 'type'> {
   type: 'book';
 }
 
-/** Single side of a flashcard (front or back) */
-export interface FlashcardCardSide {
-  language: 'en' | 'vi';
-  sentence: string;
-  image: string;
-}
-
-/** One flashcard card within a topic */
+/** Một thẻ trong topic: chỉ có ảnh mặt trước và mặt sau (imageKey). Không có chữ. */
 export interface FlashcardCard {
   id: string;
   topic: string;
-  front: FlashcardCardSide;
-  back: FlashcardCardSide;
+  /** imageKey cho ảnh mặt trước; URL = topic.images[front] */
+  front: string;
+  /** imageKey cho ảnh mặt sau; URL = topic.images[back] */
+  back: string;
 }
 
-/** Learning topic (Activities, Places, Special Days) */
+/** Learning topic. Có images riêng (key → URL cho mặt trước/sau thẻ trong topic). Flashcard product không có images. */
 export interface FlashcardTopic {
   id: string;
   key: 'activities' | 'places' | 'special-days';
@@ -36,11 +28,12 @@ export interface FlashcardTopic {
   nameVi: string;
   purposeEn: string;
   purposeVi: string;
-  /** Content rules / description (paragraph) */
+  coverImage: string;
   contentEn: string;
   contentVi: string;
-  /** Example phrases (e.g. "eating breakfast", "market") */
   examples: string[];
+  /** imageKey → URL cho ảnh mặt trước / mặt sau của thẻ trong topic này */
+  images: Record<string, string>;
   cards: FlashcardCard[];
 }
 
@@ -70,7 +63,7 @@ export interface FlashcardBonusClass {
   noExtraFeeVi: string;
 }
 
-/** Flashcard product (full detail page data) */
+/** Flashcard product. Không có images; chỉ topics có images (và cards có front/back imageKey). */
 export interface FlashcardProduct {
   type: 'flashcard';
   id: string;
@@ -80,8 +73,7 @@ export interface FlashcardProduct {
   subtitleEn: string;
   subtitleVi: string;
   descriptionEn: string;
-  descriptionVi: string;    
-  heroImage?: string;
+  descriptionVi: string;
   topics: FlashcardTopic[];
   packages: FlashcardPackage[];
   bonusClass: FlashcardBonusClass;

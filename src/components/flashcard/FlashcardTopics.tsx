@@ -10,7 +10,7 @@ interface FlashcardTopicsProps {
   topics: FlashcardTopic[];
 }
 
-/** Learning topics as visual cards: image + name + short description. Click to select and see detail. */
+/** Learning topics as visual cards: image + name + short description. Ảnh lấy từ topic.coverImage. */
 export const FlashcardTopics = memo(({ topics }: FlashcardTopicsProps) => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
@@ -28,7 +28,7 @@ export const FlashcardTopics = memo(({ topics }: FlashcardTopicsProps) => {
   const renderTopicCard = (topic: FlashcardTopic, scrollable: boolean) => {
     const name = lang === 'vi' ? topic.nameVi : topic.nameEn;
     const shortPurpose = lang === 'vi' ? topic.purposeVi : topic.purposeEn;
-    const thumbnail = topic.cards[0]?.front?.image;
+    const thumbnail = topic.coverImage ?? undefined;
     const isActive = activeTopicKey === topic.key;
     return (
       <button
@@ -123,9 +123,9 @@ export const FlashcardTopics = memo(({ topics }: FlashcardTopicsProps) => {
                   className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-600 overflow-hidden shadow-md hover:shadow-lg transition-shadow"
                 >
                   <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-700 relative">
-                    {card.front.image && (
+                    {(activeTopic.images[card.front] != null) && (
                       <img
-                        src={card.front.image}
+                        src={activeTopic.images[card.front]}
                         alt=""
                         className="w-full h-full object-cover"
                         onError={(e) => {
@@ -133,16 +133,6 @@ export const FlashcardTopics = memo(({ topics }: FlashcardTopicsProps) => {
                         }}
                       />
                     )}
-                  </div>
-                  <div className="p-3">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">EN</p>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white line-clamp-2">
-                      {card.front.sentence}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 mb-1">VI</p>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2">
-                      {card.back.sentence}
-                    </p>
                   </div>
                 </div>
               ))}

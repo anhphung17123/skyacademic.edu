@@ -53,7 +53,7 @@ export const CourseCard = memo(({ course }: CourseCardProps) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
         
         {/* Play button overlay */}
-        {course.trailerUrl && (
+        {course.youtubePlaylistUrl && (
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-xl dark:shadow-2xl hover:scale-110 transition-transform">
               <Play className="w-7 h-7 text-primary-600 ml-1" fill="currentColor" />

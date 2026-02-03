@@ -51,8 +51,8 @@ export const FlashcardTopicCard = memo(({ product, topic }: FlashcardTopicCardPr
           {purpose}
         </p>
         {sampleCard && (
-          <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mb-4">
-            {sampleCard.front.sentence} → {sampleCard.back.sentence}
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+            {t('flashcard.cardWithImage')}
           </p>
         )}
         <Button

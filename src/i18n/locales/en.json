@@ -193,6 +193,7 @@
     "content": "Content",
     "examples": "Examples",
     "exampleCard": "Example flashcard",
+    "cardWithImage": "Card with front/back image only",
     "packagesTitle": "Product packages",
     "packagesDesc": "Choose the right package: Physical, PDF, or Combo (best value).",
     "bonusTitle": "FREE bonus: Pronunciation & Communication class",

@@ -19,11 +19,6 @@ export const SCROLL_THRESHOLD = {
   HEADER: 20,
 } as const;
 
-export const DELAY = {
-  API_SIMULATION: 300,
-  API_SIMULATION_SHORT: 200,
-} as const;
-
 export const ROUTES = {
   HOME: '/',
   COURSES: '/courses',

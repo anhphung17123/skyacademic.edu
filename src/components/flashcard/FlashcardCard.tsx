@@ -1,9 +1,10 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Layers, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import type { FlashcardProduct } from '@/types';
+import { getTopicCoverUrls } from '@/utils/flashcard';
 
 interface FlashcardCardProps {
   product: FlashcardProduct;
@@ -11,12 +12,13 @@ interface FlashcardCardProps {
 
 /**
  * Card for Flashcard product in list view.
- * UI is intentionally different from BookCard (friendly, visual, learning-focused).
+ * Cover = ảnh cover của mỗi topic (topic.coverImage).
  */
 export const FlashcardCard = memo(({ product }: FlashcardCardProps) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const lang = i18n.language;
+  const coverUrls = getTopicCoverUrls(product);
 
   const title = lang === 'vi' ? product.titleVi : product.titleEn;
   const subtitle = lang === 'vi' ? product.subtitleVi : product.subtitleEn;
@@ -24,17 +26,28 @@ export const FlashcardCard = memo(({ product }: FlashcardCardProps) => {
 
   return (
     <div className="group relative rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-      {/* Visual: stacked cards mockup */}
+      {/* Visual: cover mỗi topic */}
       <div className="relative aspect-[4/3] bg-gradient-to-br from-amber-50 to-orange-100 dark:from-amber-900/20 dark:to-orange-900/20 overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center p-4">
-          <div className="relative w-32 h-40">
-            <div className="absolute inset-0 bg-white dark:bg-gray-700 rounded-lg shadow-lg transform rotate-[-6deg] border border-amber-200/50 dark:border-gray-600" />
-            <div className="absolute inset-0 bg-white dark:bg-gray-700 rounded-lg shadow-lg transform rotate-[2deg] translate-y-1 border border-amber-200/50 dark:border-gray-600" />
-            <div className="absolute inset-0 bg-white dark:bg-gray-700 rounded-lg shadow-xl transform rotate-[6deg] translate-y-2 border-2 border-amber-300/60 dark:border-amber-500/40 flex items-center justify-center">
-              <Layers className="w-10 h-10 text-amber-500 dark:text-amber-400" />
-            </div>
+        {coverUrls.length > 0 ? (
+          <div className="absolute inset-0 flex">
+            {coverUrls.map((src, i) => (
+              <div key={i} className="flex-1 min-w-0 border-r border-white/50 last:border-r-0">
+                <img
+                  src={src}
+                  alt=""
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+              </div>
+            ))}
           </div>
-        </div>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-4xl text-amber-400">
+            📚
+          </div>
+        )}
         <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
       </div>
 
