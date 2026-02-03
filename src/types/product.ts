@@ -78,6 +78,7 @@ export interface FlashcardProduct {
   packages: FlashcardPackage[];
   bonusClass: FlashcardBonusClass;
   targetAudience: string[];
+  targetAudienceVi: string[];
 }
 
 /** Union type for any product */

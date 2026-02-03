@@ -217,7 +217,7 @@ export const FlashcardDetailContent = memo(({ product }: FlashcardDetailContentP
                     topic={topic ?? null}
                   />
 
-                  <FlashcardTargetAudience items={product.targetAudience} />
+                  <FlashcardTargetAudience items={lang === 'vi' ? product.targetAudienceVi : product.targetAudience} />
                 </div>
 
                 {/* Right: price + package CTAs (open modal on click) */}

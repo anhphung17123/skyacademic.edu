@@ -8,7 +8,7 @@ export interface ContactInfo {
 }
 
 export const mockContactInfo: ContactInfo = {
-  email: 'xuan123hv@gmail.com',
+  email: 'skyacademy210@gmail.com',
   phone: '+84901959142',
   phoneFormatted: '(+84) 901 959 142',
   contactFormUrl: 'https://tinyurl.com/contactskyacademy',
