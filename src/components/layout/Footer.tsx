@@ -28,7 +28,7 @@ export const Footer = memo(() => {
   const quickLinks: readonly FooterLink[] = useMemo(
     () => [
       { to: '/courses', label: t('nav.courses') },
-      { to: '/books', label: t('nav.books') },
+      { to: '/products', label: t('nav.products') },
       { to: '/free-videos', label: t('nav.freeVideos') },
     ],
     [t]

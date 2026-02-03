@@ -1,13 +1,13 @@
 import { memo } from 'react';
 import { Star, BookOpen, Eye, Smartphone, Package, ArrowRight } from 'lucide-react';
-import { Book } from '@/types';
+import type { Book, BookProduct } from '@/types';
 import { Button } from '@/components/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { PriceDisplay } from '@/components/common/PriceDisplay';
 
 interface BookCardProps {
-  book: Book;
+  book: Book | BookProduct;
 }
 
 export const BookCard = memo(({ book }: BookCardProps) => {
@@ -50,7 +50,7 @@ export const BookCard = memo(({ book }: BookCardProps) => {
         <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
           <button
             onClick={() => {
-              navigate(`/books/${book.id}`);
+              navigate(`/books/${book.slug}`);
             }}
             className="p-2.5 bg-surface dark:bg-surface-dark rounded-full shadow-md dark:shadow-lg backdrop-blur-sm text-text-primary dark:text-text-primary-dark hover:bg-accent-primary hover:text-surface dark:hover:bg-accent-primary-dark dark:hover:text-surface-dark transition-all duration-300"
           >
@@ -93,7 +93,7 @@ export const BookCard = memo(({ book }: BookCardProps) => {
         {/* Title */}
         <h3 
           className="text-base font-bold text-gray-800 dark:text-gray-100 mb-1.5 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors cursor-pointer leading-snug"
-          onClick={() => navigate(`/books/${book.id}`)}
+          onClick={() => navigate(`/books/${book.slug}`)}
         >
           {title}
         </h3>
@@ -140,7 +140,7 @@ export const BookCard = memo(({ book }: BookCardProps) => {
             variant="ghost" 
             size="sm" 
             onClick={() => {
-              navigate(`/books/${book.id}`);
+              navigate(`/books/${book.slug}`);
             }}
             className="!px-3 hover:bg-gray-100 dark:hover:bg-gray-700 group/btn"
           >

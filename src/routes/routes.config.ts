@@ -12,8 +12,9 @@ import { Home } from '@/pages/Home';
 // Lazy load other pages for code splitting
 export const Courses = lazy(() => import('@/pages/Courses').then((module) => ({ default: module.Courses })));
 export const CourseDetail = lazy(() => import('@/pages/CourseDetail').then((module) => ({ default: module.CourseDetail })));
-export const Books = lazy(() => import('@/pages/Books').then((module) => ({ default: module.Books })));
+export const Products = lazy(() => import('@/pages/Products').then((module) => ({ default: module.Products })));
 export const BookDetail = lazy(() => import('@/pages/BookDetail').then((module) => ({ default: module.BookDetail })));
+export const FlashcardDetail = lazy(() => import('@/pages/FlashcardDetail').then((module) => ({ default: module.FlashcardDetail })));
 export const FreeVideos = lazy(() => import('@/pages/FreeVideos').then((module) => ({ default: module.FreeVideos })));
 export const About = lazy(() => import('@/pages/About').then((module) => ({ default: module.About })));
 export const Contact = lazy(() => import('@/pages/Contact').then((module) => ({ default: module.Contact })));

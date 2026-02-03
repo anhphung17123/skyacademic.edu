@@ -5,6 +5,7 @@ import bookCoverImage from '@/images/book-Wishes-Under-the-Winter-Sky.png';
 export const mockBooks: BookDto[] = [
   {
     id: "book-1",
+    slug: "wishes-under-the-winter-sky",
     title: "Wishes Under the Winter Sky",
     title_vi: "Wishes Under the Winter Sky",
     title_en: "Wishes Under the Winter Sky",

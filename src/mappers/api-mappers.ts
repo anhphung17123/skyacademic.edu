@@ -62,8 +62,15 @@ export const mapBookDtoToBook = (dto: BookDto): Book => {
   const language: Language = mapBackendLanguageToUi(dto.language);
   // Map 'digital' type to 'ebook' for Book type
   const bookType: Book['type'] = dto.type === 'digital' ? 'ebook' : dto.type;
+  const slug =
+    dto.slug ??
+    dto.title
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '');
   return {
     id: dto.id,
+    slug,
     title: dto.title,
     titleEn: dto.title_en,
     titleVi: dto.title_vi,

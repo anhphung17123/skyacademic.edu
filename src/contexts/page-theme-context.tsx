@@ -25,7 +25,7 @@ import { ROUTES } from '@/constants';
 const routeToThemeMap: Record<string, PageThemeId> = {
   [ROUTES.HOME]: 'home',
   [ROUTES.COURSES]: 'courses',
-  [ROUTES.BOOKS]: 'books',
+  [ROUTES.PRODUCTS]: 'products',
   [ROUTES.FREE_VIDEOS]: 'free-videos',
   [ROUTES.ABOUT]: 'about',
   [ROUTES.CONTACT]: 'contact',
@@ -54,17 +54,27 @@ const getThemeIdFromRoute = (pathname: string): PageThemeId => {
     return 'course-detail';
   }
 
-  // Check for book detail pattern: /books/:id
+  // Check for book detail: /books/:slug
   if (/^\/books\/[^/]+$/.test(normalizedPath)) {
     return 'book-detail';
+  }
+  // Check for flashcard detail: /flashcards/:slug
+  if (/^\/flashcards\/[^/]+$/.test(normalizedPath)) {
+    return 'flashcard-detail';
   }
 
   // Check if path starts with known routes (for nested routes)
   if (normalizedPath.startsWith('/courses')) {
     return 'courses';
   }
+  if (normalizedPath.startsWith('/products')) {
+    return 'products';
+  }
   if (normalizedPath.startsWith('/books')) {
-    return 'books';
+    return 'book-detail';
+  }
+  if (normalizedPath.startsWith('/flashcards')) {
+    return 'flashcard-detail';
   }
   if (normalizedPath.startsWith('/free-videos')) {
     return 'free-videos';

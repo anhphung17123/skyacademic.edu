@@ -2,7 +2,8 @@ import { Language, BookFormat } from './core';
 
 export interface Book {
   id: string;
-  slug?: string;
+  /** URL slug for /products/:slug (required for product routing) */
+  slug: string;
   title: string;
   titleEn?: string;
   titleVi?: string;

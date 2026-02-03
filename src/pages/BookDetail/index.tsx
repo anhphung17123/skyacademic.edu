@@ -1,6 +1,9 @@
-import { useParams, Navigate, Link } from "react-router-dom";
+import { Link, useParams, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
+import { useDataFetch } from "@/hooks";
+import { productApi } from "@/services/api/product-service";
+import { Loading } from "@/components/common/Loading";
 import { useTheme } from "@/contexts/theme-context";
 import { PageTransition } from "@/components/common/PageTransition";
 import { Container } from "@/components/layout/Container";
@@ -20,9 +23,7 @@ import {
   Shield,
   Check,
 } from "lucide-react";
-import { bookApi } from "@/services/api/book-service";
-import { Book as BookType } from "@/types";
-import { Loading } from "@/components/common/Loading";
+import type { BookProduct } from "@/types";
 import { PaymentInfo } from "@/components/payment/PaymentInfo";
 import { PreviewGalleryModal } from "@/components/book/PreviewGalleryModal";
 import { ContactInfo } from "@/components/common/ContactInfo";
@@ -160,15 +161,16 @@ const WISHES_BOOK_TABLE_OF_CONTENTS: TableOfContentsItem[] = [
   { type: "title", text: "About the Author (Ms. Song)" },
 ];
 
-export const BookDetail = () => {
-  const { id } = useParams<{ id: string }>();
+interface BookDetailContentProps {
+  book: BookProduct;
+}
+
+/** Book detail UI; used by ProductDetail when product.type === "book". */
+export const BookDetailContent = ({ book }: BookDetailContentProps) => {
   const { t, i18n } = useTranslation();
   const { resolvedTheme } = useTheme();
   const isLightMode = resolvedTheme === "light";
   const currentLang = i18n.language;
-  const [book, setBook] = useState<BookType | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<
     "description" | "details" | "reviews"
   >("description");
@@ -176,43 +178,6 @@ export const BookDetail = () => {
   const [showToast, setShowToast] = useState(false);
   const [previewStartIndex, setPreviewStartIndex] = useState(0);
   const previewSectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!id) return;
-    let isMounted = true;
-
-    const fetchBook = async () => {
-      try {
-        setIsLoading(true);
-        const data = await bookApi.getBook(id);
-        if (isMounted) {
-          setBook(data);
-          setError(null);
-        }
-      } catch {
-        if (isMounted) {
-          setBook(null);
-          setError("Book could not be loaded from the server.");
-        }
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    void fetchBook();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [id]);
-
-  if (isLoading) {
-    return <Loading fullScreen />;
-  }
-
-  if (!book) return <Navigate to="/books" />;
 
   const tabs = [
     { id: "description", label: t("bookDetail.tabDescription") },
@@ -263,12 +228,12 @@ export const BookDetail = () => {
             <div className="py-4 md:py-6 relative z-10">
               {/* Breadcrumb */}
               <Link
-                to="/books"
+                to="/products"
                 className="inline-flex items-center gap-2 text-white hover:text-white transition-colors mb-3 group font-medium drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]"
               >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 <span className="text-sm font-medium">
-                  {t("common.backToBooks")}
+                  {t("common.backToProducts")}
                 </span>
               </Link>
 
@@ -774,16 +739,6 @@ export const BookDetail = () => {
           </Container>
         </Section>
 
-        {error && (
-          <Section padding="md" background="default">
-            <Container>
-              <div className="p-4 rounded-xl bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 text-red-700 dark:text-red-200">
-                {error}
-              </div>
-            </Container>
-          </Section>
-        )}
-
         {/* Preview Gallery Modal */}
         {book.id === "book-1" && (
           <PreviewGalleryModal
@@ -820,4 +775,19 @@ export const BookDetail = () => {
       </div>
     </PageTransition>
   );
+};
+
+/** Book detail page: route /books/:slug */
+export const BookDetail = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const { data: book, isLoading, error } = useDataFetch(
+    () => (slug ? productApi.getBookBySlug(slug) : Promise.resolve(null)),
+    { immediate: !!slug }
+  );
+
+  if (!slug) return <Navigate to="/products" replace />;
+  if (isLoading) return <Loading fullScreen />;
+  if (error || !book) return <Navigate to="/products" replace />;
+
+  return <BookDetailContent book={book} />;
 };

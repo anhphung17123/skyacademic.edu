@@ -28,7 +28,7 @@ export const FeaturedBlocksSection = () => {
       descriptionVi: t('home.featuredBlocks.books.descriptionVi'),
       buttonText: t('home.featuredBlocks.books.button'),
       buttonTextVi: t('home.featuredBlocks.books.buttonVi'),
-      link: '/books',
+      link: '/products',
       gradient: 'from-purple-500 to-pink-500',
       bgGradient: 'from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20',
     },

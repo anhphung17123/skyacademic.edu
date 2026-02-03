@@ -2,6 +2,7 @@ import { BackendLanguage } from "./common";
 
 export interface BookDto {
   id: string;
+  slug?: string;
   title: string;
   title_vi?: string;
   title_en?: string;

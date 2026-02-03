@@ -77,7 +77,7 @@ export const HorizontalScroll = memo<HorizontalScrollProps>(({
           <button
             ref={scrollLeftRef}
             onClick={() => scroll('left')}
-            className={clsx("absolute left-0 top-1/2 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed", isIconShown ? 'opacity-50 cursor-not-allowed' : 'hidden')}
+            className="absolute left-1 md:left-0 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Scroll left"
           >
             <ChevronLeft className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -85,7 +85,7 @@ export const HorizontalScroll = memo<HorizontalScrollProps>(({
           <button
             ref={scrollRightRef}
             onClick={() => scroll('right')}
-            className={clsx("absolute right-0 top-1/2 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed", isIconShown ? 'opacity-50 cursor-not-allowed' : 'hidden')}
+            className="absolute right-1 md:right-0 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Scroll right"
           >
             <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -98,9 +98,8 @@ export const HorizontalScroll = memo<HorizontalScrollProps>(({
           'overflow-x-auto overflow-y-hidden',
           'scrollbar-hide',
           'scroll-smooth',
-          'flex gap-6 items-stretch',
-          'pb-4 -mx-4 px-4',
-          'md:pb-0 md:mx-0 md:px-0',
+          'flex flex-nowrap gap-6 items-stretch',
+          'pb-4 px-8',
           'snap-x snap-mandatory',
           '[&>*]:snap-start [&>*]:flex-shrink-0',
           'w-full max-w-full'
