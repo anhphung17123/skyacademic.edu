@@ -2,24 +2,22 @@ import { BackendLanguage } from "./common";
 
 export interface BookDto {
   id: string;
+  slug?: string;
   title: string;
   title_vi?: string;
   title_en?: string;
   description: string;
   description_vi?: string;
   description_en?: string;
-  cover_url?: string;
-  preview_url?: string;
+  cover_images?: Record<string, string[]>;
+  preview_images?: Record<string, string[]>;
   price: number;
   currency: string;
   category: string;
   category_vi?: string;
-  category_en?: string;
   language: BackendLanguage;
   type: 'physical' | 'ebook' | 'bundle' | 'digital';
-  delivery_type?: 'shipping' | 'digital' | 'hybrid';
   stock_quantity?: number;
-  download_url?: string;
   created_at?: string;
   author?: string;
   pages?: number;

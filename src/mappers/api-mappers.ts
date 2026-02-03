@@ -1,4 +1,4 @@
-import { Book, Course, Language } from '@/types';
+import { Book, Course, Language, TableOfContentsItem } from '@/types';
 import { BackendLanguage, BookDto, CourseDto } from '@/types/api';
 import { DEFAULT_VALUES } from '@/constants';
 
@@ -35,11 +35,8 @@ export const mapCourseDtoToCourse = (dto: CourseDto): Course => {
     level: (dto.level as Course['level']) ?? 'beginner',
     language,
     thumbnail: dto.thumbnail_url ?? dto.cover_url ?? DEFAULT_THUMBNAIL,
-    coverImage: dto.cover_url ?? dto.thumbnail_url ?? DEFAULT_THUMBNAIL,
-    heroImage: dto.hero_url ?? dto.hero_background_url,
     category: dto.category,
     categoryVi: dto.category_vi,
-    trailerUrl: dto.youtube_playlist_url,
     youtubePlaylistUrl: dto.youtube_playlist_url,
     supportEmail: dto.support_email,
     deliveryMode: dto.delivery_mode,
@@ -52,18 +49,24 @@ export const mapCourseDtoToCourse = (dto: CourseDto): Course => {
   };
 };
 
-export const mapBookDtoToBook = (dto: BookDto): Book => {
+export const mapBookDtoToBook = (dto: BookDto, tableOfContents: TableOfContentsItem[]): Book => {
   const isDigitalType = dto.type === 'ebook' || dto.type === 'digital';
   const format: Book['format'] =
     dto.type === 'bundle' ? 'both' : isDigitalType ? 'digital' : 'physical';
-  const deliveryType: Book['deliveryType'] =
-    dto.delivery_type === 'hybrid' ? 'hybrid' : dto.delivery_type ?? 'shipping';
-  // Map backend language to UI Language type for Book (en, vi, bilingual)
   const language: Language = mapBackendLanguageToUi(dto.language);
-  // Map 'digital' type to 'ebook' for Book type
   const bookType: Book['type'] = dto.type === 'digital' ? 'ebook' : dto.type;
+  const slug =
+    dto.slug ??
+    dto.title
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '');
+  const coverBySlug = slug && dto.cover_images?.[slug]?.[0];
+  const coverFirst = dto.cover_images && Object.values(dto.cover_images)[0]?.[0];
+  const coverUrl = coverBySlug ?? coverFirst ?? DEFAULT_BOOK_COVER;
   return {
     id: dto.id,
+    slug,
     title: dto.title,
     titleEn: dto.title_en,
     titleVi: dto.title_vi,
@@ -75,17 +78,12 @@ export const mapBookDtoToBook = (dto: BookDto): Book => {
     language,
     format,
     type: bookType,
-    deliveryType,
-    thumbnail: dto.cover_url ?? DEFAULT_BOOK_COVER,
-    image: dto.cover_url,
-    imageUrl: dto.cover_url,
-    previewUrl: dto.preview_url,
+    thumbnail: coverUrl,
+    previewImages: dto.preview_images ?? {},
     category: dto.category,
     categoryVi: dto.category_vi,
     stock: dto.stock_quantity,
-    stockQuantity: dto.stock_quantity,
     rating: dto.rating ?? 0,
-    downloadUrl: dto.download_url,
     createdAt: dto.created_at,
     author: dto.author,
     pages: dto.pages,
@@ -93,5 +91,6 @@ export const mapBookDtoToBook = (dto: BookDto): Book => {
     isbn: dto.isbn ?? undefined,
     publishedDate: dto.published_date,
     publishedDateVi: dto.published_date_vi,
+    tableOfContents,
   };
 };

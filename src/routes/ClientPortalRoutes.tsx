@@ -6,8 +6,9 @@ import {
   Home,
   Courses,
   CourseDetail,
-  Books,
+  Products,
   BookDetail,
+  FlashcardDetail,
   FreeVideos,
   About,
   Contact,
@@ -28,9 +29,12 @@ export const ClientPortalRoutes = () => {
           <Route path={ROUTES.COURSES} element={<Courses />} />
           <Route path={ROUTES.COURSE_DETAIL} element={<CourseDetail />} />
           
-          {/* Books */}
-          <Route path={ROUTES.BOOKS} element={<Books />} />
+          {/* Products (Books + Flashcards) */}
+          <Route path={ROUTES.PRODUCTS} element={<Products />} />
+          {/* Book detail - separate route */}
           <Route path={ROUTES.BOOK_DETAIL} element={<BookDetail />} />
+          {/* Flashcard detail – topics as tabs, payment in modal */}
+          <Route path={ROUTES.FLASHCARD_DETAIL} element={<FlashcardDetail />} />
           
           {/* Free Videos */}
           <Route path={ROUTES.FREE_VIDEOS} element={<FreeVideos />} />

@@ -5,6 +5,7 @@ import { memo, useMemo } from 'react';
 import { clsx } from 'clsx';
 import { Container } from './Container';
 import { mockContactInfo } from '@/services/mock/data/Contact';
+import logoImage from '@/images/logo.png';
 
 interface FooterLink {
   readonly to: string;
@@ -28,7 +29,7 @@ export const Footer = memo(() => {
   const quickLinks: readonly FooterLink[] = useMemo(
     () => [
       { to: '/courses', label: t('nav.courses') },
-      { to: '/books', label: t('nav.books') },
+      { to: '/products', label: t('nav.products') },
       { to: '/free-videos', label: t('nav.freeVideos') },
     ],
     [t]
@@ -71,8 +72,8 @@ export const Footer = memo(() => {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-4">
               <div className="mb-6 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 via-primary-600 to-secondary-600 shadow-lg shadow-primary-600/25">
-                  <span className="text-xl font-display font-bold text-white">S</span>
+                <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl">
+                  <img src={logoImage} alt="SkyAcademy Logo" className="h-full w-full object-contain" />
                 </div>
                 <div>
                   <span className="block text-lg font-display font-bold text-gray-900 dark:text-white">SkyAcademy</span>

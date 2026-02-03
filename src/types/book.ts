@@ -1,8 +1,15 @@
 import { Language, BookFormat } from './core';
 
+/** One entry in a book's table of contents (title, chapter, or section). */
+export interface TableOfContentsItem {
+  type: 'title' | 'chapter' | 'section';
+  text: string;
+  chapterNumber?: number;
+}
+
 export interface Book {
   id: string;
-  slug?: string;
+  slug: string;
   title: string;
   titleEn?: string;
   titleVi?: string;
@@ -10,26 +17,22 @@ export interface Book {
   description: string;
   descriptionEn?: string;
   descriptionVi?: string;
+  tableOfContents?: TableOfContentsItem[];
   price: number;
   currency?: string;
   language?: Language;
   pages?: number;
   format?: BookFormat;
   type?: 'physical' | 'ebook' | 'bundle';
-  deliveryType?: 'shipping' | 'digital' | 'hybrid';
   thumbnail: string;
-  image?: string;
-  imageUrl?: string;
-  previewUrl?: string;
+  previewImages?: Record<string, string[]>;
   category?: string;
   categoryVi?: string;
   stock?: number;
-  stockQuantity?: number;
   isbn?: string;
   publisher?: string;
   publishedDate?: string;
   publishedDateVi?: string;
   rating?: number;
-  downloadUrl?: string;
   createdAt?: string;
 }

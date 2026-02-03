@@ -19,17 +19,13 @@ export const SCROLL_THRESHOLD = {
   HEADER: 20,
 } as const;
 
-export const DELAY = {
-  API_SIMULATION: 300,
-  API_SIMULATION_SHORT: 200,
-} as const;
-
 export const ROUTES = {
   HOME: '/',
   COURSES: '/courses',
   COURSE_DETAIL: '/courses/:language/:slug',
-  BOOKS: '/books',
-  BOOK_DETAIL: '/books/:id',
+  PRODUCTS: '/products',
+  BOOK_DETAIL: '/books/:slug',
+  FLASHCARD_DETAIL: '/flashcards/:slug',
   FREE_VIDEOS: '/free-videos',
   ABOUT: '/about',
   CONTACT: '/contact',

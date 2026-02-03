@@ -162,11 +162,11 @@ const courseDetailTheme: PageTheme = {
 };
 
 /**
- * Books page theme - Warm orange/amber (Vibrant Orange)
- * Matches the beautiful amber-orange-red gradient
+ * Products page theme - Warm orange/amber (Vibrant Orange)
+ * Used for /products list (Books + Flashcards)
  */
-const booksTheme: PageTheme = {
-  name: 'books',
+const productsTheme: PageTheme = {
+  name: 'products',
   light: {
     primary: '#f97316', // orange-500 (middle of gradient)
     secondary: '#ef4444', // red-500 (end of gradient)
@@ -202,21 +202,21 @@ const booksTheme: PageTheme = {
 };
 
 /**
- * Book detail page theme - Rich amber-orange-red gradient
- * Matches the beautiful amber-orange-red gradient from hardcoded version
+ * Book detail page theme - Rich amber-orange (same as products for consistency)
+ * Used for /books/:slug
  */
 const bookDetailTheme: PageTheme = {
   name: 'book-detail',
   light: {
-    primary: '#f97316', // orange-500 (middle of gradient)
-    secondary: '#ef4444', // red-500 (end of gradient)
+    primary: '#f97316',
+    secondary: '#ef4444',
     background: {
       start: '#ffedd5',
       end: '#fed7aa',
     },
     accent: {
-      start: '#f59e0b', // amber-500 (start of gradient)
-      end: '#ef4444', // red-500 (end of gradient)
+      start: '#f59e0b',
+      end: '#ef4444',
     },
     overlay: {
       light: 'rgba(255, 255, 255, 0.9)',
@@ -224,18 +224,58 @@ const bookDetailTheme: PageTheme = {
     },
   },
   dark: {
-    primary: '#fb923c', // orange-400
-    secondary: '#f87171', // red-400
+    primary: '#fb923c',
+    secondary: '#f87171',
     background: {
       start: '#9a3412',
       end: '#7c2d12',
     },
     accent: {
-      start: '#fbbf24', // amber-400
-      end: '#f87171', // red-400
+      start: '#fbbf24',
+      end: '#f87171',
     },
     overlay: {
       light: 'rgba(154, 52, 18, 0.95)',
+      dark: 'rgba(15, 23, 42, 0.98)',
+    },
+  },
+};
+
+/**
+ * Flashcard detail page theme - Soft indigo/violet (calm, readable, distinct from book/courses)
+ * Used for /flashcards/:slug
+ */
+const flashcardDetailTheme: PageTheme = {
+  name: 'flashcard-detail',
+  light: {
+    primary: '#5b21b6', // violet-800
+    secondary: '#6d28d9', // violet-700
+    background: {
+      start: '#f5f3ff',
+      end: '#ede9fe',
+    },
+    accent: {
+      start: '#7c3aed', // violet-600
+      end: '#5b21b6',
+    },
+    overlay: {
+      light: 'rgba(255, 255, 255, 0.9)',
+      dark: 'rgba(15, 23, 42, 0.95)',
+    },
+  },
+  dark: {
+    primary: '#7c3aed',
+    secondary: '#8b5cf6',
+    background: {
+      start: '#2e1065',
+      end: '#1e1b4b',
+    },
+    accent: {
+      start: '#8b5cf6',
+      end: '#7c3aed',
+    },
+    overlay: {
+      light: 'rgba(46, 16, 101, 0.95)',
       dark: 'rgba(15, 23, 42, 0.98)',
     },
   },
@@ -443,8 +483,9 @@ export const PAGE_THEMES: Record<PageThemeId, PageTheme> = {
   'home': homeTheme,
   'courses': coursesTheme,
   'course-detail': courseDetailTheme,
-  'books': booksTheme,
+  'products': productsTheme,
   'book-detail': bookDetailTheme,
+  'flashcard-detail': flashcardDetailTheme,
   'free-videos': freeVideosTheme,
   'about': aboutTheme,
   'contact': contactTheme,

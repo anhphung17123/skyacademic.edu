@@ -56,7 +56,7 @@ export const FeaturedBooksSection = () => {
             </p>
           </div>
           <Link
-            to="/books"
+            to="/products"
             className="inline-flex items-center gap-2 text-secondary-600 dark:text-secondary-400 font-semibold hover:gap-3 transition-all self-start lg:self-auto"
           >
             {t('books.viewAll')}

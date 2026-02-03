@@ -7,4 +7,5 @@ export * from './i18n';
 export * from './course';
 export * from './validation';
 export * from './format';
+export * from './flashcard';
 

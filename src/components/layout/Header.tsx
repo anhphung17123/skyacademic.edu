@@ -79,7 +79,7 @@ export const Header = memo(() => {
   const navItems: readonly NavItem[] = useMemo(
     () => [
       { label: t("nav.courses"), href: "/courses" },
-      { label: t("nav.books"), href: "/books" },
+      { label: t("nav.products"), href: "/products" },
       { label: t("nav.freeVideos"), href: "/free-videos" },
       { label: t("nav.about"), href: "/about" },
       { label: t("nav.contact"), href: "/contact" },
@@ -315,7 +315,7 @@ export const Header = memo(() => {
                 const Icon =
                   item.href === "/courses"
                     ? GraduationCap
-                    : item.href === "/books"
+                    : item.href === "/products"
                     ? BookOpen
                     : item.href === "/free-videos"
                     ? Play

@@ -14,7 +14,6 @@ export interface CourseDto {
   description_vi?: string;
   description_en?: string;
   cover_url?: string;
-  hero_url?: string;
   level: string;
   type: CourseType;
   language: BackendLanguage;
@@ -30,6 +29,5 @@ export interface CourseDto {
   duration?: string;
   category?: string;
   category_vi?: string;
-  hero_background_url?: string;
   thumbnail_url?: string;
 }
