@@ -190,4 +190,10 @@ export const mockFlashcardProduct: FlashcardProduct = {
     'Those who want to improve pronunciation & communication',
     'Offline learners in the area',
   ],
+  targetAudienceVi: [
+    'Người nước ngoài học tiếng Việt',
+    'Người mới bắt đầu',
+    'Người muốn cải thiện phát âm & giao tiếp',
+    'Người học trực tiếp',
+  ],
 };
