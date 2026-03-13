@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import {
   Clock,
-  Award,
   BarChart3,
   Play,
 } from 'lucide-react';
@@ -9,6 +8,7 @@ import { Course } from '@/types';
 import { useTheme } from '@/contexts/theme-context';
 import { clsx } from 'clsx';
 import { PriceDisplay } from '@/components/common/PriceDisplay';
+import { getDefaultTeacher } from '@/services/mock/data/Teachers';
 
 interface CourseHeaderProps {
   course: Course;
@@ -60,16 +60,17 @@ export const CourseHeader = ({ course, error }: CourseHeaderProps) => {
             </button>
           </div>
           
-          {/* Level Badge */}
+          {/* Level / Levels Badge */}
           <div className="absolute top-4 left-4">
             <span className={clsx(
               "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold backdrop-blur-sm",
-              levelStyle.bg,
-              levelStyle.text,
+              course.levelsLabel
+                ? "bg-amber-200/90 dark:bg-amber-900/50 text-amber-900 dark:text-amber-200"
+                : [levelStyle.bg, levelStyle.text],
               isLightMode ? "shadow-md" : "shadow-lg"
             )}>
               <BarChart3 className="w-3.5 h-3.5" />
-              {t(`courses.${course.level}`)}
+              {course.levelsLabel ? t('courses.threeLevels') : t(`courses.${course.level}`)}
             </span>
           </div>
 
@@ -134,28 +135,39 @@ export const CourseHeader = ({ course, error }: CourseHeaderProps) => {
           ? "flex items-center gap-4 pt-4 border-t border-white/40"
           : "flex items-center gap-4 pt-5 border-t border-white/30"
         }>
-          <div className={isLightMode
-            ? "w-11 h-11 rounded-full bg-gradient-to-br from-primary-400 to-secondary-500 flex items-center justify-center shadow-xl border-2 border-white/30"
-            : "w-12 h-12 rounded-full bg-gradient-to-br from-primary-400 to-secondary-500 flex items-center justify-center shadow-xl border-2 border-white/20"
-          }>
-            <Award className={isLightMode ? "w-5 h-5 text-white" : "w-6 h-6 text-white"} />
-          </div>
-          <div>
-            <p className={isLightMode
-              ? "text-white text-xs font-semibold mb-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"
-              : "text-white/90 text-xs font-semibold mb-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
-            }>
-              {t('courseDetail.createdBy')}
-            </p>
-            <p className={isLightMode
-              ? "text-white font-bold text-base drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]"
-              : "text-white font-bold text-base drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"
-            }>{t('courseDetail.instructorName')}</p>
-            <p className={isLightMode
-              ? "text-white text-xs font-medium drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"
-              : "text-white/90 text-xs font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
-            }>{t('courseDetail.instructorRole')}</p>
-          </div>
+          {(() => {
+            const instructor = course.instructor ?? getDefaultTeacher();
+            if (!instructor) return null;
+            return (
+              <>
+                <img
+                  src={instructor.imageUrl}
+                  alt={instructor.name}
+                  className="w-12 h-12 rounded-full object-cover shadow-xl border-2 border-white/30 flex-shrink-0"
+                />
+                <div>
+                  <p className={isLightMode
+                    ? "text-white text-xs font-semibold mb-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"
+                    : "text-white/90 text-xs font-semibold mb-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
+                  }>
+                    {t('courseDetail.createdBy')}
+                  </p>
+                  <p className={isLightMode
+                    ? "text-white font-bold text-base drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]"
+                    : "text-white font-bold text-base drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"
+                  }>
+                    {currentLang === 'vi' && instructor.nameVi ? instructor.nameVi : instructor.name}
+                  </p>
+                  <p className={isLightMode
+                    ? "text-white text-xs font-medium drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"
+                    : "text-white/90 text-xs font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
+                  }>
+                    {currentLang === 'vi' && instructor.roleVi ? instructor.roleVi : instructor.role}
+                  </p>
+                </div>
+              </>
+            );
+          })()}
         </div>
 
         {error && (

@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Facebook, Mail, Phone, MapPin, Youtube, Heart, type LucideIcon } from 'lucide-react';
+import { Facebook, Mail, Phone, MapPin, Youtube, Heart, Instagram, type LucideIcon } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { clsx } from 'clsx';
 import { Container } from './Container';
-import { mockContactInfo } from '@/services/mock/data/Contact';
+import { FooterLinkSection } from './FooterLinkSection';
+import { CONTACT_INFO } from '@/config/contact.config';
 import logoImage from '@/images/logo.png';
 
 interface FooterLink {
@@ -30,7 +31,6 @@ export const Footer = memo(() => {
     () => [
       { to: '/courses', label: t('nav.courses') },
       { to: '/products', label: t('nav.products') },
-      { to: '/free-videos', label: t('nav.freeVideos') },
     ],
     [t]
   );
@@ -38,7 +38,6 @@ export const Footer = memo(() => {
   const supportLinks: readonly FooterLink[] = useMemo(
     () => [
       { to: '/about', label: t('nav.about') },
-      { to: '/contact', label: t('nav.contact') },
       { to: '/privacy-policy', label: t('footer.privacy') },
       { to: '/terms-of-service', label: t('footer.terms') },
     ],
@@ -47,17 +46,23 @@ export const Footer = memo(() => {
 
   const socialLinks: readonly SocialLink[] = useMemo(
     () => [
-      { 
-        Icon: Facebook, 
-        href: 'https://www.facebook.com/tienganhsky/', 
-        label: 'Facebook', 
-        hoverClass: 'hover:bg-blue-600 dark:hover:bg-blue-500' 
+      {
+        Icon: Facebook,
+        href: CONTACT_INFO.facebookUrl ?? '#',
+        label: 'Facebook',
+        hoverClass: 'hover:bg-blue-600 dark:hover:bg-blue-500',
       },
-      { 
-        Icon: Youtube, 
-        href: 'https://www.youtube.com/@tienganhsky', 
-        label: 'YouTube', 
-        hoverClass: 'hover:bg-red-600 dark:hover:bg-red-500' 
+      {
+        Icon: Youtube,
+        href: CONTACT_INFO.youtubeUrl ?? '#',
+        label: 'YouTube',
+        hoverClass: 'hover:bg-red-600 dark:hover:bg-red-500',
+      },
+      {
+        Icon: Instagram,
+        href: CONTACT_INFO.instagramUrl ?? '#',
+        label: 'Instagram',
+        hoverClass: 'hover:bg-pink-600 dark:hover:bg-pink-500',
       },
     ],
     []
@@ -110,41 +115,8 @@ export const Footer = memo(() => {
 
             <div className="lg:col-span-8">
               <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 md:gap-8">
-                <div>
-                  <h3 className="mb-4 text-sm sm:text-base font-bold text-gray-900 dark:text-white">
-                    {t('footer.quickLinks')}
-                  </h3>
-                  <ul className="space-y-2.5">
-                    {quickLinks.map(({ to, label }) => (
-                      <li key={to}>
-                        <Link
-                          to={to}
-                          className="text-xs sm:text-sm text-gray-700 dark:text-gray-400 transition-colors duration-200 hover:text-primary-600 dark:hover:text-white hover:font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 rounded break-words"
-                        >
-                          {label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="mb-4 text-sm sm:text-base font-bold text-gray-900 dark:text-white">
-                    {t('footer.support')}
-                  </h3>
-                  <ul className="space-y-2.5">
-                    {supportLinks.map(({ to, label }) => (
-                      <li key={to}>
-                        <Link
-                          to={to}
-                          className="text-xs sm:text-sm text-gray-700 dark:text-gray-400 transition-colors duration-200 hover:text-primary-600 dark:hover:text-white hover:font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 rounded break-words"
-                        >
-                          {label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <FooterLinkSection title={t('footer.quickLinks')} links={quickLinks} />
+                <FooterLinkSection title={t('footer.support')} links={supportLinks} />
 
                 <div className="col-span-2 md:col-span-1">
                   <h3 className="mb-4 text-base font-bold text-gray-900 dark:text-white">
@@ -152,7 +124,7 @@ export const Footer = memo(() => {
                   </h3>
                   <div className="space-y-2.5">
                     <a
-                      href={`tel:${mockContactInfo.phone}`}
+                      href={`tel:${CONTACT_INFO.phone}`}
                       className="flex items-start gap-3 rounded-lg border border-green-200 dark:border-gray-700/50 bg-green-50/50 dark:bg-gray-800/50 p-2.5 backdrop-blur-sm transition-all duration-200 hover:border-green-400 hover:bg-green-50 dark:hover:border-green-500/30 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500"
                     >
                       <div className="flex-shrink-0 rounded-lg bg-green-100 dark:bg-green-500/20 p-1.5">
@@ -160,14 +132,14 @@ export const Footer = memo(() => {
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="text-xs font-semibold text-gray-900 dark:text-white break-words">
-                          {mockContactInfo.phoneFormatted}
+                          {CONTACT_INFO.phoneFormatted}
                         </p>
                         <p className="text-xs text-gray-600 dark:text-gray-500 break-words">{t('contact.phoneWhatsAppZalo')}</p>
                       </div>
                     </a>
 
                     <a
-                      href={`mailto:${mockContactInfo.email}`}
+                      href={`mailto:${CONTACT_INFO.email}`}
                       className="flex items-start gap-3 rounded-lg border border-primary-200 dark:border-gray-700/50 bg-primary-50/50 dark:bg-gray-800/50 p-2.5 backdrop-blur-sm transition-all duration-200 hover:border-primary-400 hover:bg-primary-50 dark:hover:border-primary-500/30 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500"
                     >
                       <div className="flex-shrink-0 rounded-lg bg-primary-100 dark:bg-primary-500/20 p-1.5">
@@ -175,7 +147,7 @@ export const Footer = memo(() => {
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="text-xs font-semibold text-gray-900 dark:text-white break-words break-all">
-                          {mockContactInfo.email}
+                          {CONTACT_INFO.email}
                         </p>
                         <p className="text-xs text-gray-600 dark:text-gray-500 break-words">{t('footer.replyTime')}</p>
                       </div>

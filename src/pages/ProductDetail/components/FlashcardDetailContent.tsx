@@ -6,12 +6,14 @@ import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { HorizontalScroll } from '@/components/common/HorizontalScroll';
 import { FlashcardHero } from '@/components/flashcard/FlashcardHero';
+import { FlashcardTopicCard } from '@/components/flashcard/FlashcardTopicCard';
 import { FlashcardPreviewGallery } from '@/components/flashcard/FlashcardPreviewGallery';
 import { FlashcardPreviewModal } from '@/components/flashcard/FlashcardPreviewModal';
 import { FlashcardTargetAudience } from '@/components/flashcard/FlashcardTargetAudience';
 import { PaymentModal } from '@/components/payment/PaymentModal';
+import { ShareLinkToast } from '@/components/common/ShareLinkToast';
+import { useShare } from '@/hooks';
 import type { FlashcardProduct } from '@/types';
-import { getTopicCoverUrl } from '@/utils/flashcard';
 import { clsx } from 'clsx';
 
 interface FlashcardDetailContentProps {
@@ -33,155 +35,78 @@ export const FlashcardDetailContent = memo(({ product }: FlashcardDetailContentP
   const lang = i18n.language;
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
-  const [showToast, setShowToast] = useState(false);
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
+  const { share, isToastVisible } = useShare({ toastDurationMs: 3000 });
   const topic = product.topics[activeTabIndex];
+
+  const handleShare = () => {
+    const url = typeof window !== 'undefined' ? window.location.href : '';
+    void share({ url });
+  };
 
   return (
     <PageTransition>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         <FlashcardHero product={product} />
 
+        {product.creator && (
+          <Section padding="sm" background="muted">
+            <Container>
+              <div className="flex flex-wrap items-center gap-4 p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm">
+                <img
+                  src={product.creator.imageUrl}
+                  alt={product.creator.name}
+                  className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
+                />
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    {t('courseDetail.createdBy')}
+                  </p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white">
+                    {lang === 'vi' && product.creator.nameVi ? product.creator.nameVi : product.creator.name}
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    {lang === 'vi' && product.creator.roleVi ? product.creator.roleVi : product.creator.role}
+                  </p>
+                </div>
+              </div>
+            </Container>
+          </Section>
+        )}
+
         <Section padding="lg" background="default">
           <Container>
             <div className="space-y-10">
-              {/* Topic cards – one row on small (horizontal scroll), grid 3 cols on large */}
+              {/* Topic cards – horizontal scroll on small, grid on large */}
               <div className="lg:hidden">
                 <HorizontalScroll showControls={true} scrollStep={320}>
-                  {product.topics.map((t, i) => {
-                    const name = lang === 'vi' ? t.nameVi : t.nameEn;
-                    const shortPurpose = lang === 'vi' ? t.purposeVi : t.purposeEn;
-                    const thumbnail = getTopicCoverUrl(t);
-                    const isActive = activeTabIndex === i;
-                    return (
-                      <button
-                        key={t.key}
-                        type="button"
-                        onClick={() => setActiveTabIndex(i)}
-                        className={clsx(
-                          'w-[min(100%,320px)] min-w-[280px] flex-shrink-0 text-left rounded-2xl border-2 overflow-hidden transition-all duration-200',
-                          'focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2',
-                          isActive
-                            ? 'border-violet-500 dark:border-violet-400 shadow-lg shadow-violet-200/40 dark:shadow-violet-900/30 bg-violet-50/50 dark:bg-violet-900/20'
-                            : 'border-gray-200 dark:border-gray-600 hover:border-violet-300 dark:hover:border-violet-600 hover:shadow-md bg-white dark:bg-gray-800'
-                        )}
-                      >
-                        <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
-                          {thumbnail ? (
-                            <img
-                              src={thumbnail}
-                              alt=""
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                (e.target as HTMLImageElement).style.display = 'none';
-                              }}
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500 text-4xl">
-                              📚
-                            </div>
-                          )}
-                          <div
-                            className={clsx(
-                              'absolute inset-0 flex items-end p-4 bg-gradient-to-t from-black/70 to-transparent',
-                              isActive && 'from-violet-900/80'
-                            )}
-                          >
-                            <span
-                              className={clsx(
-                                'text-lg font-bold text-white drop-shadow',
-                                isActive && 'underline underline-offset-2 decoration-2'
-                              )}
-                            >
-                              {name}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="p-4">
-                          <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
-                            {shortPurpose}
-                          </p>
-                          {t.examples?.length > 0 && (
-                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                              {lang === 'vi' ? 'Ví dụ: ' : 'E.g. '}
-                              {t.examples.slice(0, 3).join(', ')}
-                            </p>
-                          )}
-                        </div>
-                      </button>
-                    );
-                  })}
+                  {product.topics.map((topic, i) => (
+                    <FlashcardTopicCard
+                      key={topic.key}
+                      topic={topic}
+                      lang={lang}
+                      isActive={activeTabIndex === i}
+                      onClick={() => setActiveTabIndex(i)}
+                      className="w-[min(100%,320px)] min-w-[280px] flex-shrink-0"
+                    />
+                  ))}
                 </HorizontalScroll>
               </div>
               <div className="hidden lg:grid lg:grid-cols-3 gap-6">
-                {product.topics.map((t, i) => {
-                  const name = lang === 'vi' ? t.nameVi : t.nameEn;
-                  const shortPurpose = lang === 'vi' ? t.purposeVi : t.purposeEn;
-                  const thumbnail = getTopicCoverUrl(t);
-                  const isActive = activeTabIndex === i;
-                  return (
-                    <button
-                      key={t.key}
-                      type="button"
-                      onClick={() => setActiveTabIndex(i)}
-                      className={clsx(
-                        'text-left rounded-2xl border-2 overflow-hidden transition-all duration-200',
-                        'focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2',
-                        isActive
-                          ? 'border-violet-500 dark:border-violet-400 shadow-lg shadow-violet-200/40 dark:shadow-violet-900/30 bg-violet-50/50 dark:bg-violet-900/20'
-                          : 'border-gray-200 dark:border-gray-600 hover:border-violet-300 dark:hover:border-violet-600 hover:shadow-md bg-white dark:bg-gray-800'
-                      )}
-                    >
-                      <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
-                        {thumbnail ? (
-                          <img
-                            src={thumbnail}
-                            alt=""
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none';
-                            }}
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500 text-4xl">
-                            📚
-                          </div>
-                        )}
-                        <div
-                          className={clsx(
-                            'absolute inset-0 flex items-end p-4 bg-gradient-to-t from-black/70 to-transparent',
-                            isActive && 'from-violet-900/80'
-                          )}
-                        >
-                          <span
-                            className={clsx(
-                              'text-lg font-bold text-white drop-shadow',
-                              isActive && 'underline underline-offset-2 decoration-2'
-                            )}
-                          >
-                            {name}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="p-4">
-                        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
-                          {shortPurpose}
-                        </p>
-                        {t.examples?.length > 0 && (
-                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                            {lang === 'vi' ? 'Ví dụ: ' : 'E.g. '}
-                            {t.examples.slice(0, 3).join(', ')}
-                          </p>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
+                {product.topics.map((topic, i) => (
+                  <FlashcardTopicCard
+                    key={topic.key}
+                    topic={topic}
+                    lang={lang}
+                    isActive={activeTabIndex === i}
+                    onClick={() => setActiveTabIndex(i)}
+                  />
+                ))}
               </div>
 
               {/* Active topic content + packages row (no sticky sidebar) */}
-              <div className="grid lg:grid-cols-3 gap-8 lg:gap-10">
-                <div className="lg:col-span-2 space-y-10">
+              <div className="grid lg:grid-cols-5 gap-8 lg:gap-10">
+                <div className="lg:col-span-3 space-y-10">
                   {/* Preview gallery – active topic only */}
                   {topic && (
                     <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
@@ -221,7 +146,7 @@ export const FlashcardDetailContent = memo(({ product }: FlashcardDetailContentP
                 </div>
 
                 {/* Right: price + package CTAs (open modal on click) */}
-                <div className="lg:col-span-1 space-y-6">
+                <div className="lg:col-span-2 space-y-6">
                   <div className="bg-white dark:bg-gray-800 rounded-2xl border-2 border-gray-200 dark:border-gray-600 shadow-lg overflow-hidden p-6">
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
                       {t('flashcard.choosePackage')}
@@ -273,9 +198,9 @@ export const FlashcardDetailContent = memo(({ product }: FlashcardDetailContentP
                     </div>
                     <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300 mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
                       {[
-                        lang === 'vi' ? 'Thẻ giấy + PDF + Lớp học' : 'Physical + PDF + Free class',
-                        lang === 'vi' ? 'Thanh toán an toàn' : 'Secure payment',
-                        lang === 'vi' ? 'Hỗ trợ sau mua' : 'Post-purchase support',
+                        t('flashcard.packageFeatures.physicalPdfClass'),
+                        t('flashcard.packageFeatures.securePayment'),
+                        t('flashcard.packageFeatures.postPurchaseSupport'),
                       ].map((item, i) => (
                         <li key={i} className="flex items-center gap-2">
                           <Check className="w-4 h-4 text-violet-500 dark:text-violet-400 flex-shrink-0" />
@@ -285,25 +210,7 @@ export const FlashcardDetailContent = memo(({ product }: FlashcardDetailContentP
                     </ul>
                     <button
                       type="button"
-                      onClick={async () => {
-                        const url = window.location.href;
-                        try {
-                          await navigator.clipboard.writeText(url);
-                          setShowToast(true);
-                          setTimeout(() => setShowToast(false), 3000);
-                        } catch (err) {
-                          // Fallback for older browsers
-                          const textArea =
-                            document.createElement("textarea");
-                          textArea.value = url;
-                          document.body.appendChild(textArea);
-                          textArea.select();
-                          document.execCommand("copy");
-                          document.body.removeChild(textArea);
-                          setShowToast(true);
-                          setTimeout(() => setShowToast(false), 3000);
-                        }
-                      }}
+                      onClick={handleShare}
                       className="w-full mt-4 py-2.5 rounded-xl text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center gap-2 transition-all"
                     >
                       <Share2 className="w-4 h-4" />
@@ -322,15 +229,7 @@ export const FlashcardDetailContent = memo(({ product }: FlashcardDetailContentP
           isDonation={false}
         />
 
-        {/* Toast Notification */}
-        {showToast && (
-          <div className="fixed bottom-24 right-6 z-50 animate-slide-up">
-            <div className="bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 min-w-[280px]">
-              <Check className="w-5 h-5 flex-shrink-0" />
-              <span className="font-medium">{t("common.linkCopied")}</span>
-            </div>
-          </div>
-        )}
+        <ShareLinkToast visible={isToastVisible} />
       </div>
     </PageTransition>
   );

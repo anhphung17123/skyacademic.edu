@@ -6,7 +6,8 @@
     "books": "Sách",
     "products": "Sản phẩm",
     "freeVideos": "Video Miễn phí",
-    "startLearning": "Bắt Đầu Học"
+    "startLearning": "Bắt Đầu Học",
+    "whatStudentsSay": "Học viên nói gì"
   },
   "hero": {
     "title": "Học Không Giới Hạn",
@@ -110,6 +111,7 @@
     "bilingual": "Song Ngữ",
     "english": "Tiếng Anh",
     "vietnamese": "Tiếng Việt",
+    "categoryVietnamese": "Tiếng Việt",
     "categoryPronunciation": "Phát Âm",
     "categoryCommunication": "Tiếng Anh Giao Tiếp",
     "categoryIelts": "Luyện Thi IELTS",
@@ -122,7 +124,9 @@
     "noResultsDesc": "Thử điều chỉnh từ khóa tìm kiếm hoặc tiêu chí lọc",
     "ctaTitle": "Không Tìm Thấy Điều Bạn Đang Tìm?",
     "ctaSubtitle": "Liên hệ với chúng tôi để được tư vấn khóa học phù hợp với mục tiêu của bạn",
-    "loadError": "Không thể tải khóa học từ máy chủ."
+    "loadError": "Không thể tải khóa học từ máy chủ.",
+    "threeLevels": "3 cấp độ",
+    "viewCourse": "Xem khóa học"
   },
   "books": {
     "title": "Sách của chúng tôi",
@@ -202,7 +206,13 @@
     "targetAudienceTitle": "Đối tượng phù hợp",
     "recommended": "Khuyến nghị",
     "pricePerSet": "1 bộ $12",
-    "priceThreeSets": "3 bộ $30"
+    "priceThreeSets": "3 bộ $30",
+    "packageFeatures": {
+      "physicalPdfClass": "Thẻ giấy + PDF + Lớp học",
+      "securePayment": "Thanh toán an toàn",
+      "postPurchaseSupport": "Hỗ trợ sau mua"
+    },
+    "examplesLabel": "Ví dụ: "
   },
   "bookDetail": {
     "tabDescription": "Mô tả",
@@ -277,15 +287,6 @@
     "featureMaterialsDesc": "Tài nguyên học tập toàn diện",
     "instructorTitle": "Gặp Gỡ Giảng Viên Của Bạn",
     "instructorSubtitle": "Học từ nhà giáo dục có kinh nghiệm",
-    "instructorName": "Phung Thi Xuan",
-    "instructorRole": "Nhà Giáo Dục Song Ngữ Anh–Việt",
-    "instructorDescription": "Chuyên về Khoa học, Vật lý, ESL và IELTS. Kinh nghiệm với Đại học Swinburne, Chương trình STEM Canada và Martin Academy.",
-    "instructorBed": "Cử nhân Sư phạm Vật lý (GPA 3.57/4.0)",
-    "instructorTesol": "Chứng chỉ TESOL",
-    "instructorIelts": "IELTS 6.5",
-    "instructorSwinburne": "Đại học Swinburne",
-    "instructorCanadianStem": "Chương trình STEM Canada",
-    "instructorMartinAcademy": "Martin Academy",
     "faqTitle": "Câu Hỏi Thường Gặp",
     "faqEmpty": "Có câu hỏi về khóa học này? Chúng tôi rất muốn giúp đỡ!",
     "contactUs": "Liên Hệ Với Chúng Tôi",
@@ -302,6 +303,7 @@
     "createdBy": "Được tạo bởi",
     "freeCourse": "Khóa Học Miễn Phí",
     "freeCourseDesc": "Đây là khóa học miễn phí. Truy cập tất cả tài liệu mà không cần đăng ký.",
+    "paidCourseNote": "Thanh toán một lần. Xem chi tiết thanh toán bên dưới.",
     "oneHundredPercentFree": "100% Miễn Phí",
     "watchOnYouTube": "Xem Trên YouTube",
     "classroomsTitle": "Các lớp đang mở",
@@ -334,6 +336,7 @@
     "freeLessonsTitle": "Video miễn phí",
     "freeLessonsSubtitle": "Xem trước khi đăng ký",
     "freeLessonsEmpty": "Đang cập nhật video miễn phí, vui lòng quay lại sau.",
+    "levelsIncluded": "Khóa học gồm {{count}} cấp độ.",
     "objectivesTitle": "Bạn sẽ học được gì",
     "registrationTitle": "Đăng ký lớp học",
     "registrationSubtitle": "Điền biểu mẫu, tải minh chứng chuyển khoản và chờ duyệt.",
@@ -423,6 +426,8 @@
   "payment": {
     "title": "Thanh Toán",
     "description": "Chọn phương thức thanh toán bạn muốn",
+    "acceptedMethods": "Chúng tôi chấp nhận",
+    "detailsButton": "Chi tiết thanh toán",
     "donationTitle": "Hỗ Trợ & Quyên Góp",
     "donationDescription": "Nội dung này miễn phí. Nếu bạn thấy hữu ích, bạn có thể hỗ trợ chúng tôi bằng cách quyên góp. Đóng góp của bạn giúp chúng tôi tạo thêm nhiều nội dung giáo dục miễn phí.",
     "donationNote": "💚 Điều này hoàn toàn tùy chọn. Nội dung miễn phí và sẽ luôn miễn phí. Quyên góp giúp chúng tôi tiếp tục tạo ra các tài liệu giáo dục chất lượng.",
@@ -727,7 +732,16 @@
   },
   "testimonials": {
     "title": "Học Viên Nói Gì Về Chúng Tôi",
-    "subtitle": "Tham gia cùng hàng ngàn học viên đã cải thiện kỹ năng ngôn ngữ với chúng tôi"
+    "subtitle": "Tham gia cùng hàng ngàn học viên đã cải thiện kỹ năng ngôn ngữ với chúng tôi",
+    "testimonial1Name": "Minh Trần",
+    "testimonial1Role": "Học viên IELTS",
+    "testimonial1Text": "Phương pháp giảng dạy của SkyAcademy rất hiệu quả. Tôi đã cải thiện phát âm đáng kể chỉ sau vài tuần học.",
+    "testimonial2Name": "Sarah L.",
+    "testimonial2Role": "Người học Tiếng Việt",
+    "testimonial2Text": "Các video thực tế giúp việc học tiếng Việt trở nên hấp dẫn hơn nhiều. Giờ tôi có thể giao tiếp cơ bản một cách tự tin!",
+    "testimonial3Name": "David Nguyễn",
+    "testimonial3Role": "Học viên ESL",
+    "testimonial3Text": "Phương pháp song ngữ giúp tôi hiểu khái niệm tốt hơn nhiều. Giáo viên rất nhiệt tình và hỗ trợ tận tâm."
   },
   "consultation": {
     "title": "Nhận Tư Vấn Miễn Phí",
@@ -925,8 +939,8 @@
           "Email: skyacademy210@gmail.com",
           "Điện thoại/WhatsApp/Zalo: (+84) 901 959 142",
           "Địa điểm: Đà Nẵng, Việt Nam",
-          "Facebook: https://www.facebook.com/tienganhsky/",
-          "YouTube: https://www.youtube.com/@tienganhsky"
+          "Facebook: https://www.facebook.com/skyacademy0/",
+          "YouTube: https://www.youtube.com/@skyacademy0"
         ]
       }
     },
@@ -1021,8 +1035,8 @@
           "Email: skyacademy210@gmail.com",
           "Điện thoại/WhatsApp/Zalo: (+84) 901 959 142",
           "Địa điểm: Đà Nẵng, Việt Nam",
-          "Facebook: https://www.facebook.com/tienganhsky/",
-          "YouTube: https://www.youtube.com/@tienganhsky"
+          "Facebook: https://www.facebook.com/skyacademy0/",
+          "YouTube: https://www.youtube.com/@skyacademy0"
         ]
       }
     },

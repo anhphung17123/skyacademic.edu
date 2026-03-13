@@ -6,7 +6,8 @@
     "books": "Books",
     "products": "Products",
     "freeVideos": "Free Videos",
-    "startLearning": "Start Learning"
+    "startLearning": "Start Learning",
+    "whatStudentsSay": "What Students Say"
   },
   "hero": {
     "title": "Learn Without Limits",
@@ -109,6 +110,7 @@
     "bilingual": "Bilingual",
     "english": "English",
     "vietnamese": "Vietnamese",
+    "categoryVietnamese": "Vietnamese",
     "categoryPronunciation": "Pronunciation",
     "categoryCommunication": "Communication English",
     "categoryIelts": "IELTS Preparation",
@@ -121,7 +123,9 @@
     "noResultsDesc": "Try adjusting your search or filter criteria",
     "ctaTitle": "Can't Find What You're Looking For?",
     "ctaSubtitle": "Contact us for personalized course recommendations tailored to your goals",
-    "loadError": "Unable to load courses from the server."
+    "loadError": "Unable to load courses from the server.",
+    "threeLevels": "3 levels",
+    "viewCourse": "View course"
   },
   "books": {
     "title": "Our Books",
@@ -201,7 +205,13 @@
     "targetAudienceTitle": "Who this is for",
     "recommended": "Recommended",
     "pricePerSet": "$12 per set",
-    "priceThreeSets": "3 sets $30"
+    "priceThreeSets": "3 sets $30",
+    "packageFeatures": {
+      "physicalPdfClass": "Physical + PDF + Free class",
+      "securePayment": "Secure payment",
+      "postPurchaseSupport": "Post-purchase support"
+    },
+    "examplesLabel": "E.g. "
   },
   "bookDetail": {
     "tabDescription": "Description",
@@ -276,15 +286,6 @@
     "featureMaterialsDesc": "Comprehensive learning resources",
     "instructorTitle": "Meet Your Instructor",
     "instructorSubtitle": "Learn from an experienced educator",
-    "instructorName": "Phung Thi Xuan",
-    "instructorRole": "Bilingual English–Vietnamese Educator",
-    "instructorDescription": "Specializing in Science, Physics, ESL, and IELTS. Experience with Swinburne University, Canadian STEM Program, and Martin Academy.",
-    "instructorBed": "B.Ed. Physics (GPA 3.57/4.0)",
-    "instructorTesol": "TESOL Certified",
-    "instructorIelts": "IELTS 6.5",
-    "instructorSwinburne": "Swinburne University",
-    "instructorCanadianStem": "Canadian STEM Program",
-    "instructorMartinAcademy": "Martin Academy",
     "faqTitle": "Frequently Asked Questions",
     "faqEmpty": "Have questions about this course? We'd love to help!",
     "contactUs": "Contact Us",
@@ -301,6 +302,7 @@
     "createdBy": "Created by",
     "freeCourse": "Free Course",
     "freeCourseDesc": "This is a free course. Access all materials without registration.",
+    "paidCourseNote": "One-time payment. See payment details below.",
     "oneHundredPercentFree": "100% Free",
     "watchOnYouTube": "Watch on YouTube",
     "classroomsTitle": "Available Class Cohorts",
@@ -333,6 +335,7 @@
     "freeLessonsTitle": "Free YouTube lessons",
     "freeLessonsSubtitle": "Watch before you enroll",
     "freeLessonsEmpty": "Free lessons are being curated. Please check back soon.",
+    "levelsIncluded": "This course includes {{count}} levels.",
     "objectivesTitle": "What you'll learn",
     "registrationTitle": "Register for this class",
     "registrationSubtitle": "Complete the form, upload the QR payment receipt, and wait for admin approval.",
@@ -422,6 +425,8 @@
   "payment": {
     "title": "Payment",
     "description": "Choose your preferred payment method",
+    "acceptedMethods": "We accept",
+    "detailsButton": "Payment details",
     "donationTitle": "Support & Donation",
     "donationDescription": "This content is free. If you find it helpful, you can support us with a donation. Your contribution helps us create more free educational content.",
     "donationNote": "💚 This is completely optional. The content is free and will remain free. Donations help us continue creating quality educational materials.",
@@ -725,7 +730,16 @@
   },
   "testimonials": {
     "title": "What Our Students Say",
-    "subtitle": "Join thousands of satisfied students who transformed their language skills with us"
+    "subtitle": "Join thousands of satisfied students who transformed their language skills with us",
+    "testimonial1Name": "Minh Tran",
+    "testimonial1Role": "IELTS Student",
+    "testimonial1Text": "SkyAcademy's teaching method is very effective. I improved my pronunciation significantly after just a few weeks of learning.",
+    "testimonial2Name": "Sarah L.",
+    "testimonial2Role": "Vietnamese Learner",
+    "testimonial2Text": "The real-life videos make learning Vietnamese so much more engaging. I can now communicate basic phrases with confidence!",
+    "testimonial3Name": "David Nguyen",
+    "testimonial3Role": "ESL Student",
+    "testimonial3Text": "The bilingual approach helped me understand concepts much better. The instructor is passionate and very supportive."
   },
   "consultation": {
     "title": "Get Free Consultation",
@@ -921,8 +935,8 @@
           "Email: skyacademy210@gmail.com",
           "Phone/WhatsApp/Zalo: (+84) 901 959 142",
           "Location: Da Nang, Vietnam",
-          "Facebook: https://www.facebook.com/tienganhsky/",
-          "YouTube: https://www.youtube.com/@tienganhsky"
+          "Facebook: https://www.facebook.com/skyacademy0/",
+          "YouTube: https://www.youtube.com/@skyacademy0"
         ]
       }
     },
@@ -1017,8 +1031,8 @@
           "Email: skyacademy210@gmail.com",
           "Phone/WhatsApp/Zalo: (+84) 901 959 142",
           "Location: Da Nang, Vietnam",
-          "Facebook: https://www.facebook.com/tienganhsky/",
-          "YouTube: https://www.youtube.com/@tienganhsky"
+          "Facebook: https://www.facebook.com/skyacademy0/",
+          "YouTube: https://www.youtube.com/@skyacademy0"
         ]
       }
     },

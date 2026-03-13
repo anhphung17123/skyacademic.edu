@@ -1,4 +1,4 @@
-import { daysAgo } from '../utils/date-helpers';
+import { getDateDaysAgo as daysAgo } from '../utils/date-helpers';
 import { BookDto } from '@/types/api';
 import bookCoverImage from '@/images/books/wishes-under-the-winter-sky/cover.png';
 import preview1 from '@/images/books/wishes-under-the-winter-sky/preview/1.png';

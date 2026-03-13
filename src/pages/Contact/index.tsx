@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Phone, Mail, Facebook, ExternalLink, Sparkles } from 'lucide-react';
-import { mockContactInfo } from '@/services/mock/data/Contact';
+import { CONTACT_INFO } from '@/config/contact.config';
 import { PageTransition } from '@/components/common/PageTransition';
 import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
@@ -35,8 +35,8 @@ export const Contact = () => {
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
                   {t('contact.callUsDesc')}
                 </p>
-                <a href={`tel:${mockContactInfo.phone}`} className="text-primary-600 dark:text-primary-400 font-semibold hover:underline text-lg transition-colors">
-                  {mockContactInfo.phoneFormatted}
+                <a href={`tel:${CONTACT_INFO.phone}`} className="text-primary-600 dark:text-primary-400 font-semibold hover:underline text-lg transition-colors">
+                  {CONTACT_INFO.phoneFormatted}
                 </a>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">{t('contact.phoneWhatsAppZalo')}</p>
               </div>
@@ -51,8 +51,8 @@ export const Contact = () => {
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
                   {t('contact.emailUsDesc')}
                 </p>
-                <a href={`mailto:${mockContactInfo.email}`} className="text-primary-600 dark:text-primary-400 font-semibold hover:underline transition-colors break-all">
-                  {mockContactInfo.email}
+                <a href={`mailto:${CONTACT_INFO.email}`} className="text-primary-600 dark:text-primary-400 font-semibold hover:underline transition-colors break-all">
+                  {CONTACT_INFO.email}
                 </a>
               </div>
 
@@ -67,7 +67,7 @@ export const Contact = () => {
                   {t('contact.facebookDesc')}
                 </p>
                 <a
-                  href="https://www.facebook.com/tienganhsky/"
+                  href={CONTACT_INFO.facebookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary-600 dark:text-primary-400 font-semibold hover:underline inline-flex items-center gap-2 transition-colors"

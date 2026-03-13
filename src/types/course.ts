@@ -1,4 +1,5 @@
 import { Language, Level, DeliveryMode, CourseType } from './core';
+import type { Teacher } from './teacher';
 
 export interface Course {
   id: string;
@@ -31,4 +32,6 @@ export interface Course {
   isPublished?: boolean;
   status?: 'draft' | 'published' | 'archived';
   createdAt?: string;
+  levelsLabel?: string;
+  instructor?: Teacher;
 }

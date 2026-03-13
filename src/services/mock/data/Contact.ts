@@ -1,18 +1,5 @@
-export interface ContactInfo {
-  email: string;
-  phone: string;
-  phoneFormatted: string;
-  contactFormUrl: string;
-  facebookUrl?: string;
-  youtubeUrl?: string;
-}
-
-export const mockContactInfo: ContactInfo = {
-  email: 'skyacademy210@gmail.com',
-  phone: '+84901959142',
-  phoneFormatted: '(+84) 901 959 142',
-  contactFormUrl: 'https://tinyurl.com/contactskyacademy',
-  facebookUrl: 'https://www.facebook.com/tienganhsky/',
-  youtubeUrl: 'https://www.youtube.com/@tienganhsky',
-};
-
+/**
+ * @deprecated Import from '@/config/contact.config' instead.
+ */
+export { CONTACT_INFO } from '@/config/contact.config';
+export type { ContactInfo } from '@/config/contact.config';

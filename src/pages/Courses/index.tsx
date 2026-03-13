@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BookOpen, Sparkles } from 'lucide-react';
 import { Loading } from '@/components/common/Loading';
+import { ErrorState } from '@/components/common/ErrorState';
 import { PageHero } from '@/components/common/PageHero';
 import { CourseFilters } from './components/CourseFilters';
 import { CourseCategorySection } from './components/CourseCategorySection';
@@ -105,9 +106,7 @@ export const Courses = () => {
               <Loading />
             </div>
           ) : error ? (
-            <div className="text-center py-8">
-              <p className="text-sm text-warning-600">{error}</p>
-            </div>
+            <ErrorState error={error} onRetry={() => window.location.reload()} />
           ) : categoryGroups.length > 0 ? (
             categoryGroups.map((group) => (
               <CourseCategorySection

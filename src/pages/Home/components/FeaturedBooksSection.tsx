@@ -2,41 +2,25 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { BookCard } from '@/components/book/BookCard';
-import { useEffect, useState } from 'react';
 import { bookApi } from '@/services/api/book-service';
 import { Book } from '@/types';
-import { HorizontalScroll } from '@/components/common/HorizontalScroll';
+import { useFeaturedData } from '@/hooks';
+import { CardSkeleton, GridSkeleton } from '@/components/common/Skeleton';
+import { ResponsiveGrid } from '@/components/common/ResponsiveGrid';
 
-export const FeaturedBooksSection = () => {
+const FEATURED_COUNT = 4;
+
+interface FeaturedBooksSectionProps {
+  /** When provided (e.g. from Home useHome), no fetch is performed */
+  books?: Book[];
+}
+
+export const FeaturedBooksSection = ({ books: booksProp }: FeaturedBooksSectionProps = {}) => {
   const { t } = useTranslation();
-  const [books, setBooks] = useState<Book[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchBooks = async () => {
-      try {
-        const data = await bookApi.fetchBooks();
-        if (isMounted) {
-          // Get first 4 books for featured section (1 row)
-          setBooks(data.slice(0, 4));
-        }
-      } catch {
-        // Fail silently
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    void fetchBooks();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const { data: books, isLoading } = useFeaturedData(bookApi.fetchBooks, {
+    initialData: booksProp,
+    count: FEATURED_COUNT,
+  });
 
   return (
     <section className="py-20 bg-white dark:bg-gray-900">
@@ -66,51 +50,25 @@ export const FeaturedBooksSection = () => {
 
         {/* Books Grid - Single Row with Horizontal Scroll on Mobile/iPad */}
         {isLoading ? (
-          <>
-            <div className="hidden lg:grid grid-cols-4 gap-6">
-                <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden animate-pulse">
-                  <div className="aspect-[3/4] bg-gray-200 dark:bg-gray-700" />
-                  <div className="p-5 space-y-4">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
-                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full" />
-                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded" />
-                  </div>
-                </div>
-            </div>
-            <HorizontalScroll className="lg:hidden" isIconShown={false}>
-                <div className="w-[240px] sm:w-[280px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden animate-pulse">
-                  <div className="aspect-[3/4] bg-gray-200 dark:bg-gray-700" />
-                  <div className="p-5 space-y-4">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
-                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full" />
-                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded" />
-                  </div>
-                </div>
-            </HorizontalScroll>
-          </>
+          <GridSkeleton count={4} desktopColumns="lg:grid-cols-3" itemWidth="w-[240px] sm:w-[280px]">
+            <CardSkeleton variant="book" />
+          </GridSkeleton>
         ) : (
-          <>
-            <div className="hidden lg:grid grid-cols-3 gap-6">
-              {books.map((book) => (
-                <BookCard key={book.id} book={book} />
-              ))}
-            </div>
-            <HorizontalScroll className="lg:hidden" isIconShown={false}>
-              {books.map((book) => (
-                <div key={book.id} className="w-[400px]">
-                  <BookCard book={book} />
-                </div>
-              ))}
-            </HorizontalScroll>
-          </>
+          <ResponsiveGrid
+            desktopColumns="lg:grid-cols-3"
+            mobileItemWidth="w-[400px]"
+            mobileItemClassName="w-[400px]"
+          >
+            {books.map((book) => (
+              <BookCard key={book.id} book={book} />
+            ))}
+          </ResponsiveGrid>
         )}
 
         {/* View All Button - Mobile */}
         <div className="mt-10 text-center md:hidden">
           <Link
-            to="/books"
+            to="/products"
             className="inline-flex items-center gap-2 bg-secondary-600 text-white font-semibold px-8 py-3 rounded-xl hover:bg-secondary-700 transition-colors"
           >
             {t('books.viewAll')}

@@ -1,9 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { BookOpen, GraduationCap, FileText, ArrowRight } from 'lucide-react';
+import { CONTACT_INFO } from '@/config/contact.config';
+
+const YOUTUBE_CHANNEL_URL = CONTACT_INFO.youtubeUrl ?? 'https://www.youtube.com/@skyacademy0';
 
 export const FeaturedBlocksSection = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const blocks = [
     {
@@ -41,13 +44,14 @@ export const FeaturedBlocksSection = () => {
       descriptionVi: t('home.featuredBlocks.resources.descriptionVi'),
       buttonText: t('home.featuredBlocks.resources.button'),
       buttonTextVi: t('home.featuredBlocks.resources.buttonVi'),
-      link: '/free-videos',
+      link: YOUTUBE_CHANNEL_URL,
+      external: true,
       gradient: 'from-green-500 to-emerald-500',
       bgGradient: 'from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20',
     },
   ];
 
-  const currentLang = useTranslation().i18n.language;
+  const currentLang = i18n.language;
 
   return (
     <section className="py-16 md:py-20 bg-white dark:bg-slate-900">
@@ -59,11 +63,14 @@ export const FeaturedBlocksSection = () => {
             const description = currentLang === 'vi' ? block.descriptionVi : block.description;
             const buttonText = currentLang === 'vi' ? block.buttonTextVi : block.buttonText;
 
-            return (
-              <Link
+            const className = `group relative overflow-hidden rounded-2xl p-8 bg-gradient-to-br ${block.bgGradient} border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-300 hover:shadow-xl`;
+            return (block as { external?: boolean }).external ? (
+              <a
                 key={block.id}
-                to={block.link}
-                className={`group relative overflow-hidden rounded-2xl p-8 bg-gradient-to-br ${block.bgGradient} border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-300 hover:shadow-xl`}
+                href={block.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={className}
               >
                 {/* Background Gradient */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${block.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
@@ -86,6 +93,30 @@ export const FeaturedBlocksSection = () => {
                   </p>
 
                   {/* Button */}
+                  <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-semibold group-hover:gap-3 transition-all">
+                    <span>{buttonText}</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
+                </div>
+              </a>
+            ) : (
+              <Link
+                key={block.id}
+                to={block.link}
+                className={className}
+              >
+                {/* Background Gradient */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${block.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+                <div className="relative z-10">
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${block.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                    {title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6">
+                    {description}
+                  </p>
                   <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-semibold group-hover:gap-3 transition-all">
                     <span>{buttonText}</span>
                     <ArrowRight className="w-5 h-5" />

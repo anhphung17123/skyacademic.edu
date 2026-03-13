@@ -26,7 +26,6 @@ const routeToThemeMap: Record<string, PageThemeId> = {
   [ROUTES.HOME]: 'home',
   [ROUTES.COURSES]: 'courses',
   [ROUTES.PRODUCTS]: 'products',
-  [ROUTES.FREE_VIDEOS]: 'free-videos',
   [ROUTES.ABOUT]: 'about',
   [ROUTES.CONTACT]: 'contact',
   [ROUTES.PRIVACY_POLICY]: 'privacy-policy',
@@ -75,9 +74,6 @@ const getThemeIdFromRoute = (pathname: string): PageThemeId => {
   }
   if (normalizedPath.startsWith('/flashcards')) {
     return 'flashcard-detail';
-  }
-  if (normalizedPath.startsWith('/free-videos')) {
-    return 'free-videos';
   }
   if (normalizedPath.startsWith('/about')) {
     return 'about';

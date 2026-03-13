@@ -1,5 +1,5 @@
 import type { FlashcardProduct } from '@/types/product';
-import actCoverImange from '@/images/flashcards/vietnamese-vocabulary-flashcards/activities/cover.png';
+import actCoverImage from '@/images/flashcards/vietnamese-vocabulary-flashcards/activities/cover.png';
 import placeCoverImage from '@/images/flashcards/vietnamese-vocabulary-flashcards/places/cover.png';
 import specialDaysCoverImage from '@/images/flashcards/vietnamese-vocabulary-flashcards/special-days/cover.png';
 import actCard1FrontImage from '@/images/flashcards/vietnamese-vocabulary-flashcards/activities/cards/1-01.png';
@@ -39,7 +39,7 @@ export const mockFlashcardProduct: FlashcardProduct = {
       key: 'activities',
       nameEn: 'Activities',
       nameVi: 'Hoạt động',
-      coverImage: actCoverImange,
+      coverImage: actCoverImage,
       purposeEn: 'Help learners describe daily actions using common verbs. Activities focus on what people regularly do in Vietnam, allowing learners to quickly form useful sentences.',
       purposeVi: 'Giúp học viên mô tả hành động hằng ngày bằng động từ thông dụng. Chủ đề tập trung vào những việc người Việt thường làm, giúp học viên nhanh chóng đặt câu hữu ích.',
       contentEn:

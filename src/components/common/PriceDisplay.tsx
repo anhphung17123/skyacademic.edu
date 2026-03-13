@@ -101,7 +101,7 @@ export const PriceDisplay = ({
               : 'text-xl'
           )}
         >
-          {formatPrice(price, currency)}
+          {formatPrice(price, currency, t('common.free'))}
         </span>
       </div>
     </div>

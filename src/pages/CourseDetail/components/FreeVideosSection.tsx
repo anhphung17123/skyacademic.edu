@@ -8,7 +8,9 @@ import {
 } from 'lucide-react';
 import { FreeVideoDto } from '@/types/api';
 import { YouTubeThumbnail } from '@/components/common/YouTubeThumbnail';
-import { useNavigate, Link } from 'react-router-dom';
+import { CONTACT_INFO } from '@/config/contact.config';
+
+const YOUTUBE_CHANNEL_URL = CONTACT_INFO.youtubeUrl ?? 'https://www.youtube.com/@skyacademy0';
 
 interface FreeVideosSectionProps {
   courseFreeVideos: FreeVideoDto[];
@@ -16,11 +18,12 @@ interface FreeVideosSectionProps {
 
 export const FreeVideosSection = ({ courseFreeVideos }: FreeVideosSectionProps) => {
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
   const currentLang = i18n.language;
 
   const handleVideoClick = (video: FreeVideoDto) => {
-    navigate(`/free-videos?video=${video.id}`);
+    if (video.youtube_url) {
+      window.open(video.youtube_url, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
@@ -127,13 +130,15 @@ export const FreeVideosSection = ({ courseFreeVideos }: FreeVideosSectionProps) 
         {/* View All Link */}
         {courseFreeVideos.length > 0 && (
           <div className="mt-6 text-center">
-            <Link
-              to="/free-videos"
+            <a
+              href={YOUTUBE_CHANNEL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-red-600 dark:text-red-400 font-medium hover:underline"
             >
               {t('courseDetail.viewAllFreeVideos')}
               <ChevronRight className="w-4 h-4" />
-            </Link>
+            </a>
           </div>
         )}
       </div>

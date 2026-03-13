@@ -9,7 +9,6 @@ import {
   Products,
   BookDetail,
   FlashcardDetail,
-  FreeVideos,
   About,
   Contact,
   PrivacyPolicy,
@@ -35,9 +34,6 @@ export const ClientPortalRoutes = () => {
           <Route path={ROUTES.BOOK_DETAIL} element={<BookDetail />} />
           {/* Flashcard detail – topics as tabs, payment in modal */}
           <Route path={ROUTES.FLASHCARD_DETAIL} element={<FlashcardDetail />} />
-          
-          {/* Free Videos */}
-          <Route path={ROUTES.FREE_VIDEOS} element={<FreeVideos />} />
           
           {/* Info Pages */}
           <Route path={ROUTES.ABOUT} element={<About />} />

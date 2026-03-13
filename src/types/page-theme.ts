@@ -52,7 +52,6 @@ export type PageThemeId =
   | 'products'
   | 'book-detail'
   | 'flashcard-detail'
-  | 'free-videos'
   | 'about'
   | 'contact'
   | 'privacy-policy'

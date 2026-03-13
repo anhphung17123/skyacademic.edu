@@ -15,7 +15,6 @@ export const CourseDetail = lazy(() => import('@/pages/CourseDetail').then((modu
 export const Products = lazy(() => import('@/pages/Products').then((module) => ({ default: module.Products })));
 export const BookDetail = lazy(() => import('@/pages/BookDetail').then((module) => ({ default: module.BookDetail })));
 export const FlashcardDetail = lazy(() => import('@/pages/FlashcardDetail').then((module) => ({ default: module.FlashcardDetail })));
-export const FreeVideos = lazy(() => import('@/pages/FreeVideos').then((module) => ({ default: module.FreeVideos })));
 export const About = lazy(() => import('@/pages/About').then((module) => ({ default: module.About })));
 export const Contact = lazy(() => import('@/pages/Contact').then((module) => ({ default: module.Contact })));
 export const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy').then((module) => ({ default: module.PrivacyPolicy })));

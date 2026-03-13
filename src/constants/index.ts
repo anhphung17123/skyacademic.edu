@@ -26,7 +26,6 @@ export const ROUTES = {
   PRODUCTS: '/products',
   BOOK_DETAIL: '/books/:slug',
   FLASHCARD_DETAIL: '/flashcards/:slug',
-  FREE_VIDEOS: '/free-videos',
   ABOUT: '/about',
   CONTACT: '/contact',
   PRIVACY_POLICY: '/privacy-policy',
@@ -39,6 +38,7 @@ export const LANGUAGE_MAP = {
 } as const;
 
 export const COURSE_CATEGORIES = {
+  VIETNAMESE: 'Vietnamese',
   PRONUNCIATION: 'Pronunciation',
   COMMUNICATION: 'Communication English',
   IELTS: 'IELTS Preparation',

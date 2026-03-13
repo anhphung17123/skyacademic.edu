@@ -2,41 +2,25 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { CourseCard } from '@/components/course/CourseCard';
-import { useEffect, useState } from 'react';
 import { courseApi } from '@/services/api/course-service';
 import { Course } from '@/types';
-import { HorizontalScroll } from '@/components/common/HorizontalScroll';
+import { useFeaturedData } from '@/hooks';
+import { CardSkeleton, GridSkeleton } from '@/components/common/Skeleton';
+import { ResponsiveGrid } from '@/components/common/ResponsiveGrid';
 
-export const FeaturedCoursesSection = () => {
+const FEATURED_COUNT = 4;
+
+interface FeaturedCoursesSectionProps {
+  /** When provided (e.g. from Home useHome), no fetch is performed */
+  courses?: Course[];
+}
+
+export const FeaturedCoursesSection = ({ courses: coursesProp }: FeaturedCoursesSectionProps = {}) => {
   const { t } = useTranslation();
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchCourses = async () => {
-      try {
-        const data = await courseApi.fetchCourses();
-        if (isMounted) {
-          // Get first 4 courses for featured section (1 row)
-          setCourses(data.slice(0, 4));
-        }
-      } catch {
-        // Fail silently
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    void fetchCourses();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const { data: courses, isLoading } = useFeaturedData(courseApi.fetchCourses, {
+    initialData: coursesProp,
+    count: FEATURED_COUNT,
+  });
 
   return (
     <section className="py-20 bg-gray-50 dark:bg-slate-950">
@@ -66,51 +50,15 @@ export const FeaturedCoursesSection = () => {
 
         {/* Courses Grid - Single Row with Horizontal Scroll on Mobile/iPad */}
         {isLoading ? (
-          <>
-            <div className="hidden lg:grid grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden animate-pulse">
-                  <div className="aspect-video bg-gray-200 dark:bg-gray-700" />
-                  <div className="p-5 space-y-4">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
-                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full" />
-                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded" />
-                  </div>
-                </div>
-              ))}
-            </div>
-            <HorizontalScroll className="lg:hidden">
-              <div className="w-4 md:w-6 flex-shrink-0" />
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-[280px] sm:w-[320px] bg-white dark:bg-gray-800 rounded-2xl overflow-hidden animate-pulse">
-                  <div className="aspect-video bg-gray-200 dark:bg-gray-700" />
-                  <div className="p-5 space-y-4">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
-                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full" />
-                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded" />
-                  </div>
-                </div>
-              ))}
-            </HorizontalScroll>
-          </>
+          <GridSkeleton count={4}>
+            <CardSkeleton variant="course" />
+          </GridSkeleton>
         ) : (
-          <>
-            <div className="hidden lg:grid grid-cols-4 gap-6">
-              {courses.map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
-            </div>
-            <HorizontalScroll className="lg:hidden">
-              <div className="w-4 md:w-6 flex-shrink-0" />
-              {courses.map((course) => (
-                <div key={course.id} className="w-[280px] sm:w-[320px]">
-                  <CourseCard course={course} />
-                </div>
-              ))}
-            </HorizontalScroll>
-          </>
+          <ResponsiveGrid>
+            {courses.map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
+          </ResponsiveGrid>
         )}
 
         {/* View All Button - Mobile */}

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Mail, Phone, AlertCircle, ExternalLink } from 'lucide-react';
-import { mockContactInfo } from '@/services/mock/data/Contact';
+import { CONTACT_INFO } from '@/config/contact.config';
 
 interface ContactInfoProps {
   variant?: 'default' | 'compact';
@@ -8,7 +8,7 @@ interface ContactInfoProps {
 
 export const ContactInfo = ({ variant = 'default' }: ContactInfoProps) => {
   const { t } = useTranslation();
-  const contact = mockContactInfo;
+  const contact = CONTACT_INFO;
 
   if (variant === 'compact') {
     return (

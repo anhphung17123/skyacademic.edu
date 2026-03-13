@@ -1,4 +1,4 @@
-import { daysAgo, futureDate } from '../utils/date-helpers';
+import { getDateDaysAgo as daysAgo, getFutureDate as futureDate } from '../utils/date-helpers';
 import { ClassroomDto } from '@/types/api/classroom';
 
 export const mockClassrooms: ClassroomDto[] = [

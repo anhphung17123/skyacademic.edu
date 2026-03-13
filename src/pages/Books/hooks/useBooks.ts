@@ -4,6 +4,7 @@ import { bookApi } from '@/services/api/book-service';
 import { Book, ViewMode } from '@/types';
 import { FILTER_OPTIONS, VIEW_MODES } from '@/constants';
 import { useDataFetch, useDebounce } from '@/hooks';
+import { logger } from '@/lib/logger';
 
 interface UseBooksReturn {
   books: Book[];
@@ -50,7 +51,7 @@ export const useBooks = (): UseBooksReturn => {
     {
       immediate: true,
       onError: (err) => {
-        console.error('Failed to fetch books:', err);
+        logger.error('Failed to fetch books', err);
       },
     }
   );
@@ -105,19 +106,20 @@ export const useBooks = (): UseBooksReturn => {
       return true;
     });
 
-    // Sort
+    // Sort (copy first to avoid mutating filtered)
+    const sorted = [...filtered];
     if (sortBy === 'priceLow') {
-      filtered.sort((a, b) => a.price - b.price);
+      sorted.sort((a, b) => a.price - b.price);
     } else if (sortBy === 'priceHigh') {
-      filtered.sort((a, b) => b.price - a.price);
+      sorted.sort((a, b) => b.price - a.price);
     } else if (sortBy === 'newest') {
-      filtered.sort(
+      sorted.sort(
         (a, b) =>
           new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
       );
     }
 
-    return filtered;
+    return sorted;
   }, [books, formatFilter, languageFilter, debouncedSearchTerm, priceFilter, sortBy]);
 
   const activeFiltersCount = useMemo(

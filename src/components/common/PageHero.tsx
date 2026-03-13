@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { clsx } from "clsx";
 import { LucideIcon } from "lucide-react";
 import { Container } from "@/components/layout/Container";
+import { StatCard } from "@/components/common/StatCard";
 import { useTheme } from "@/contexts/theme-context";
 
 interface PageHeroProps {
@@ -139,62 +140,30 @@ export const PageHero = ({
                 )}
 
                 {/* Stats below title (only when stats with subscribe) */}
-                {statsWithSubscribe && (
+                {statsWithSubscribe && stats && (
                   <div className="flex items-center justify-center gap-4 lg:justify-start pt-2">
                     {stats.map((stat, index) => (
-                      <div
+                      <StatCard
                         key={index}
-                        className={clsx(
-                          "text-center rounded-xl border backdrop-blur-md px-4 py-3 shadow-lg",
-                          isLightMode
-                            ? "border-white/50 bg-black/20"
-                            : "border-white/40 bg-black/40"
-                        )}
-                      >
-                        <div className={clsx(
-                          "text-xl font-bold text-white",
-                          isLightMode
-                            ? "drop-shadow-[0_1px_4px_rgba(0,0,0,0.3)]"
-                            : "drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
-                        )}>{stat.value}</div>
-                        <div className={clsx(
-                          "text-xs font-semibold",
-                          isLightMode
-                            ? "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]"
-                            : "text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"
-                        )}>{stat.label}</div>
-                      </div>
+                        value={stat.value}
+                        label={stat.label}
+                        isLightMode={isLightMode}
+                      />
                     ))}
                   </div>
                 )}
               </div>
 
               {/* Right Column: Stats (if stats only) or Subscribe CTA (if rightContent) */}
-              {statsOnly && (
+              {statsOnly && stats && (
                 <div className="flex items-center justify-center gap-4 lg:justify-end">
                   {stats.map((stat, index) => (
-                    <div
+                    <StatCard
                       key={index}
-                      className={clsx(
-                        "text-center rounded-xl border backdrop-blur-md px-4 py-3 shadow-lg",
-                        isLightMode
-                          ? "border-white/50 bg-black/20"
-                          : "border-white/40 bg-black/40"
-                      )}
-                    >
-                      <div className={clsx(
-                        "text-xl font-bold text-white",
-                        isLightMode
-                          ? "drop-shadow-[0_1px_4px_rgba(0,0,0,0.3)]"
-                          : "drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
-                      )}>{stat.value}</div>
-                      <div className={clsx(
-                        "text-xs font-semibold",
-                        isLightMode
-                          ? "text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]"
-                          : "text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.4)]"
-                      )}>{stat.label}</div>
-                    </div>
+                      value={stat.value}
+                      label={stat.label}
+                      isLightMode={isLightMode}
+                    />
                   ))}
                 </div>
               )}

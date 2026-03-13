@@ -95,10 +95,12 @@ export const CourseCard = memo(({ course }: CourseCardProps) => {
           )}
           <span
             className={`px-2.5 py-1 text-xs font-semibold rounded-full ${
-              LEVEL_COLORS[course.level] || LEVEL_COLORS['All Levels']
+              course.levelsLabel
+                ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border border-amber-200/60 dark:border-amber-700/40'
+                : LEVEL_COLORS[course.level] || LEVEL_COLORS['All Levels']
             }`}
           >
-            {t(`courses.${course.level}`)}
+            {course.levelsLabel ? t('courses.threeLevels') : t(`courses.${course.level}`)}
           </span>
         </div>
 

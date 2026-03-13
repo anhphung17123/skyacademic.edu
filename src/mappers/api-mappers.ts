@@ -1,5 +1,6 @@
-import { Book, Course, Language, TableOfContentsItem } from '@/types';
-import { BackendLanguage, BookDto, CourseDto } from '@/types/api';
+import { Book, Course, Language, TableOfContentsItem, FreeVideo, Classroom } from '@/types';
+import type { ClassroomStatus } from '@/types/classroom';
+import { BackendLanguage, BookDto, CourseDto, FreeVideoDto, ClassroomDto, ClassroomStatusDto } from '@/types/api';
 import { DEFAULT_VALUES } from '@/constants';
 
 const DEFAULT_THUMBNAIL = DEFAULT_VALUES.THUMBNAIL;
@@ -46,8 +47,11 @@ export const mapCourseDtoToCourse = (dto: CourseDto): Course => {
     isPublished: dto.status === 'published',
     status: dto.status,
     createdAt: dto.created_at,
+    levelsLabel: dto.levels_label,
   };
 };
+
+export { mapBackendLanguageToUi };
 
 export const mapBookDtoToBook = (dto: BookDto, tableOfContents: TableOfContentsItem[]): Book => {
   const isDigitalType = dto.type === 'ebook' || dto.type === 'digital';
@@ -94,3 +98,43 @@ export const mapBookDtoToBook = (dto: BookDto, tableOfContents: TableOfContentsI
     tableOfContents,
   };
 };
+
+const mapClassroomStatusToUi = (status: ClassroomStatusDto): ClassroomStatus => {
+  switch (status) {
+    case 'draft':
+    case 'archived':
+      return 'cancelled';
+    default:
+      return status;
+  }
+};
+
+export const mapFreeVideoDtoToFreeVideo = (dto: FreeVideoDto): FreeVideo => ({
+  id: dto.id,
+  title: dto.title,
+  titleVi: dto.title_vi,
+  titleEn: dto.title_en,
+  youtubeUrl: dto.youtube_url,
+  category: dto.category,
+  categoryVi: dto.category_vi,
+  description: dto.description,
+  descriptionVi: dto.description_vi,
+  descriptionEn: dto.description_en,
+  courseId: dto.course_id,
+  duration: dto.duration,
+  createdAt: dto.created_at,
+});
+
+export const mapClassroomDtoToClassroom = (dto: ClassroomDto): Classroom => ({
+  id: dto.id,
+  courseId: dto.course_id,
+  code: dto.code,
+  title: dto.title,
+  description: dto.description,
+  status: mapClassroomStatusToUi(dto.status),
+  language: dto.language ? mapBackendLanguageToUi(dto.language) : undefined,
+  timezone: dto.timezone,
+  startDate: dto.start_date,
+  endDate: dto.end_date,
+  createdAt: dto.created_at,
+});

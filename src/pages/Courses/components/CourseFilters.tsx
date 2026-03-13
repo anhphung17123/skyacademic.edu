@@ -59,6 +59,7 @@ export const CourseFilters = ({
       onChange: onCategoryFilterChange,
       options: [
         { value: 'all', label: t('courses.allCategories') },
+        { value: 'Vietnamese', label: t('courses.categoryVietnamese') },
         { value: 'Pronunciation', label: t('courses.categoryPronunciation') },
         { value: 'Communication English', label: t('courses.categoryCommunication') },
         { value: 'IELTS Preparation', label: t('courses.categoryIelts') },
@@ -122,7 +123,9 @@ export const CourseFilters = ({
     if (categoryFilter !== 'all') {
       filters.push({
         id: 'category',
-        label: categoryFilter === 'Pronunciation'
+        label: categoryFilter === 'Vietnamese'
+          ? t('courses.categoryVietnamese')
+          : categoryFilter === 'Pronunciation'
           ? t('courses.categoryPronunciation')
           : categoryFilter === 'Communication English'
           ? t('courses.categoryCommunication')

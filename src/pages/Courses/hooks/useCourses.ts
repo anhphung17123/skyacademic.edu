@@ -3,15 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { courseApi } from '@/services/api/course-service';
 import { Course, ViewMode } from '@/types';
 import { getLocalizedText } from '@/utils';
-import { FILTER_OPTIONS, VIEW_MODES, COURSE_CATEGORIES } from '@/constants';
-import { Volume2, MessageCircle, Award } from 'lucide-react';
+import { FILTER_OPTIONS, VIEW_MODES } from '@/constants';
+import { CATEGORY_DEFINITIONS } from '@/config/categories.config';
 import { useDataFetch, useDebounce } from '@/hooks';
+import { logger } from '@/lib/logger';
+import type { LucideIcon } from 'lucide-react';
 
 interface CategoryGroup {
   id: string;
   name: string;
   nameVi: string;
-  icon: typeof Volume2;
+  icon: LucideIcon;
   tagline: string;
   taglineVi: string;
   courses: Course[];
@@ -59,7 +61,7 @@ export const useCourses = (): UseCoursesReturn => {
     {
       immediate: true,
       onError: (err) => {
-        console.error('Failed to fetch courses:', err);
+        logger.error('Failed to fetch courses', err);
       },
     }
   );
@@ -125,36 +127,17 @@ export const useCourses = (): UseCoursesReturn => {
   }, [courses, languageFilter, levelFilter, priceFilter, categoryFilter, debouncedSearchTerm, currentLang]);
 
   const categoryGroups = useMemo(() => {
-    const groups: CategoryGroup[] = [
-      {
-        id: 'pronunciation',
-        name: 'Pronunciation – 44 IPA Sounds',
-        nameVi: 'Phát Âm – 44 Âm IPA',
-        icon: Volume2,
-        tagline: 'Speak clearly. Sound natural.',
-        taglineVi: 'Nói rõ ràng. Âm thanh tự nhiên.',
-        courses: filteredCourses.filter((c) => c.category === COURSE_CATEGORIES.PRONUNCIATION),
-      },
-      {
-        id: 'communication',
-        name: 'Communication English',
-        nameVi: 'Giao Tiếp Tiếng Anh',
-        icon: MessageCircle,
-        tagline: 'Use English in real life, not just textbooks.',
-        taglineVi: 'Sử dụng tiếng Anh trong cuộc sống thực, không chỉ sách giáo khoa.',
-        courses: filteredCourses.filter((c) => c.category === COURSE_CATEGORIES.COMMUNICATION),
-      },
-      {
-        id: 'ielts',
-        name: 'IELTS Preparation',
-        nameVi: 'Luyện Thi IELTS',
-        icon: Award,
-        tagline: 'Learn smart. Score higher.',
-        taglineVi: 'Học thông minh. Điểm cao hơn.',
-        courses: filteredCourses.filter((c) => c.category === COURSE_CATEGORIES.IELTS),
-      },
-    ];
-    return groups.filter((group) => group.courses.length > 0);
+    return CATEGORY_DEFINITIONS
+      .map((def) => ({
+        id: def.id,
+        name: def.name,
+        nameVi: def.nameVi,
+        icon: def.icon,
+        tagline: def.tagline,
+        taglineVi: def.taglineVi,
+        courses: filteredCourses.filter((c) => c.category === def.categoryKey),
+      }))
+      .filter((group) => group.courses.length > 0);
   }, [filteredCourses]);
 
   const clearFilters = useCallback(() => {

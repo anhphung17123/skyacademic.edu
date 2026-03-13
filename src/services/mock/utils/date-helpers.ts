@@ -24,7 +24,4 @@ export const getFutureDate = (days: number): string => {
   return date.toISOString();
 };
 
-// Legacy exports for backward compatibility (can be removed after updating all usages)
-export const daysAgo = getDateDaysAgo;
-export const futureDate = getFutureDate;
 

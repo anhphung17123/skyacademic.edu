@@ -4,6 +4,7 @@
  */
 
 import { Book } from './book';
+import type { Teacher } from './teacher';
 
 /** Book as a product (for /products list and /products/:slug) */
 export interface BookProduct extends Omit<Book, 'type'> {
@@ -79,6 +80,8 @@ export interface FlashcardProduct {
   bonusClass: FlashcardBonusClass;
   targetAudience: string[];
   targetAudienceVi: string[];
+  /** Creator / mentor of this flashcard product */
+  creator?: Teacher;
 }
 
 /** Union type for any product */

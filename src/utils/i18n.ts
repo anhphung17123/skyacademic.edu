@@ -36,49 +36,4 @@ export const getLocalizedText = (
   return defaultText;
 };
 
-/**
- * Get localized course/book title based on current language
- * @param currentLang - Current language
- * @param title - Default title
- * @param titleEn - English title (optional)
- * @param titleVi - Vietnamese title (optional)
- * @returns Localized title
- */
-export const getLocalizedTitle = (
-  currentLang: string,
-  title: string,
-  titleEn?: string,
-  titleVi?: string
-): string => {
-  if (currentLang === 'vi' && titleVi) {
-    return titleVi;
-  }
-  if (currentLang === 'en' && titleEn) {
-    return titleEn;
-  }
-  return title;
-};
-
-/**
- * Get localized course/book description based on current language
- * @param currentLang - Current language
- * @param description - Default description
- * @param descriptionEn - English description (optional)
- * @param descriptionVi - Vietnamese description (optional)
- * @returns Localized description
- */
-export const getLocalizedDescription = (
-  currentLang: string,
-  description: string,
-  descriptionEn?: string,
-  descriptionVi?: string
-): string => {
-  if (currentLang === 'vi' && descriptionVi) {
-    return descriptionVi;
-  }
-  if (currentLang === 'en' && descriptionEn) {
-    return descriptionEn;
-  }
-  return description;
-};
 

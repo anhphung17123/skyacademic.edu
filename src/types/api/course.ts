@@ -1,4 +1,4 @@
-import { CourseType, DeliveryMode } from '../index';
+import { CourseType, DeliveryMode } from '../core';
 import { BackendLanguage, CourseStatusDto } from './common';
 
 export interface CourseDto {
@@ -30,4 +30,6 @@ export interface CourseDto {
   category?: string;
   category_vi?: string;
   thumbnail_url?: string;
+  levels_label?: string;
+  instructor_id?: string;
 }

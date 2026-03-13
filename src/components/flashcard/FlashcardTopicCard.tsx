@@ -1,71 +1,86 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Layers, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { useNavigate } from 'react-router-dom';
-import type { FlashcardProduct, FlashcardTopic } from '@/types';
+import { clsx } from 'clsx';
+import type { FlashcardTopic } from '@/types/product';
+import { getTopicCoverUrl } from '@/utils/flashcard';
 
-interface FlashcardTopicCardProps {
-  product: FlashcardProduct;
+export interface FlashcardTopicCardProps {
   topic: FlashcardTopic;
+  lang: string;
+  isActive: boolean;
+  onClick: () => void;
+  className?: string;
 }
 
-/**
- * Card for one flashcard topic on Products page (Activities, Places, Special Days).
- * Each topic is a separate card linking to flashcard detail.
- */
-export const FlashcardTopicCard = memo(({ product, topic }: FlashcardTopicCardProps) => {
-  const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
-  const lang = i18n.language;
-
-  const topicName = lang === 'vi' ? topic.nameVi : topic.nameEn;
-  const purpose = lang === 'vi' ? topic.purposeVi : topic.purposeEn;
-  const sampleCard = topic.cards[0];
+export const FlashcardTopicCard = memo(({
+  topic,
+  lang,
+  isActive,
+  onClick,
+  className,
+}: FlashcardTopicCardProps) => {
+  const { t } = useTranslation();
+  const name = lang === 'vi' ? topic.nameVi : topic.nameEn;
+  const shortPurpose = lang === 'vi' ? topic.purposeVi : topic.purposeEn;
+  const thumbnail = getTopicCoverUrl(topic);
+  const examplesLabel = t('flashcard.examplesLabel');
 
   return (
-    <div className="group relative rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-      <div className="relative aspect-[4/3] bg-gradient-to-br from-violet-50 to-indigo-50 dark:from-violet-900/20 dark:to-indigo-900/20 overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center p-4">
-          <div className="relative w-32 h-40">
-            <div className="absolute inset-0 bg-white dark:bg-gray-700 rounded-lg shadow-lg transform rotate-[-6deg] border border-violet-200/50 dark:border-gray-600" />
-            <div className="absolute inset-0 bg-white dark:bg-gray-700 rounded-lg shadow-xl transform rotate-[4deg] translate-y-1 border-2 border-violet-300/60 dark:border-violet-500/40 flex items-center justify-center">
-              <Layers className="w-10 h-10 text-violet-500 dark:text-violet-400" />
-            </div>
+    <button
+      type="button"
+      onClick={onClick}
+      className={clsx(
+        'text-left rounded-2xl border-2 overflow-hidden transition-all duration-200',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2',
+        isActive
+          ? 'border-violet-500 dark:border-violet-400 shadow-lg shadow-violet-200/40 dark:shadow-violet-900/30 bg-violet-50/50 dark:bg-violet-900/20'
+          : 'border-gray-200 dark:border-gray-600 hover:border-violet-300 dark:hover:border-violet-600 hover:shadow-md bg-white dark:bg-gray-800',
+        className
+      )}
+    >
+      <div className="aspect-[4/3] bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
+        {thumbnail ? (
+          <img
+            src={thumbnail}
+            alt=""
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500 text-4xl">
+            📚
           </div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
-      </div>
-
-      <div className="p-5">
-        <span className="inline-block px-2.5 py-1 bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 text-xs font-semibold rounded-full mb-2">
-          {t('products.flashcard')}
-        </span>
-        <h3
-          className="text-lg font-bold text-gray-900 dark:text-white mb-1 line-clamp-2 cursor-pointer hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-          onClick={() => navigate(`/flashcards/${product.slug}/${topic.key}`)}
+        )}
+        <div
+          className={clsx(
+            'absolute inset-0 flex items-end p-4 bg-gradient-to-t from-black/70 to-transparent',
+            isActive && 'from-violet-900/80'
+          )}
         >
-          {topicName}
-        </h3>
-        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">
-          {purpose}
+          <span
+            className={clsx(
+              'text-lg font-bold text-white drop-shadow',
+              isActive && 'underline underline-offset-2 decoration-2'
+            )}
+          >
+            {name}
+          </span>
+        </div>
+      </div>
+      <div className="p-4">
+        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+          {shortPurpose}
         </p>
-        {sampleCard && (
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
-            {t('flashcard.cardWithImage')}
+        {topic.examples?.length > 0 && (
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+            {examplesLabel}
+            {topic.examples.slice(0, 3).join(', ')}
           </p>
         )}
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={() => navigate(`/flashcards/${product.slug}/${topic.key}`)}
-          className="w-full sm:w-auto"
-        >
-          <span>{t('common.details')}</span>
-          <ArrowRight className="w-4 h-4 ml-1" />
-        </Button>
       </div>
-    </div>
+    </button>
   );
 });
 

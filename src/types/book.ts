@@ -1,4 +1,5 @@
 import { Language, BookFormat } from './core';
+import type { Teacher } from './teacher';
 
 /** One entry in a book's table of contents (title, chapter, or section). */
 export interface TableOfContentsItem {
@@ -35,4 +36,5 @@ export interface Book {
   publishedDateVi?: string;
   rating?: number;
   createdAt?: string;
+  teacher?: Teacher;
 }

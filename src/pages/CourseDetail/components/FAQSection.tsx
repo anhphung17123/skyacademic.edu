@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { HelpCircle, Mail, Phone, MessageCircle, ExternalLink } from 'lucide-react';
-import { mockContactInfo } from '@/services/mock/data/Contact';
+import { CONTACT_INFO } from '@/config/contact.config';
 
 export const FAQSection = () => {
   const { t } = useTranslation();
@@ -40,10 +40,10 @@ export const FAQSection = () => {
                   {t('courseDetail.email')}
                 </p>
                 <a
-                  href={`mailto:${mockContactInfo.email}`}
+                  href={`mailto:${CONTACT_INFO.email}`}
                   className="text-primary-600 dark:text-primary-400 hover:underline font-medium"
                 >
-                  {mockContactInfo.email}
+                  {CONTACT_INFO.email}
                 </a>
               </div>
             </div>
@@ -58,16 +58,16 @@ export const FAQSection = () => {
                   {t('courseDetail.phone')}
                 </p>
                 <a
-                  href={`tel:${mockContactInfo.phone}`}
+                  href={`tel:${CONTACT_INFO.phone}`}
                   className="text-primary-600 dark:text-primary-400 hover:underline font-medium"
                 >
-                  {mockContactInfo.phoneFormatted}
+                  {CONTACT_INFO.phoneFormatted}
                 </a>
               </div>
             </div>
 
             {/* Facebook */}
-            {mockContactInfo.facebookUrl && (
+            {CONTACT_INFO.facebookUrl && (
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
                   <MessageCircle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
@@ -77,7 +77,7 @@ export const FAQSection = () => {
                     {t('courseDetail.facebook')}
                   </p>
                   <a
-                    href={mockContactInfo.facebookUrl}
+                    href={CONTACT_INFO.facebookUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary-600 dark:text-primary-400 hover:underline font-medium inline-flex items-center gap-1"
@@ -90,7 +90,7 @@ export const FAQSection = () => {
             )}
 
             {/* YouTube */}
-            {mockContactInfo.youtubeUrl && (
+            {CONTACT_INFO.youtubeUrl && (
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
                   <MessageCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
@@ -100,7 +100,7 @@ export const FAQSection = () => {
                     {t('courseDetail.youtube')}
                   </p>
                   <a
-                    href={mockContactInfo.youtubeUrl}
+                    href={CONTACT_INFO.youtubeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary-600 dark:text-primary-400 hover:underline font-medium inline-flex items-center gap-1"
@@ -113,10 +113,10 @@ export const FAQSection = () => {
             )}
 
             {/* Contact Form */}
-            {mockContactInfo.contactFormUrl && (
+            {CONTACT_INFO.contactFormUrl && (
               <div className="pt-4 border-t border-primary-200 dark:border-primary-700">
                 <a
-                  href={mockContactInfo.contactFormUrl}
+                  href={CONTACT_INFO.contactFormUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-600 to-secondary-600 hover:from-primary-700 hover:to-secondary-700 text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-xl"

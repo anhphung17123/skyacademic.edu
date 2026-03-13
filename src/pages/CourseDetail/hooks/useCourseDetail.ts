@@ -1,11 +1,18 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { courseApi } from '@/services/api/course-service';
 import { classroomApi } from '@/services/api/classroom-service';
 import { freeVideoApi } from '@/services/api/free-video-service';
+import { useDataFetch } from '@/hooks';
 import { Course } from '@/types';
 import { ClassroomDto, FreeVideoDto } from '@/types/api';
+
+interface CourseDetailData {
+  course: Course;
+  classrooms: ClassroomDto[];
+  videos: FreeVideoDto[];
+}
 
 interface UseCourseDetailReturn {
   course: Course | null;
@@ -18,72 +25,38 @@ interface UseCourseDetailReturn {
   error: string | null;
 }
 
-/**
- * Custom hook for fetching and managing course detail data
- * @returns Course detail data and state management functions
- */
 export const useCourseDetail = (): UseCourseDetailReturn => {
   const { slug } = useParams<{ slug: string; language: string }>();
   const { t } = useTranslation();
-  const [course, setCourse] = useState<Course | null>(null);
-  const [classrooms, setClassrooms] = useState<ClassroomDto[]>([]);
-  const [videos, setVideos] = useState<FreeVideoDto[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedClassroomId, setSelectedClassroomId] = useState<string | null>(null);
 
-  const fetchCourseData = useCallback(async () => {
-    if (!slug) {
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      // Try to find course by slug first, then by ID
+  const { data, isLoading, error: fetchError } = useDataFetch<CourseDetailData | null>(
+    async () => {
+      if (!slug) return null;
       let fullCourse = await courseApi.getCourseBySlug(slug);
       if (!fullCourse) {
         fullCourse = await courseApi.getCourse(slug);
       }
-
       if (!fullCourse) {
-        setError(t('courseDetail.notFound'));
-        setIsLoading(false);
-        return;
+        throw new Error(t('courseDetail.notFound'));
       }
-
       const courseId = fullCourse.id;
-      const [courseClassrooms, courseVideos] = await Promise.all([
+      const [classrooms, videos] = await Promise.all([
         classroomApi.fetchClassrooms({ courseId }),
         freeVideoApi.fetchVideos({ search: courseId }),
       ]);
+      return { course: fullCourse, classrooms, videos };
+    },
+    { immediate: !!slug }
+  );
 
-      setCourse(fullCourse);
-      setClassrooms(courseClassrooms);
-      setVideos(courseVideos);
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : t('courseDetail.loadError');
-      setError(errorMessage);
-      setCourse(null);
-      setClassrooms([]);
-      setVideos([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [slug, t]);
-
-  useEffect(() => {
-    void fetchCourseData();
-  }, [fetchCourseData]);
-
+  const course = data?.course ?? null;
   const courseClassrooms = useMemo(
-    () => (course ? classrooms.filter((classroom) => classroom.course_id === course.id) : []),
-    [classrooms, course]
+    () =>
+      data?.course
+        ? (data.classrooms.filter((c) => c.course_id === data.course.id) ?? [])
+        : [],
+    [data]
   );
 
   useEffect(() => {
@@ -93,14 +66,21 @@ export const useCourseDetail = (): UseCourseDetailReturn => {
   }, [courseClassrooms, selectedClassroomId]);
 
   const selectedClassroom = useMemo(
-    () => courseClassrooms.find((classroom) => classroom.id === selectedClassroomId) ?? null,
+    () => courseClassrooms.find((c) => c.id === selectedClassroomId) ?? null,
     [courseClassrooms, selectedClassroomId]
   );
 
   const courseFreeVideos = useMemo(
-    () => (course ? videos.filter((video) => video.course_id === course.id) : []),
-    [course, videos]
+    () =>
+      data?.course
+        ? data.videos.filter((v) => v.course_id === data.course.id)
+        : [],
+    [data]
   );
+
+  const error = fetchError
+    ? (fetchError instanceof Error ? fetchError.message : t('courseDetail.loadError'))
+    : null;
 
   return {
     course,
@@ -113,4 +93,3 @@ export const useCourseDetail = (): UseCourseDetailReturn => {
     error,
   };
 };
-

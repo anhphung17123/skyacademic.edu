@@ -282,45 +282,6 @@ const flashcardDetailTheme: PageTheme = {
 };
 
 /**
- * Free videos page theme - Vibrant purple
- */
-const freeVideosTheme: PageTheme = {
-  name: 'free-videos',
-  light: {
-    primary: '#7c3aed',
-    secondary: '#a855f7',
-    background: {
-      start: '#faf5ff',
-      end: '#f3e8ff',
-    },
-    accent: {
-      start: '#a855f7',
-      end: '#7c3aed',
-    },
-    overlay: {
-      light: 'rgba(255, 255, 255, 0.9)',
-      dark: 'rgba(15, 23, 42, 0.95)',
-    },
-  },
-  dark: {
-    primary: '#a78bfa',
-    secondary: '#c084fc',
-    background: {
-      start: '#581c87',
-      end: '#4c1d95',
-    },
-    accent: {
-      start: '#c084fc',
-      end: '#a78bfa',
-    },
-    overlay: {
-      light: 'rgba(88, 28, 135, 0.95)',
-      dark: 'rgba(15, 23, 42, 0.98)',
-    },
-  },
-};
-
-/**
  * About page theme - Calm green (Emerald Green)
  */
 const aboutTheme: PageTheme = {
@@ -486,7 +447,6 @@ export const PAGE_THEMES: Record<PageThemeId, PageTheme> = {
   'products': productsTheme,
   'book-detail': bookDetailTheme,
   'flashcard-detail': flashcardDetailTheme,
-  'free-videos': freeVideosTheme,
   'about': aboutTheme,
   'contact': contactTheme,
   'privacy-policy': privacyPolicyTheme,

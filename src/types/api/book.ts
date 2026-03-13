@@ -26,4 +26,5 @@ export interface BookDto {
   published_date?: string;
   published_date_vi?: string;
   rating?: number;
+  teacher_id?: string;
 }

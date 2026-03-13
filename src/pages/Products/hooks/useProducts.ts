@@ -3,6 +3,7 @@ import { productApi } from '@/services/api/product-service';
 import type { Product } from '@/types';
 import { useMemo } from 'react';
 import { isBookProduct, isFlashcardProduct } from '@/types';
+import { logger } from '@/lib/logger';
 
 interface UseProductsReturn {
   products: Product[];
@@ -20,7 +21,7 @@ export const useProducts = (): UseProductsReturn => {
   } = useDataFetch<Product[] | null>(() => productApi.fetchProducts(), {
     immediate: true,
     onError: (err) => {
-      console.error('Failed to fetch products:', err);
+      logger.error('Failed to fetch products', err);
     },
   });
 
