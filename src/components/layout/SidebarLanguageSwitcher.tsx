@@ -3,6 +3,7 @@ import { Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useClickOutside } from '@/hooks/use-click-outside';
 import { STORAGE_KEYS } from '@/constants';
+import { logger } from '@/lib/logger';
 import { clsx } from 'clsx';
 
 /**
@@ -26,7 +27,7 @@ export const SidebarLanguageSwitcher = () => {
       setCurrentLang(langCode);
       setIsOpen(false);
     } catch (error) {
-      console.error('Error changing language:', error);
+      logger.error('Error changing language:', error);
     }
   }, [i18n]);
 

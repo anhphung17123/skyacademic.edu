@@ -93,10 +93,15 @@ export const useCourses = (): UseCoursesReturn => {
 
       // Search filter
       if (hasSearch) {
-        const title = getLocalizedText(currentLang, course.title, course.titleEn, course.titleVi);
+        const title = getLocalizedText(
+          currentLang,
+          course.title ?? '',
+          course.titleEn,
+          course.titleVi
+        );
         const description = getLocalizedText(
           currentLang,
-          course.description,
+          course.description ?? '',
           course.descriptionEn,
           course.descriptionVi
         );

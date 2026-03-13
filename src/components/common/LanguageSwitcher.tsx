@@ -3,6 +3,7 @@ import { Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useClickOutside } from '@/hooks/use-click-outside';
 import { STORAGE_KEYS } from '@/constants';
+import { logger } from '@/lib/logger';
 
 export const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
@@ -22,7 +23,7 @@ export const LanguageSwitcher = () => {
       setCurrentLang(langCode);
       setIsOpen(false);
     } catch (error) {
-      console.error('Error changing language:', error);
+      logger.error('Error changing language:', error);
     }
   }, [i18n]);
 

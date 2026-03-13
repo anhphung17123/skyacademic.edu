@@ -37,22 +37,22 @@ export const useHome = () => {
   );
 
   const featuredCourses = useMemo(
-    () => homeData?.courses.slice(0, FEATURED_COURSES_COUNT) ?? [],
+    () => (homeData?.courses ?? []).slice(0, FEATURED_COURSES_COUNT),
     [homeData?.courses]
   );
 
   const featuredBooks = useMemo(
-    () => homeData?.books.slice(0, FEATURED_BOOKS_COUNT) ?? [],
+    () => (homeData?.books ?? []).slice(0, FEATURED_BOOKS_COUNT),
     [homeData?.books]
   );
 
   const featuredVideos = useMemo(
-    () => homeData?.videos.slice(0, FEATURED_VIDEOS_COUNT) ?? [],
+    () => (homeData?.videos ?? []).slice(0, FEATURED_VIDEOS_COUNT),
     [homeData?.videos]
   );
 
   const featuredVideo = useMemo(
-    () => homeData?.videos[0] ?? null,
+    () => homeData?.videos?.[0] ?? null,
     [homeData?.videos]
   );
 

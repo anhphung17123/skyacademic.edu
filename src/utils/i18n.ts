@@ -23,17 +23,18 @@ export const getCurrentLanguage = (i18n: { language: string }): Language => {
  */
 export const getLocalizedText = (
   currentLang: string,
-  defaultText: string,
+  defaultText: string | undefined,
   enText?: string,
   viText?: string
 ): string => {
+  const fallback = defaultText ?? '';
   if (currentLang === 'vi' && viText) {
     return viText;
   }
   if (currentLang === 'en' && enText) {
     return enText;
   }
-  return defaultText;
+  return fallback;
 };
 
 

@@ -30,22 +30,32 @@ export const CourseDetail = () => {
   const { share, isToastVisible } = useShare({ toastDurationMs: 3000 });
   const { course, courseFreeVideos, isLoading, error } = useCourseDetail();
 
-  if (isLoading) return <Loading fullScreen />;
-  if (!course) return <Navigate to="/" />;
-
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const shareTitle = useMemo(
-    () => (i18n.language === "vi" && course.titleVi ? course.titleVi : course.title),
-    [i18n.language, course.titleVi, course.title]
+    () =>
+      course
+        ? i18n.language === "vi" && course.titleVi
+          ? course.titleVi
+          : course.title
+        : "",
+    [i18n.language, course?.titleVi, course?.title]
   );
   const shareText = useMemo(
-    () => (i18n.language === "vi" && course.summaryVi ? course.summaryVi : course.summary),
-    [i18n.language, course.summaryVi, course.summary]
+    () =>
+      course
+        ? i18n.language === "vi" && course.summaryVi
+          ? course.summaryVi
+          : course.summary
+        : "",
+    [i18n.language, course?.summaryVi, course?.summary]
   );
 
   const handleShare = useCallback(() => {
     void share({ url: shareUrl, title: shareTitle, text: shareText });
   }, [share, shareUrl, shareTitle, shareText]);
+
+  if (isLoading) return <Loading fullScreen />;
+  if (!course) return <Navigate to="/" />;
 
   return (
     <PageTransition>

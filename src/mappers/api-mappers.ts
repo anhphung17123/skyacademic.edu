@@ -61,7 +61,7 @@ export const mapBookDtoToBook = (dto: BookDto, tableOfContents: TableOfContentsI
   const bookType: Book['type'] = dto.type === 'digital' ? 'ebook' : dto.type;
   const slug =
     dto.slug ??
-    dto.title
+    (dto.title ?? '')
       .toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/[^a-z0-9-]/g, '');

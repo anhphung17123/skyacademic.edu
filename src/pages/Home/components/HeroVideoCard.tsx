@@ -67,16 +67,26 @@ export const HeroVideoCard = ({ video, isLightMode, currentLang }: HeroVideoCard
 
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <a
-              className={`text-base font-bold line-clamp-2 ${
-                isLightMode ? 'text-gray-800' : 'text-gray-100'
-              }`}
-              href={video.youtube_url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {videoTitle}
-            </a>
+            {video.youtube_url ? (
+              <a
+                className={`text-base font-bold line-clamp-2 ${
+                  isLightMode ? 'text-gray-800' : 'text-gray-100'
+                }`}
+                href={video.youtube_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {videoTitle}
+              </a>
+            ) : (
+              <span
+                className={`text-base font-bold line-clamp-2 ${
+                  isLightMode ? 'text-gray-800' : 'text-gray-100'
+                }`}
+              >
+                {videoTitle}
+              </span>
+            )}
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 flex-shrink-0 ml-2">
               <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
               <span

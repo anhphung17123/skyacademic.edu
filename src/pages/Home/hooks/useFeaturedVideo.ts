@@ -13,7 +13,7 @@ export function useFeaturedVideo(): {
   );
 
   const featuredVideo = useMemo(
-    () => (videos && videos.length > 0 ? videos[0] : null),
+    () => (videos?.length ? videos[0] ?? null : null),
     [videos]
   );
 

@@ -85,9 +85,9 @@ export const useBooks = (): UseBooksReturn => {
       // Search filter
       if (hasSearch) {
         const matchesSearch =
-          book.title.toLowerCase().includes(searchTermLower) ||
+          (book.title ?? '').toLowerCase().includes(searchTermLower) ||
           (book.author ?? '').toLowerCase().includes(searchTermLower) ||
-          book.description.toLowerCase().includes(searchTermLower);
+          (book.description ?? '').toLowerCase().includes(searchTermLower);
         if (!matchesSearch) return false;
       }
 

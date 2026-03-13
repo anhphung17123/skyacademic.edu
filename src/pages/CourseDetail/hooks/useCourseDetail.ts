@@ -54,7 +54,7 @@ export const useCourseDetail = (): UseCourseDetailReturn => {
   const courseClassrooms = useMemo(
     () =>
       data?.course
-        ? (data.classrooms.filter((c) => c.course_id === data.course.id) ?? [])
+        ? (data.classrooms?.filter((c) => c.course_id === data.course.id) ?? [])
         : [],
     [data]
   );
@@ -73,7 +73,7 @@ export const useCourseDetail = (): UseCourseDetailReturn => {
   const courseFreeVideos = useMemo(
     () =>
       data?.course
-        ? data.videos.filter((v) => v.course_id === data.course.id)
+        ? (data.videos?.filter((v) => v.course_id === data.course.id) ?? [])
         : [],
     [data]
   );
