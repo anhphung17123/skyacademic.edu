@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BookOpen, Sparkles } from 'lucide-react';
+import { BookOpen, Sparkles, UserCheck } from 'lucide-react';
+import { ContactCTALink } from '@/components/common/ContactCTALink';
 import { Loading } from '@/components/common/Loading';
 import { ErrorState } from '@/components/common/ErrorState';
 import { PageHero } from '@/components/common/PageHero';
@@ -13,6 +14,7 @@ import { Container } from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { useCourses } from './hooks/useCourses';
 import { FILTER_OPTIONS } from '@/constants';
+import { mockSiteStats } from '@/services/mock/data/SiteStats';
 
 export const Courses = () => {
   const { t, i18n } = useTranslation();
@@ -50,13 +52,13 @@ export const Courses = () => {
     [languageFilter, levelFilter, priceFilter, categoryFilter]
   );
 
-  const heroStats = useMemo(
-    () => [
-      { value: `${filteredCourses.length}+`, label: t('courses.total') },
-      { value: '4.9', label: t('courses.rating') },
-    ],
-    [filteredCourses.length, t]
-  );
+  const heroStats = useMemo(() => {
+    const { totalCourses, averageRating } = mockSiteStats.coursesPage;
+    const items: Array<{ value: string; label: string }> = [];
+    if (totalCourses > 0) items.push({ value: `${totalCourses}+`, label: t('courses.total') });
+    if (averageRating > 0) items.push({ value: averageRating.toFixed(1), label: t('courses.rating') });
+    return items;
+  }, [t]);
 
   return (
     <>
@@ -71,6 +73,14 @@ export const Courses = () => {
 
       <Section padding="lg" background="default">
         <Container>
+          <ContactCTALink
+            variant="card"
+            icon={<UserCheck />}
+            className="mb-8"
+          >
+            {t('about.oneOnOneRate')}
+          </ContactCTALink>
+
           <CourseFilters
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}

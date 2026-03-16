@@ -13,7 +13,7 @@ export const CONTACT_INFO: ContactInfo = {
   email: 'skyacademy210@gmail.com',
   phone: '+84901959142',
   phoneFormatted: '(+84) 901 959 142',
-  contactFormUrl: 'https://tinyurl.com/contactskyacademy',
+  contactFormUrl: 'https://bit.ly/4skPVP9',
   facebookUrl: 'https://www.facebook.com/skyacademy0/',
   youtubeUrl: 'https://www.youtube.com/@skyacademy0',
   instagramUrl: 'https://www.instagram.com/skyacademy0',

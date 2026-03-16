@@ -6,7 +6,7 @@ export const ContactSection = () => {
   const { t } = useTranslation();
 
   return (
-    <div>
+    <div id="contact">
       <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8 text-center">
         {t('contact.title')}
       </h2>

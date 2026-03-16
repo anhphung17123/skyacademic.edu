@@ -12,6 +12,7 @@ import { ResultsInfo } from '@/components/common/ResultsInfo';
 import { BooksFilters } from './components/BooksFilters';
 import { BooksGrid } from './components/BooksGrid';
 import { useMemo } from 'react';
+import { mockSiteStats } from '@/services/mock/data/SiteStats';
 
 export const Books = () => {
   const { t } = useTranslation();
@@ -34,16 +35,15 @@ export const Books = () => {
     clearFilters,
     activeFiltersCount,
     hasActiveFilters,
-    books,
   } = useBooks();
 
-  const heroStats = useMemo(
-    () => [
-      { value: `${books.length}+`, label: t('books.titles') },
-      { value: '4.9', label: t('books.avgRating') },
-    ],
-    [books.length, t]
-  );
+  const heroStats = useMemo(() => {
+    const { totalTitles, averageRating } = mockSiteStats.booksPage;
+    const items: Array<{ value: string; label: string }> = [];
+    if (totalTitles > 0) items.push({ value: `${totalTitles}+`, label: t('books.titles') });
+    if (averageRating > 0) items.push({ value: averageRating.toFixed(1), label: t('books.avgRating') });
+    return items;
+  }, [t]);
 
   return (
     <>

@@ -21,13 +21,20 @@ export function CourseDetailHero({
 }: CourseDetailHeroProps) {
   const { t } = useTranslation();
 
+  const isViewOnly = Boolean(course.viewOnly);
+
   return (
     <div
-      className={
-        isLightMode
-          ? "relative bg-gradient-to-br from-primary-500 via-blue-500 to-secondary-500 overflow-hidden"
-          : "relative bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600 overflow-hidden"
-      }
+      className={clsx(
+        "relative overflow-hidden",
+        isViewOnly
+          ? isLightMode
+            ? "bg-gradient-to-br from-primary-500 via-secondary-500/90 to-primary-600"
+            : "bg-gradient-to-br from-primary-600 via-secondary-600/90 to-primary-700"
+          : isLightMode
+            ? "bg-gradient-to-br from-primary-500 via-blue-500 to-secondary-500"
+            : "bg-gradient-to-br from-primary-600 via-primary-700 to-secondary-600"
+      )}
     >
       <div className="absolute inset-0">
         <div
@@ -54,6 +61,17 @@ export function CourseDetailHero({
           }}
           aria-hidden
         />
+        {isViewOnly && (
+          <div
+            className="absolute inset-0 opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%)",
+              backgroundSize: "32px 32px",
+            }}
+            aria-hidden
+          />
+        )}
       </div>
 
       <div

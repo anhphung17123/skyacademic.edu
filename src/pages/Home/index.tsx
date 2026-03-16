@@ -8,6 +8,7 @@ import { FeaturedCoursesSection } from './components/FeaturedCoursesSection';
 import { FeaturedBooksSection } from './components/FeaturedBooksSection';
 import { FreeVideosSection } from './components/FreeVideosSection';
 import { FeaturedBlocksSection } from './components/FeaturedBlocksSection';
+import { LearningResourcesSection } from './components/LearningResourcesSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 
 export const Home = () => {
@@ -22,13 +23,13 @@ export const Home = () => {
   } = useHome();
 
   useEffect(() => {
-    if (hash) {
+    if (!hash || isLoading || error) return;
+    const timer = window.setTimeout(() => {
       const el = document.querySelector(hash);
-      if (el) {
-        setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 100);
-      }
-    }
-  }, [hash]);
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+    return () => window.clearTimeout(timer);
+  }, [hash, isLoading, error]);
 
   if (isLoading) return <Loading />;
   if (error) return <ErrorState error={error} />;
@@ -37,6 +38,7 @@ export const Home = () => {
     <div className="overflow-hidden">
       <HeroSectionContent featuredVideo={featuredVideo} />
       <FeaturedBlocksSection />
+      <LearningResourcesSection />
       <FeaturedCoursesSection courses={featuredCourses} />
       <FeaturedBooksSection books={featuredBooks} />
       <TestimonialsSection />

@@ -3,6 +3,7 @@ import {
   Clock,
   BarChart3,
   Play,
+  Compass,
 } from 'lucide-react';
 import { Course } from '@/types';
 import { useTheme } from '@/contexts/theme-context';
@@ -91,15 +92,22 @@ export const CourseHeader = ({ course, error }: CourseHeaderProps) => {
 
       {/* Course Info */}
       <div className="flex-1 text-white space-y-5">
-        {/* Category */}
-        {category && (
-          <div className={isLightMode
-            ? "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/30 backdrop-blur-sm border border-white/40 text-white text-sm font-semibold shadow-md drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]"
-            : "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white text-sm font-medium shadow-lg"
-          }>
-            {category}
-          </div>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          {category && (
+            <div className={isLightMode
+              ? "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/30 backdrop-blur-sm border border-white/40 text-white text-sm font-semibold shadow-md drop-shadow-[0_1px_3px_rgba(0,0,0,0.3)]"
+              : "inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white text-sm font-medium shadow-lg"
+            }>
+              {category}
+            </div>
+          )}
+          {course.viewOnly && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/25 backdrop-blur-sm border border-white/30 text-white text-xs font-bold shadow-md">
+              <Compass className="w-3.5 h-3.5" />
+              {t('courses.explore')}
+            </span>
+          )}
+        </div>
 
         {/* Title */}
         <div className="mb-5">

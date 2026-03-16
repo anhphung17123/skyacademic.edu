@@ -48,6 +48,7 @@ export const mapCourseDtoToCourse = (dto: CourseDto): Course => {
     status: dto.status,
     createdAt: dto.created_at,
     levelsLabel: dto.levels_label,
+    viewOnly: dto.view_only ?? false,
   };
 };
 
