@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { Star, Users, Clock, Play, BookOpen, Award, ArrowRight } from 'lucide-react';
+import { Star, Users, Clock, Play, BookOpen, Award, ArrowRight, Compass } from 'lucide-react';
+import { clsx } from 'clsx';
 import { Course } from '@/types';
 import { Button } from '@/components/ui/Button';
 import { useTranslation } from 'react-i18next';
@@ -39,18 +40,50 @@ export const CourseCard = memo(({ course }: CourseCardProps) => {
   };
 
   return (
-    <div className="group relative card-light rounded-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2 h-full flex flex-col">
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={handleCardClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCardClick();
+        }
+      }}
+      className={clsx(
+        'group relative card-light rounded-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2 h-full flex flex-col cursor-pointer',
+        course.viewOnly &&
+          'border-2 border-dashed border-primary-300 dark:border-primary-600 bg-gray-50/80 dark:bg-gray-800/50'
+      )}
+    >
       {/* Image container */}
       <div className="relative aspect-video overflow-hidden flex-shrink-0">
         <img
           src={course.thumbnail || DEFAULT_VALUES.THUMBNAIL}
           alt={title}
           loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className={clsx(
+            'w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 transition-all duration-300',
+            course.viewOnly && 'saturate-75 blur-[4px] scale-105'
+          )}
         />
         
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+        {/* View-only: blur overlay + "Coming soon" centered */}
+        {course.viewOnly && (
+          <>
+            <div
+              className="absolute inset-0 bg-gradient-to-br from-primary-900/25 via-black/20 to-secondary-900/20 pointer-events-none"
+              aria-hidden
+            />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <span className="px-5 py-2.5 rounded-xl bg-white/95 dark:bg-gray-900/95 text-primary-700 dark:text-primary-300 text-lg font-bold shadow-xl border border-primary-200/50 dark:border-primary-600/50 backdrop-blur-sm">
+                {t('common.comingSoon')}
+              </span>
+            </div>
+          </>
+        )}
         
         {/* Play button overlay */}
         {course.youtubePlaylistUrl && (
@@ -70,18 +103,32 @@ export const CourseCard = memo(({ course }: CourseCardProps) => {
             </div>
           </div>
         )}
+        {/* Explore badge (view-only courses) */}
+        {course.viewOnly && (
+          <div className="absolute top-3 right-3 z-10">
+            <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-primary-500 to-secondary-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm border border-white/20">
+              <Compass className="w-3.5 h-3.5" />
+              {t('courses.explore')}
+            </span>
+          </div>
+        )}
         
-        {/* Bottom info bar */}
+        {((course.lessonsCount ?? 0) > 0 || (course.rating ?? 0) > 0) && (
         <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-center">
-          <div className="flex items-center gap-2 text-white text-sm">
-            <BookOpen className="w-4 h-4" />
-            <span>{course.lessonsCount || 12} {t('courses.lessons')}</span>
-          </div>
-          <div className="flex items-center gap-1 bg-black/40 backdrop-blur-sm rounded-full px-2 py-1">
-            <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-            <span className="text-white text-sm font-medium">{(course.rating ?? 4.8).toFixed(1)}</span>
-          </div>
+          {(course.lessonsCount ?? 0) > 0 && (
+            <div className="flex items-center gap-2 text-white text-sm">
+              <BookOpen className="w-4 h-4" />
+              <span>{course.lessonsCount} {t('courses.lessons')}</span>
+            </div>
+          )}
+          {(course.rating ?? 0) > 0 && (
+            <div className="flex items-center gap-1 bg-black/40 backdrop-blur-sm rounded-full px-2 py-1">
+              <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+              <span className="text-white text-sm font-medium">{(course.rating ?? 0).toFixed(1)}</span>
+            </div>
+          )}
         </div>
+        )}
       </div>
 
       {/* Content */}
@@ -105,10 +152,7 @@ export const CourseCard = memo(({ course }: CourseCardProps) => {
         </div>
 
         {/* Title */}
-        <h3
-          className="text-base font-bold text-gray-800 dark:text-gray-100 mb-2.5 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors cursor-pointer leading-snug min-h-[2.75rem] flex-shrink-0"
-          onClick={handleCardClick}
-        >
+        <h3 className="text-base font-bold text-gray-800 dark:text-gray-100 mb-2.5 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-snug min-h-[2.75rem] flex-shrink-0">
           {title}
         </h3>
 
@@ -119,10 +163,12 @@ export const CourseCard = memo(({ course }: CourseCardProps) => {
 
         {/* Stats row */}
         <div className="flex items-center gap-4 text-xs text-gray-600 dark:text-gray-400 mb-4 pb-4 border-b border-gray-200/80 dark:border-gray-700/80 flex-shrink-0">
-          <div className="flex items-center gap-1.5">
-            <Users className="w-4 h-4 text-primary-500" />
-            <span>{(course.students ?? 0).toLocaleString()} {t('courses.students')}</span>
-          </div>
+          {(course.students ?? 0) > 0 && (
+            <div className="flex items-center gap-1.5">
+              <Users className="w-4 h-4 text-primary-500" />
+              <span>{(course.students ?? 0).toLocaleString()} {t('courses.students')}</span>
+            </div>
+          )}
           <div className="flex items-center gap-1.5">
             <Clock className="w-4 h-4 text-secondary-500" />
             <span>{course.duration === 'Self-paced' ? t('courses.durationLabel') : (course.duration ?? t('courses.durationLabel'))}</span>
@@ -141,7 +187,7 @@ export const CourseCard = memo(({ course }: CourseCardProps) => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={handleCardClick}
+            type="button"
             className="!px-3 hover:bg-gray-100 dark:hover:bg-gray-700"
             aria-label={t('courses.viewCourse')}
           >
@@ -150,8 +196,15 @@ export const CourseCard = memo(({ course }: CourseCardProps) => {
         </div>
       </div>
       
-      {/* Hover border effect */}
-      <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-primary-400/50 transition-colors pointer-events-none" />
+      {/* Hover border effect (solid when view-only for contrast with dashed) */}
+      <div
+        className={clsx(
+          'absolute inset-0 rounded-2xl border-2 pointer-events-none transition-colors',
+          course.viewOnly
+            ? 'border-transparent group-hover:border-primary-400/60'
+            : 'border-transparent group-hover:border-primary-400/50'
+        )}
+      />
     </div>
   );
 });

@@ -1,32 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { Star, Quote } from 'lucide-react';
-
-const TESTIMONIALS = [
-  {
-    id: 1,
-    nameKey: 'testimonial1Name',
-    roleKey: 'testimonial1Role',
-    textKey: 'testimonial1Text',
-    rating: 5,
-  },
-  {
-    id: 2,
-    nameKey: 'testimonial2Name',
-    roleKey: 'testimonial2Role',
-    textKey: 'testimonial2Text',
-    rating: 5,
-  },
-  {
-    id: 3,
-    nameKey: 'testimonial3Name',
-    roleKey: 'testimonial3Role',
-    textKey: 'testimonial3Text',
-    rating: 5,
-  },
-];
+import { Link } from 'react-router-dom';
+import { MessageCircle, ArrowRight, Star } from 'lucide-react';
+import { mockSiteStats } from '@/services/mock/data/SiteStats';
 
 export const TestimonialsSection = () => {
   const { t } = useTranslation();
+  const hasStudents = (mockSiteStats.about.statStudents ?? 0) > 0;
+  const subtitleKey = hasStudents ? 'testimonials.subtitle' : 'testimonials.subtitleNoStudents';
 
   return (
     <section id="testimonials" className="py-20 bg-white dark:bg-gray-900">
@@ -36,35 +16,33 @@ export const TestimonialsSection = () => {
             {t('testimonials.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            {t('testimonials.subtitle')}
+            {t(subtitleKey)}
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {TESTIMONIALS.map((item) => (
-            <div
-              key={item.id}
-              className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
-            >
-              <Quote className="w-8 h-8 text-primary-400 dark:text-primary-500 mb-4 opacity-50" />
-              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-6">
-                {t(`testimonials.${item.textKey}`)}
-              </p>
-              <div className="flex items-center gap-1 mb-3">
-                {Array.from({ length: item.rating }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <div>
-                <p className="font-semibold text-gray-900 dark:text-white text-sm">
-                  {t(`testimonials.${item.nameKey}`)}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  {t(`testimonials.${item.roleKey}`)}
-                </p>
-              </div>
+        <div className="max-w-2xl mx-auto">
+          <div className="relative rounded-3xl border-2 border-dashed border-primary-200 dark:border-primary-700 bg-gradient-to-br from-primary-50/80 to-secondary-50/80 dark:from-primary-900/20 dark:to-secondary-900/20 p-8 md:p-12 text-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-secondary-500 text-white shadow-lg mb-6">
+              <MessageCircle className="w-10 h-10" />
             </div>
-          ))}
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+              {t('testimonials.emptyTitle')}
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 text-base md:text-lg leading-relaxed mb-8">
+              {t('testimonials.emptySubtitle')}
+            </p>
+            <Link
+              to="/courses"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-[1.02]"
+            >
+              {t('testimonials.ctaExploreCourses')}
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <p className="mt-6 text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center gap-1.5">
+              <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+              {t('testimonials.emptyHint')}
+            </p>
+          </div>
         </div>
       </div>
     </section>

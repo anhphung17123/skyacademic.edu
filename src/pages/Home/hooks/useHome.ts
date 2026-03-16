@@ -27,7 +27,7 @@ export const useHome = () => {
   } = useDataFetch<HomeData>(
     async () => {
       const [courses, books, videos] = await Promise.all([
-        courseApi.fetchCourses(),
+        courseApi.fetchAvailableCourses(),
         bookApi.fetchBooks(),
         freeVideoApi.fetchVideos(),
       ]);
@@ -35,7 +35,7 @@ export const useHome = () => {
     },
     { immediate: true }
   );
-
+console.log(homeData);
   const featuredCourses = useMemo(
     () => (homeData?.courses ?? []).slice(0, FEATURED_COURSES_COUNT),
     [homeData?.courses]

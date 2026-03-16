@@ -54,6 +54,8 @@ export const PageHero = ({
   const { resolvedTheme } = useTheme();
   const isLightMode = resolvedTheme === "light";
   const isPageGradient = gradient === "page";
+
+  const visibleStats = stats?.filter((stat) => Number(stat.value) !== 0) ?? [];
   
   const gradientStyle = isPageGradient
     ? {
@@ -66,7 +68,7 @@ export const PageHero = ({
     : "";
 
   // Determine layout based on props
-  const hasStats = stats && stats.length > 0;
+  const hasStats = visibleStats.length > 0;
   const hasRightContent = !!rightContent;
   const useTwoColumn = hasStats || hasRightContent;
   const statsWithSubscribe = hasStats && hasRightContent;
@@ -140,9 +142,9 @@ export const PageHero = ({
                 )}
 
                 {/* Stats below title (only when stats with subscribe) */}
-                {statsWithSubscribe && stats && (
+                {statsWithSubscribe && (
                   <div className="flex items-center justify-center gap-4 lg:justify-start pt-2">
-                    {stats.map((stat, index) => (
+                    {visibleStats.map((stat, index) => (
                       <StatCard
                         key={index}
                         value={stat.value}
@@ -155,9 +157,9 @@ export const PageHero = ({
               </div>
 
               {/* Right Column: Stats (if stats only) or Subscribe CTA (if rightContent) */}
-              {statsOnly && stats && (
+              {statsOnly && (
                 <div className="flex items-center justify-center gap-4 lg:justify-end">
-                  {stats.map((stat, index) => (
+                  {visibleStats.map((stat, index) => (
                     <StatCard
                       key={index}
                       value={stat.value}

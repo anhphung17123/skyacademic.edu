@@ -34,4 +34,5 @@ export interface Course {
   createdAt?: string;
   levelsLabel?: string;
   instructor?: Teacher;
+  viewOnly?: boolean;
 }

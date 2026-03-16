@@ -1,8 +1,10 @@
 import { useTranslation } from "react-i18next";
-import { BookOpen, Star, Share2, CreditCard, Smartphone, Landmark } from "lucide-react";
+import { BookOpen, Star, Share2, CreditCard, Smartphone, Landmark, MessageCircle, Compass } from "lucide-react";
 import { clsx } from "clsx";
+import { mockSiteStats } from "@/services/mock/data/SiteStats";
 import { formatPrice } from "@/utils/currency";
 import type { Course } from "@/types";
+import { CONTACT_INFO } from "@/config/contact.config";
 
 interface CoursePricingSidebarProps {
   course: Course;
@@ -17,6 +19,7 @@ export function CoursePricingSidebar({
 }: CoursePricingSidebarProps) {
   const { t } = useTranslation();
   const isPaid = course.price > 0;
+  const isViewOnly = Boolean(course.viewOnly);
 
   const paymentMethods = (
     <div className="mb-6">
@@ -97,6 +100,23 @@ export function CoursePricingSidebar({
           </>
         ) : (
           <>
+            {isViewOnly && (
+              <div className="mb-4 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800">
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center">
+                    <Compass className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-emerald-800 dark:text-emerald-200 mb-1">
+                      {t("courseDetail.exploreTitle")}
+                    </h4>
+                    <p className="text-sm text-emerald-700 dark:text-emerald-300/90">
+                      {t("courseDetail.exploreDesc")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="flex items-center gap-4 mb-5">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-lg shadow-emerald-500/30 ring-2 ring-emerald-400/30">
                 <BookOpen className="w-7 h-7 text-white" />
@@ -106,13 +126,29 @@ export function CoursePricingSidebar({
                   {t("courseDetail.freeCourse")}
                 </h3>
                 <p className="text-sm text-emerald-700 dark:text-emerald-400 font-medium">
-                  {t("courseDetail.oneHundredPercentFree")}
+                  {mockSiteStats.freeContentPercent > 0
+                  ? t("courseDetail.oneHundredPercentFree", { percent: mockSiteStats.freeContentPercent })
+                  : t("courseDetail.free")}
                 </p>
               </div>
             </div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
               {t("courseDetail.freeCourseDesc")}
             </p>
+            <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400 mb-4">
+              {t("courseDetail.supportByAnyAmount")}
+            </p>
+            {isViewOnly && (
+              <a
+                href={CONTACT_INFO.contactFormUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full mb-4 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-medium text-sm text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600 transition-colors"
+              >
+                <MessageCircle className="w-5 h-5" />
+                {t("courseDetail.leaveAComment")}
+              </a>
+            )}
             {paymentMethods}
             {course.youtubePlaylistUrl && (
               <a

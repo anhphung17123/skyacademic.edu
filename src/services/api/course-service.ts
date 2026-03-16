@@ -15,6 +15,10 @@ export const courseApi = {
     return processCourses();
   },
 
+  async fetchAvailableCourses(): Promise<Course[]> {
+    return processCourses().filter((c) => !c.viewOnly);
+  },
+
   async getCourse(id: string): Promise<Course | null> {
     const dto = mockCourses.find((course) => course.id === id);
     if (!dto) return null;

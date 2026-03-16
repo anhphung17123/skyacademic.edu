@@ -108,24 +108,29 @@ export const BookCard = memo(({ book }: BookCardProps) => {
           {description}
         </p>
 
-        {/* Stats row */}
+        {((book.rating ?? 0) > 0 || (book.pages ?? 0) > 0) && (
         <div className="flex items-center gap-4 text-xs text-gray-600 dark:text-gray-400 mb-4 pb-4 border-b border-gray-200/80 dark:border-gray-700/80">
-          <div className="flex items-center gap-1.5">
-            <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <Star 
-                  key={i} 
-                  className={`w-3.5 h-3.5 ${i < Math.floor(book.rating || 0) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
-                />
-              ))}
+          {(book.rating ?? 0) > 0 && (
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-center">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`w-3.5 h-3.5 ${i < Math.floor(book.rating ?? 0) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
+                  />
+                ))}
+              </div>
+              <span className="font-medium">({(book.rating ?? 0).toFixed(1)})</span>
             </div>
-            <span className="font-medium">({(book.rating ?? 0).toFixed(1)})</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <BookOpen className="w-4 h-4 text-secondary-500" />
-            <span>{(book.pages ?? 0).toString()} {t('books.pages')}</span>
-          </div>
+          )}
+          {(book.pages ?? 0) > 0 && (
+            <div className="flex items-center gap-1.5">
+              <BookOpen className="w-4 h-4 text-secondary-500" />
+              <span>{(book.pages ?? 0).toString()} {t('books.pages')}</span>
+            </div>
+          )}
         </div>
+        )}
 
         {/* Price and CTA */}
         <div className="flex items-center justify-between">

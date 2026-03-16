@@ -1,5 +1,6 @@
 import { Tag, Gift } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { mockSiteStats } from '@/services/mock/data/SiteStats';
 import { formatPrice } from '@/utils/currency';
 import { clsx } from 'clsx';
 
@@ -55,9 +56,9 @@ export const PriceDisplay = ({
           >
             {t('courseDetail.free')}
           </span>
-          {variant === 'large' && (
+          {variant === 'large' && mockSiteStats.freeContentPercent > 0 && (
             <span className="text-sm font-bold uppercase tracking-wider text-white">
-              {t('courseDetail.oneHundredPercentFree')}
+              {t('courseDetail.oneHundredPercentFree', { percent: mockSiteStats.freeContentPercent })}
             </span>
           )}
         </div>

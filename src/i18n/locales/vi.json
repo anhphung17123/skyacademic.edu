@@ -16,8 +16,8 @@
     "cta": "Bắt Đầu",
     "secondaryCta": "Xem Demo",
     "watchDemo": "Xem Demo",
-    "badge": "10+ người học",
-    "highlight1": "10+ người học",
+    "badge": "{{count}}+ người học",
+    "highlight1": "{{count}}+ người học",
     "highlight2": "Học tập linh hoạt",
     "highlight3": "Giảng dạy song ngữ",
     "highlight4": "Tài liệu được công nhận",
@@ -40,7 +40,7 @@
     "featuredLabel": "Sách Phổ Biến",
     "featuredSubtitle": "Khám phá các khóa học phổ biến nhất và bắt đầu hành trình học tập ngay hôm nay",
     "stats": {
-      "students": "10+ người học",
+      "students": "{{count}}+ người học",
       "courses": "Học tập linh hoạt",
       "instructors": "Giảng dạy song ngữ",
       "satisfaction": "Tài liệu được công nhận"
@@ -52,27 +52,27 @@
         "button": "Xem Khóa Học"
       },
       "courses": {
-        "title": "English Courses",
+        "title": "Khóa Học Tiếng Anh",
         "titleVi": "Khóa Học Tiếng Anh",
-        "description": "Improve your communication, pronunciation, and exam skills",
+        "description": "Nâng cao giao tiếp, phát âm và kỹ năng thi",
         "descriptionVi": "Nâng cao giao tiếp, phát âm và kỹ năng thi",
-        "button": "View Courses",
+        "button": "Xem Khóa Học",
         "buttonVi": "Xem Khóa Học"
       },
       "books": {
-        "title": "Books & Study Packs",
+        "title": "Sách & Tài Liệu Học Tập",
         "titleVi": "Sách & Tài Liệu Học Tập",
-        "description": "Teaching materials and learning packs for all ages",
+        "description": "Sách & tài liệu học tập cho mọi lứa tuổi",
         "descriptionVi": "Sách & tài liệu học tập cho mọi lứa tuổi",
-        "button": "Explore Books",
+        "button": "Khám Phá Sách",
         "buttonVi": "Khám Phá Sách"
       },
       "resources": {
-        "title": "Free Learning Resources",
+        "title": "Tài Nguyên Học Tập Miễn Phí",
         "titleVi": "Tài Nguyên Học Tập Miễn Phí",
-        "description": "Worksheets, slides, PDFs and more",
+        "description": "File bài học, slides, PDF miễn phí",
         "descriptionVi": "File bài học, slides, PDF miễn phí",
-        "button": "See Resources",
+        "button": "Xem Tài Nguyên",
         "buttonVi": "Xem Tài Nguyên"
       }
     },
@@ -83,7 +83,18 @@
       "freeConsultation": "Tư vấn miễn phí",
       "supportHotline": "Hotline: 1900-xxxx"
     },
-    "loadError": "Không thể tải nội dung nổi bật vào lúc này."
+    "loadError": "Không thể tải nội dung nổi bật vào lúc này.",
+    "learningResources": {
+      "title": "Tài nguyên học tập tại Sky Academy",
+      "description": "Các tài nguyên này giúp học viên luyện nghe, nói, đọc và từ vựng một cách đơn giản và thực tế.",
+      "badge": "Tài nguyên học tập",
+      "item1": "Khóa học tiếng Việt",
+      "item2": "Khóa học tiếng Anh giao tiếp",
+      "item3": "Thẻ từ vựng (flashcards)",
+      "item4": "Sách và bài tập học",
+      "item5": "Video học song ngữ",
+      "item6": "Kênh YouTube cho từ vựng và phát âm"
+    }
   },
   "courses": {
     "title": "Khóa học của chúng tôi",
@@ -126,7 +137,10 @@
     "ctaSubtitle": "Liên hệ với chúng tôi để được tư vấn khóa học phù hợp với mục tiêu của bạn",
     "loadError": "Không thể tải khóa học từ máy chủ.",
     "threeLevels": "3 cấp độ",
-    "viewCourse": "Xem khóa học"
+    "viewCourse": "Xem khóa học",
+    "previewOnly": "Xem giao diện",
+    "explore": "Khám phá",
+    "featured": "Nổi bật"
   },
   "books": {
     "title": "Sách của chúng tôi",
@@ -156,6 +170,9 @@
     "physical": "Sách In",
     "digital": "Sách Điện Tử",
     "both": "Gói Combo",
+    "lowStock": "Sắp hết:",
+    "left": "còn",
+    "outOfStock": "Hết hàng",
     "sortPopular": "Phổ Biến Nhất",
     "sortNewest": "Mới Nhất",
     "sortPriceLow": "Giá: Thấp Đến Cao",
@@ -260,7 +277,8 @@
     "noTableOfContents": "Mục lục không có sẵn",
     "feedbackTitle": "Chia Sẻ Phản Hồi Của Bạn",
     "feedbackDescription": "Chúng tôi rất muốn nghe ý kiến của bạn về cuốn sách này! Sử dụng biểu mẫu liên hệ hoặc liên hệ trực tiếp với chúng tôi.",
-    "feedbackSubtitle": "Phản hồi của bạn giúp chúng tôi cải thiện và giúp các độc giả khác đưa ra quyết định sáng suốt."
+    "feedbackSubtitle": "Phản hồi của bạn giúp chúng tôi cải thiện và giúp các độc giả khác đưa ra quyết định sáng suốt.",
+    "reviewsEmptyCta": "Sau khi học hoặc mua sách, quay lại chia sẻ đánh giá — chúng tôi rất muốn lắng nghe bạn."
   },
   "courseDetail": {
     "tabOverview": "Tổng Quan",
@@ -303,8 +321,13 @@
     "createdBy": "Được tạo bởi",
     "freeCourse": "Khóa Học Miễn Phí",
     "freeCourseDesc": "Đây là khóa học miễn phí. Truy cập tất cả tài liệu mà không cần đăng ký.",
+    "previewOnly": "Chỉ xem giao diện",
+    "exploreTitle": "Khám phá khóa học",
+    "exploreDesc": "Xem cấu trúc và nội dung. Liên hệ khi bạn sẵn sàng đăng ký.",
+    "leaveAComment": "Để lại bình luận",
+    "supportByAnyAmount": "Ủng hộ bất kỳ số tiền nào",
     "paidCourseNote": "Thanh toán một lần. Xem chi tiết thanh toán bên dưới.",
-    "oneHundredPercentFree": "100% Miễn Phí",
+    "oneHundredPercentFree": "{{percent}}% Miễn Phí",
     "watchOnYouTube": "Xem Trên YouTube",
     "classroomsTitle": "Các lớp đang mở",
     "classroomsSubtitle": "Chọn lớp phù hợp với lịch của bạn",
@@ -336,6 +359,10 @@
     "freeLessonsTitle": "Video miễn phí",
     "freeLessonsSubtitle": "Xem trước khi đăng ký",
     "freeLessonsEmpty": "Đang cập nhật video miễn phí, vui lòng quay lại sau.",
+    "freeLessonsEmptyDesc": "Chúng tôi đang bổ sung thêm bài học video miễn phí cho khóa học này. Vui lòng quay lại sau hoặc ghé kênh YouTube của chúng tôi.",
+    "viewAllFreeVideos": "Xem tất cả video miễn phí trên YouTube",
+    "notFound": "Không tìm thấy khóa học",
+    "loadError": "Không thể tải thông tin khóa học. Vui lòng thử lại.",
     "levelsIncluded": "Khóa học gồm {{count}} cấp độ.",
     "objectivesTitle": "Bạn sẽ học được gì",
     "registrationTitle": "Đăng ký lớp học",
@@ -598,6 +625,7 @@
   "common": {
     "loading": "Đang tải...",
     "error": "Đã xảy ra lỗi",
+    "errorTitle": "Đã xảy ra lỗi",
     "refreshPage": "Làm mới trang",
     "errorDetails": "Chi tiết lỗi",
     "errorDescription": "Đã xảy ra lỗi khi tải trang. Vui lòng thử lại sau.",
@@ -625,6 +653,8 @@
     "no": "Không",
     "select": "Chọn",
     "none": "Không có",
+    "next": "Tiếp",
+    "previous": "Trước",
     "confirmDelete": "Bạn có chắc chắn muốn xóa mục này không?",
     "viewAll": "Xem Tất Cả",
     "comingSoon": "Sắp Ra Mắt",
@@ -658,6 +688,7 @@
     "videoNotSupported": "Trình duyệt của bạn không hỗ trợ thẻ video.",
     "pressEscToClose": "Nhấn ESC hoặc click bên ngoài để đóng",
     "retry": "Thử Lại",
+    "clearFilter": "Xóa bộ lọc",
     "clearFilters": "Xóa Bộ Lọc",
     "clearAll": "Xóa Tất Cả",
     "clear": "Xóa",
@@ -685,7 +716,7 @@
     "ctaTitle": "Đăng Ký Kênh YouTube",
     "ctaSubtitle": "Nhận thông báo khi chúng tôi ra mắt bài học miễn phí mới mỗi tuần!",
     "subscribeButton": "Đăng Ký Ngay",
-    "badge": "Nội dung Miễn phí 100%",
+    "badge": "Nội dung Miễn phí {{percent}}%",
     "videosCount": "Video",
     "categoriesCount": "Danh mục",
     "access": "Truy cập",
@@ -733,15 +764,11 @@
   "testimonials": {
     "title": "Học Viên Nói Gì Về Chúng Tôi",
     "subtitle": "Tham gia cùng hàng ngàn học viên đã cải thiện kỹ năng ngôn ngữ với chúng tôi",
-    "testimonial1Name": "Minh Trần",
-    "testimonial1Role": "Học viên IELTS",
-    "testimonial1Text": "Phương pháp giảng dạy của SkyAcademy rất hiệu quả. Tôi đã cải thiện phát âm đáng kể chỉ sau vài tuần học.",
-    "testimonial2Name": "Sarah L.",
-    "testimonial2Role": "Người học Tiếng Việt",
-    "testimonial2Text": "Các video thực tế giúp việc học tiếng Việt trở nên hấp dẫn hơn nhiều. Giờ tôi có thể giao tiếp cơ bản một cách tự tin!",
-    "testimonial3Name": "David Nguyễn",
-    "testimonial3Role": "Học viên ESL",
-    "testimonial3Text": "Phương pháp song ngữ giúp tôi hiểu khái niệm tốt hơn nhiều. Giáo viên rất nhiệt tình và hỗ trợ tận tâm."
+    "subtitleNoStudents": "Bắt đầu hành trình học tập và trở thành người đầu tiên chia sẻ câu chuyện của bạn.",
+    "emptyTitle": "Hãy Là Người Đầu Tiên Chia Sẻ Trải Nghiệm",
+    "emptySubtitle": "Tham gia khóa học, học cùng chúng tôi, sau đó quay lại kể cho mọi người. Đánh giá của bạn giúp học viên tương lai quyết định.",
+    "ctaExploreCourses": "Xem Khóa Học",
+    "emptyHint": "Câu chuyện của bạn sẽ được chia sẻ tại đây."
   },
   "consultation": {
     "title": "Nhận Tư Vấn Miễn Phí",
@@ -824,6 +851,16 @@
     "valueInnovationDesc": "Luôn cải tiến và thích ứng phương pháp của chúng tôi",
     "valueCommunity": "Cộng Đồng",
     "valueCommunityDesc": "Xây dựng môi trường học tập hỗ trợ lẫn nhau",
+    "skyShares": {
+      "title": "SKY SHARES",
+      "communityProjects": "Dự án cộng đồng",
+      "freeEngCourse": "Khóa tiếng Anh miễn phí",
+      "freeClubEngViet": "Câu lạc bộ tiếng Anh / Tiếng Việt miễn phí",
+      "freeCommunityClass": "Lớp học cộng đồng tiếng Anh và tiếng Việt miễn phí",
+      "supportByAnyAmount": "Ủng hộ bất kỳ số tiền nào",
+      "studentReviewForm": "Form đánh giá của học viên"
+    },
+    "oneOnOneRate": "Học 1-1: $10/giờ — Tiếng Việt hoặc Tiếng Anh giao tiếp.",
     "valueAccessibility": "Tiếp Cận",
     "valueAccessibilityDesc": "Mang giáo dục đến với mọi người",
     "ourTeam": "Đội Ngũ",
@@ -836,9 +873,9 @@
     "qualityEducation": "Giáo Dục Chất Lượng",
     "qualityEducationDesc": "Chương trình được chứng nhận do chuyên gia thiết kế",
     "globalReach": "Phạm Vi Toàn Cầu",
-    "globalReachDesc": "Học viên từ hơn 20 quốc gia",
+    "globalReachDesc": "Học viên từ hơn {{count}} quốc gia",
     "provenResults": "Kết Quả Đã Chứng Minh",
-    "provenResultsDesc": "Tỷ lệ hài lòng 98%",
+    "provenResultsDesc": "Tỷ lệ hài lòng {{percent}}%",
     "studentFirst": "Học Viên Là Trên Hết",
     "studentFirstDesc": "Thành công của bạn là ưu tiên của chúng tôi",
     "startLearning": "Bắt Đầu Học Ngay Hôm Nay",
@@ -857,16 +894,16 @@
     "team": {
       "teacher1Name": "Cô Sarah Johnson",
       "teacher1Role": "Trưởng Bộ Môn Tiếng Anh",
-      "teacher1Bio": "Chuyên gia IELTS với hơn 10 năm kinh nghiệm giảng dạy",
+      "teacher1Bio": "Chuyên gia IELTS với hơn {{years}} năm kinh nghiệm giảng dạy",
       "teacher2Name": "Thầy Nguyễn Minh Tuấn",
       "teacher2Role": "Chuyên Gia TOEIC",
-      "teacher2Bio": "Giúp học viên đạt điểm TOEIC 900+",
+      "teacher2Bio": "Giúp học viên đạt điểm TOEIC {{score}}+",
       "teacher3Name": "Cô Trần Thị Mai Anh",
       "teacher3Role": "Chuyên Gia Tiếng Việt",
-      "teacher3Bio": "12 năm dạy tiếng Việt cho người nước ngoài",
+      "teacher3Bio": "{{years}} năm dạy tiếng Việt cho người nước ngoài",
       "teacher4Name": "Mr. David Williams",
       "teacher4Role": "Huấn Luyện Viên Viết Học Thuật",
-      "teacher4Bio": "Cựu giám khảo Cambridge, 15 năm kinh nghiệm"
+      "teacher4Bio": "Cựu giám khảo Cambridge, {{years}} năm kinh nghiệm"
     }
   },
   "privacyPolicy": {

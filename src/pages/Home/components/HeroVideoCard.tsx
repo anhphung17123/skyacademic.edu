@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Play, Star, Users, Award } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { YouTubeThumbnail } from '@/components/common/YouTubeThumbnail';
 import type { FreeVideoDto } from '@/types/api';
 
@@ -65,91 +65,27 @@ export const HeroVideoCard = ({ video, isLightMode, currentLang }: HeroVideoCard
           </div>
         )}
 
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            {video.youtube_url ? (
-              <a
-                className={`text-base font-bold line-clamp-2 ${
-                  isLightMode ? 'text-gray-800' : 'text-gray-100'
-                }`}
-                href={video.youtube_url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {videoTitle}
-              </a>
-            ) : (
-              <span
-                className={`text-base font-bold line-clamp-2 ${
-                  isLightMode ? 'text-gray-800' : 'text-gray-100'
-                }`}
-              >
-                {videoTitle}
-              </span>
-            )}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 flex-shrink-0 ml-2">
-              <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-              <span
-                className={`text-sm font-bold ${
-                  isLightMode ? 'text-gray-900' : 'text-white'
-                }`}
-              >
-                4.9
-              </span>
-            </div>
-          </div>
-
-          <div
-            className={`flex items-center gap-6 text-sm ${
-              isLightMode ? 'text-gray-600' : 'text-slate-400'
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <div className={`p-2 rounded-lg ${isLightMode ? 'bg-primary-50' : 'bg-primary-500/10'}`}>
-                <Users className={`w-4 h-4 ${isLightMode ? 'text-primary-600' : 'text-primary-400'}`} />
-              </div>
-              <span className="font-medium">50+ {t('hero.students')}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className={`p-2 rounded-lg ${isLightMode ? 'bg-secondary-50' : 'bg-secondary-500/10'}`}>
-                <Award className={`w-4 h-4 ${isLightMode ? 'text-secondary-600' : 'text-secondary-400'}`} />
-              </div>
-              <span className="font-medium">{t('hero.certificate')}</span>
-            </div>
-          </div>
-
-          <div className="pt-2">
-            <div className="flex items-center justify-between text-sm mb-3">
-              <span className={`font-medium ${isLightMode ? 'text-gray-700' : 'text-slate-300'}`}>
-                {t('hero.courseProgress')}
-              </span>
-              <span className={`font-bold text-lg ${isLightMode ? 'text-primary-600' : 'text-primary-400'}`}>
-                85%
-              </span>
-            </div>
-            <div className={`h-3 rounded-full overflow-hidden ${isLightMode ? 'bg-gray-200' : 'bg-slate-700'}`}>
-              <div className="h-full w-[85%] bg-gradient-to-r from-primary-500 via-primary-400 to-primary-500 rounded-full shadow-lg shadow-primary-500/30" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        className={`absolute -bottom-6 -left-6 rounded-xl p-4 shadow-xl backdrop-blur-sm border-2 ${
-          isLightMode
-            ? 'bg-white border-gray-200/50 shadow-gray-300/50'
-            : 'bg-slate-800/95 border-slate-700/50 shadow-slate-900/50'
-        }`}
-      >
-        <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${isLightMode ? 'bg-primary-100' : 'bg-primary-500/20'}`}>
-            <Users className={`w-5 h-5 ${isLightMode ? 'text-primary-600' : 'text-primary-400'}`} />
-          </div>
-          <div>
-            <p className={`text-lg font-bold ${isLightMode ? 'text-gray-800' : 'text-gray-100'}`}>
-              {t('hero.highlight1')}
-            </p>
-          </div>
+        <div className="space-y-2">
+          {video.youtube_url ? (
+            <a
+              className={`text-sm font-bold line-clamp-2 block ${
+                isLightMode ? 'text-gray-800' : 'text-gray-100'
+              } hover:underline`}
+              href={video.youtube_url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {videoTitle}
+            </a>
+          ) : (
+            <span
+              className={`text-sm font-bold line-clamp-2 ${
+                isLightMode ? 'text-gray-800' : 'text-gray-100'
+              }`}
+            >
+              {videoTitle}
+            </span>
+          )}
         </div>
       </div>
     </div>

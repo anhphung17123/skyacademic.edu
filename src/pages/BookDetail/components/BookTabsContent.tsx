@@ -121,18 +121,24 @@ export function BookTabsContent({
 
         {activeTab === "reviews" && (
           <div className="space-y-6">
-            <div className="text-center py-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-full mb-4 shadow-lg">
+            <div className="text-center py-8 px-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl mb-4 shadow-lg">
                 <Star className="w-8 h-8 text-white" />
               </div>
+              <p className="text-sm font-semibold uppercase tracking-wider text-orange-600 dark:text-orange-400 mb-2">
+                {t("bookDetail.noReviews")}
+              </p>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                {t("bookDetail.feedbackTitle")}
+                {t("bookDetail.beFirstReview")}
               </h3>
-              <p className="text-base text-gray-600 dark:text-gray-300 mb-1">
+              <p className="text-base text-gray-600 dark:text-gray-300 mb-2 max-w-lg mx-auto">
                 {t("bookDetail.feedbackDescription")}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 {t("bookDetail.feedbackSubtitle")}
+              </p>
+              <p className="text-base font-medium text-primary-600 dark:text-primary-400">
+                {t("bookDetail.reviewsEmptyCta")}
               </p>
             </div>
             <ContactInfo variant="default" />

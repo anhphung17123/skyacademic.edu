@@ -27,6 +27,7 @@ export const ROUTES = {
   BOOK_DETAIL: '/books/:slug',
   FLASHCARD_DETAIL: '/flashcards/:slug',
   ABOUT: '/about',
+  ABOUT_CONTACT: '/about#contact',
   CONTACT: '/contact',
   PRIVACY_POLICY: '/privacy-policy',
   TERMS_OF_SERVICE: '/terms-of-service',
@@ -56,4 +57,3 @@ export const VIEW_MODES = {
   GRID: 'grid',
   LIST: 'list',
 } as const;
-

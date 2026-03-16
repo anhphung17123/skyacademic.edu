@@ -32,4 +32,5 @@ export interface CourseDto {
   thumbnail_url?: string;
   levels_label?: string;
   instructor_id?: string;
+  view_only?: boolean;
 }

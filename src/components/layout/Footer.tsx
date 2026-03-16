@@ -177,6 +177,14 @@ export const Footer = memo(() => {
               © {currentYear} SkyAcademy. {t('footer.allRights')}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 text-xs sm:gap-6">
+              <a
+                href="https://bit.ly/4skPVP9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-700 dark:text-gray-500 transition-colors duration-200 hover:text-primary-600 dark:hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"
+              >
+                {t('about.skyShares.studentReviewForm')}
+              </a>
               <Link 
                 to="/privacy-policy" 
                 className="text-gray-700 dark:text-gray-500 transition-colors duration-200 hover:text-primary-600 dark:hover:text-white font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"

@@ -132,6 +132,9 @@ export const useCourses = (): UseCoursesReturn => {
   }, [courses, languageFilter, levelFilter, priceFilter, categoryFilter, debouncedSearchTerm, currentLang]);
 
   const categoryGroups = useMemo(() => {
+    const countNonViewOnly = (courses: Course[]) =>
+      courses.filter((c) => !c.viewOnly).length;
+
     return CATEGORY_DEFINITIONS
       .map((def) => ({
         id: def.id,
@@ -142,7 +145,8 @@ export const useCourses = (): UseCoursesReturn => {
         taglineVi: def.taglineVi,
         courses: filteredCourses.filter((c) => c.category === def.categoryKey),
       }))
-      .filter((group) => group.courses.length > 0);
+      .filter((group) => group.courses.length > 0)
+      .sort((a, b) => countNonViewOnly(b.courses) - countNonViewOnly(a.courses));
   }, [filteredCourses]);
 
   const clearFilters = useCallback(() => {
