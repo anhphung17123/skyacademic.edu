@@ -78,6 +78,16 @@ export const Header = memo(() => {
     [location.pathname, navigate]
   );
 
+  const handleLogoClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (location.pathname === '/') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    },
+    [location.pathname]
+  );
+
   const headerStyles = clsx(
     'fixed top-0 left-0 right-0 z-50 transition-all duration-200 ease-in-out',
     useSolidHeader
@@ -137,6 +147,7 @@ export const Header = memo(() => {
         >
           <Link
             to="/"
+            onClick={handleLogoClick}
             className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg"
             aria-label="SkyAcademy Home"
           >
@@ -228,6 +239,7 @@ export const Header = memo(() => {
         isActive={isActive}
         onClose={toggleMobileMenu}
         onNavClick={handleNavClick}
+        onLogoClick={handleLogoClick}
       />
     </header>
   );

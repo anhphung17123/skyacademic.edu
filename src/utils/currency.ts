@@ -1,4 +1,4 @@
-import { DEFAULT_VALUES, LANGUAGE_MAP } from '@/constants';
+import { DEFAULT_VALUES, LANGUAGE_MAP, USD_TO_VND_REFERENCE_RATE } from '@/constants';
 
 /**
  * Format currency based on currency code and locale.
@@ -56,6 +56,29 @@ export const formatPrice = (
 ): string => {
   if (amount === 0) return freeLabel;
   return formatCurrency(amount, currency, { showSymbol: true });
+};
+
+/**
+ * Whether to show an approximate VND line under a displayed price.
+ */
+export const shouldShowApproxVnd = (amount: number, currency: string): boolean =>
+  amount > 0 && currency.toUpperCase() === 'USD';
+
+/**
+ * Rounds USD→VND to nearest 1,000 VND for a cleaner "~2.600.000đ" line.
+ */
+export const approximateVndFromUsd = (usdAmount: number): number =>
+  Math.round((usdAmount * USD_TO_VND_REFERENCE_RATE) / 1000) * 1000;
+
+/**
+ * "~2.600.000đ" style hint below USD prices (vi-VN grouping).
+ */
+export const formatApproximateVndFromUsd = (usdAmount: number): string => {
+  const vnd = approximateVndFromUsd(usdAmount);
+  const formatted = new Intl.NumberFormat('vi-VN', {
+    maximumFractionDigits: 0,
+  }).format(vnd);
+  return `~${formatted}đ`;
 };
 
 /**

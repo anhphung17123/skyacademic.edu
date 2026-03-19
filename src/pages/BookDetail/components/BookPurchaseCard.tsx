@@ -1,7 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { clsx } from "clsx";
 import { Share2, Shield } from "lucide-react";
-import { formatPrice } from "@/utils/currency";
+import {
+  formatPrice,
+  formatApproximateVndFromUsd,
+  shouldShowApproxVnd,
+} from "@/utils/currency";
 import { PaymentInfo } from "@/components/payment/PaymentInfo";
 import type { BookProduct } from "@/types";
 
@@ -33,6 +37,16 @@ export function BookPurchaseCard({
                 >
                   {formatPrice(book.price, book.currency || "USD", t('common.free'))}
                 </span>
+                {shouldShowApproxVnd(book.price, book.currency || "USD") && (
+                  <p
+                    className={clsx(
+                      "mt-1 text-sm font-semibold tabular-nums",
+                      isLightMode ? "text-gray-600" : "text-gray-300"
+                    )}
+                  >
+                    {formatApproximateVndFromUsd(book.price)}
+                  </p>
+                )}
               </div>
             )}
 

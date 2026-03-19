@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Facebook, Mail, Phone, MapPin, Youtube, Heart, Instagram, type LucideIcon } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useCallback } from 'react';
 import { clsx } from 'clsx';
 import { Container } from './Container';
 import { FooterLinkSection } from './FooterLinkSection';
@@ -26,11 +26,23 @@ interface SocialLink {
  */
 export const Footer = memo(() => {
   const { t } = useTranslation();
+  const location = useLocation();
+
+  const handleLogoClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (location.pathname === '/') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    },
+    [location.pathname]
+  );
 
   const quickLinks: readonly FooterLink[] = useMemo(
     () => [
       { to: '/courses', label: t('nav.courses') },
       { to: '/products', label: t('nav.products') },
+      { to: CONTACT_INFO.youtubeUrl ?? '#', label: t('nav.freeVideos') },
     ],
     [t]
   );
@@ -76,7 +88,12 @@ export const Footer = memo(() => {
         <div className="py-12 lg:py-16">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-4">
-              <div className="mb-6 flex items-center gap-3">
+              <Link
+                to="/"
+                onClick={handleLogoClick}
+                className="mb-6 flex items-center gap-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                aria-label="SkyAcademy Home"
+              >
                 <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl">
                   <img src={logoImage} alt="SkyAcademy Logo" className="h-full w-full object-contain" />
                 </div>
@@ -86,7 +103,7 @@ export const Footer = memo(() => {
                     {t('footer.slogan')}
                   </span>
                 </div>
-              </div>
+              </Link>
               <p className="mb-6 text-sm leading-relaxed text-gray-700 dark:text-gray-400">
                 {t('footer.description')}
               </p>
@@ -123,20 +140,22 @@ export const Footer = memo(() => {
                     {t('footer.contactUs')}
                   </h3>
                   <div className="space-y-2.5">
-                    <a
-                      href={`tel:${CONTACT_INFO.phone}`}
-                      className="flex items-start gap-3 rounded-lg border border-green-200 dark:border-gray-700/50 bg-green-50/50 dark:bg-gray-800/50 p-2.5 backdrop-blur-sm transition-all duration-200 hover:border-green-400 hover:bg-green-50 dark:hover:border-green-500/30 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-                    >
+                    <div className="flex items-start gap-3 rounded-lg border border-green-200 dark:border-gray-700/50 bg-green-50/50 dark:bg-gray-800/50 p-2.5 backdrop-blur-sm transition-all duration-200 hover:border-green-400 hover:bg-green-50 dark:hover:border-green-500/30 hover:shadow-md focus-within:ring-2 focus-within:ring-primary-500">
                       <div className="flex-shrink-0 rounded-lg bg-green-100 dark:bg-green-500/20 p-1.5">
                         <Phone className="h-4 w-4 text-green-600 dark:text-green-400" aria-hidden={true} />
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-xs font-semibold text-gray-900 dark:text-white break-words">
+                      <div className="min-w-0 flex-1 space-y-0.5">
+                        <a href={`tel:${CONTACT_INFO.phone}`} className="block text-xs font-semibold text-gray-900 dark:text-white break-words hover:underline mb-2">
                           {CONTACT_INFO.phoneFormatted}
-                        </p>
+                        </a>
+                        {CONTACT_INFO.phone2Formatted && (
+                          <a href={`tel:${CONTACT_INFO.phone2}`} className="block text-xs font-semibold text-gray-900 dark:text-white break-words hover:underline">
+                            {CONTACT_INFO.phone2Formatted}
+                          </a>
+                        )}
                         <p className="text-xs text-gray-600 dark:text-gray-500 break-words">{t('contact.phoneWhatsAppZalo')}</p>
                       </div>
-                    </a>
+                    </div>
 
                     <a
                       href={`mailto:${CONTACT_INFO.email}`}
