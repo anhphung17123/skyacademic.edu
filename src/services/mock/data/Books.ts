@@ -50,15 +50,15 @@ export const mockBooks: BookDto[] = [
     title_vi: "Wishes Under the Winter Sky",
     title_en: "Wishes Under the Winter Sky",
     description:
-      "A poetic, illustrated Christmas book written and illustrated by Phung Thi Xuan. Warm, magical stories for children and families. Pay-What-You-Wish pricing (25.000 VND – 125.000 VND+).",
+      "A poetic, illustrated Christmas book written and illustrated by Phung Thi Xuan. Warm, magical stories for children and families. Pay-What-You-Wish pricing ($1 – $5+).",
     description_vi:
-      "Cuốn sách thơ minh họa Giáng sinh được viết và minh họa bởi Phung Thi Xuan. Những câu chuyện ấm áp, kỳ diệu cho trẻ em và gia đình. Giá trả theo mong muốn (25.000 VND – 125.000 VND+).",
+      "Cuốn sách thơ minh họa Giáng sinh được viết và minh họa bởi Phung Thi Xuan. Những câu chuyện ấm áp, kỳ diệu cho trẻ em và gia đình. Giá trả theo mong muốn ($1 – $5+).",
     description_en:
       "A poetic, illustrated Christmas book written and illustrated by Phung Thi Xuan. Warm, magical stories for children and families.",
     cover_images: coverImagesForSlug(WISHES_SLUG[0]),
     preview_images: previewImagesForSlug(WISHES_SLUG[0]),
-    price: 25000,
-    currency: "VND",
+    price: 1,
+    currency: "USD",
     category: "Poetry",
     category_vi: "Thơ",
     language: "english",
