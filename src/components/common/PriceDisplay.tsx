@@ -1,7 +1,11 @@
 import { Tag, Gift } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { mockSiteStats } from '@/services/mock/data/SiteStats';
-import { formatPrice } from '@/utils/currency';
+import {
+  formatPrice,
+  formatApproximateVndFromUsd,
+  shouldShowApproxVnd,
+} from '@/utils/currency';
 import { clsx } from 'clsx';
 
 interface PriceDisplayProps {
@@ -104,6 +108,16 @@ export const PriceDisplay = ({
         >
           {formatPrice(price, currency, t('common.free'))}
         </span>
+        {shouldShowApproxVnd(price, currency) && (
+          <span
+            className={clsx(
+              'mt-1 font-semibold tabular-nums text-white/90',
+              variant === 'large' ? 'text-sm lg:text-base' : 'text-xs'
+            )}
+          >
+            {formatApproximateVndFromUsd(price)}
+          </span>
+        )}
       </div>
     </div>
   );

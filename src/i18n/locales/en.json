@@ -46,37 +46,27 @@
     },
     "featuredBlocks": {
       "englishCourses": {
-        "title": "English Courses",
-        "description": "Improve your communication, pronunciation, and exam skills",
+        "title": "English & Vietnamese Courses",
+        "description": "English: communication, pronunciation, IELTS. \nVietnamese: real-life and classroom courses.",
         "button": "View Courses"
       },
       "courses": {
-        "title": "English Courses",
-        "titleVi": "Khóa Học Tiếng Anh",
-        "description": "Improve your communication, pronunciation, and exam skills",
-        "descriptionVi": "Nâng cao giao tiếp, phát âm và kỹ năng thi",
-        "button": "View Courses",
-        "buttonVi": "Xem Khóa Học"
+        "title": "English & Vietnamese Courses",
+        "description": "English: communication, pronunciation, IELTS.\nVietnamese: real-life and classroom courses.",
+        "button": "View Courses"
       },
       "books": {
         "title": "Books & Study Packs",
-        "titleVi": "Sách & Tài Liệu Học Tập",
         "description": "Teaching materials and learning packs for all ages",
-        "descriptionVi": "Sách & tài liệu học tập cho mọi lứa tuổi",
-        "button": "Explore Books",
-        "buttonVi": "Khám Phá Sách"
+        "button": "Explore Books"
       },
       "resources": {
         "title": "SKY SHARES – Community Classes (Free)",
-        "titleVi": "SKY SHARES – Lớp Cộng Đồng (Miễn Phí)",
-        "description": "Hi, I'm Ms. Xuân. We're creating free materials for self-study communication and IELTS, suitable for all ages. Materials will be shared on June 1st. Join our groups via the links below.",
-        "descriptionVi": "Xin chào, mình là cô Xuân. Mình và giáo viên người Mỹ đang làm tài liệu miễn phí hỗ trợ tự học giao tiếp và IELTS. Tài liệu dễ áp dụng cho cả trẻ em và người lớn. Mình sẽ gửi khóa học vào 1.6 (Quốc tế Thiếu nhi). Mong muốn lớn nhất là giúp mọi người học tiếng Anh dễ dàng hơn.",
+        "description": "Hello, I’m Ms. Xuân. Currently, a teacher from the United States and I are creating free materials to support self-study in communication and IELTS. The materials are easy to use for both children and adults. I will send the course on June 1st (International Children’s Day). My greatest wish is to help everyone learn English more easily. Keep it up!",
         "button": "See Resources",
-        "buttonVi": "Xem Tài Nguyên",
-        "linkSkyshares": "Khóa học – Sky Share (Cô Xuân)",
+        "linkSkyshares": "Course – Sky Share (Ms. Xuân)",
         "linkLanguageClub": "My English Club",
         "joinGroup": "Join group",
-        "joinGroupVi": "Tham gia nhóm",
         "joinWhatsApp": "WhatsApp",
         "joinZalo": "Zalo"
       }

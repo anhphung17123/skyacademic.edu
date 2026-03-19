@@ -15,6 +15,9 @@ export const DEFAULT_VALUES = {
   BOOK_COVER: 'https://via.placeholder.com/320x480?text=Book',
 } as const;
 
+/** Reference VND per 1 USD for displaying approximate local equivalent under USD prices (not live FX). */
+export const USD_TO_VND_REFERENCE_RATE = 26_000;
+
 export const SCROLL_THRESHOLD = {
   HEADER: 20,
 } as const;

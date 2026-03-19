@@ -28,23 +28,22 @@ export const ContactSection = () => {
           </div>
         </a>
 
-        <a
-          href={`tel:${CONTACT_INFO.phone}`}
-          className="flex items-center gap-4 p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-green-400 dark:hover:border-green-500 hover:shadow-lg transition-all"
-        >
+        <div className="flex items-center gap-4 p-5 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-green-400 dark:hover:border-green-500 hover:shadow-lg transition-all">
           <div className="p-3 rounded-xl bg-green-100 dark:bg-green-900/30">
             <Phone className="w-5 h-5 text-green-600 dark:text-green-400" />
           </div>
           <div>
             <p className="font-semibold text-gray-900 dark:text-white text-sm">{t('contact.phoneWhatsAppZalo')}</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{CONTACT_INFO.phoneFormatted}</p>
+            <a href={`tel:${CONTACT_INFO.phone}`} className="block text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+              {CONTACT_INFO.phoneFormatted}
+            </a>
             {CONTACT_INFO.phone2Formatted && (
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                <a href={`tel:${CONTACT_INFO.phone2}`} className="text-primary-600 dark:text-primary-400 hover:underline">{CONTACT_INFO.phone2Formatted}</a>
-              </p>
+              <a href={`tel:${CONTACT_INFO.phone2}`} className="block text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors mt-1">
+                {CONTACT_INFO.phone2Formatted}
+              </a>
             )}
           </div>
-        </a>
+        </div>
       </div>
 
       <div className="flex flex-wrap justify-center gap-3">

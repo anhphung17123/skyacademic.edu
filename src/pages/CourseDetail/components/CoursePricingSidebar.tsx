@@ -2,7 +2,11 @@ import { useTranslation } from "react-i18next";
 import { BookOpen, Star, Share2, CreditCard, Smartphone, Landmark, MessageCircle, Compass } from "lucide-react";
 import { clsx } from "clsx";
 import { mockSiteStats } from "@/services/mock/data/SiteStats";
-import { formatPrice } from "@/utils/currency";
+import {
+  formatPrice,
+  formatApproximateVndFromUsd,
+  shouldShowApproxVnd,
+} from "@/utils/currency";
 import type { Course } from "@/types";
 import { CONTACT_INFO } from "@/config/contact.config";
 
@@ -83,6 +87,11 @@ export function CoursePricingSidebar({
                 <p className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white tabular-nums">
                   {formatPrice(course.price, course.currency || "USD", t('common.free'))}
                 </p>
+                {shouldShowApproxVnd(course.price, course.currency || "USD") && (
+                  <p className="mt-1 text-sm font-semibold text-amber-800/90 dark:text-amber-200/90 tabular-nums">
+                    {formatApproximateVndFromUsd(course.price)}
+                  </p>
+                )}
               </div>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">

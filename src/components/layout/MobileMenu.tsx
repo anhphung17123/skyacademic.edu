@@ -31,6 +31,7 @@ interface MobileMenuProps {
   readonly isActive: (href: string) => boolean;
   readonly onClose: () => void;
   readonly onNavClick: (e: React.MouseEvent, href: string) => void;
+  readonly onLogoClick: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
 export const MobileMenu = ({
@@ -40,6 +41,7 @@ export const MobileMenu = ({
   isActive,
   onClose,
   onNavClick,
+  onLogoClick,
 }: MobileMenuProps) => {
   const { t } = useTranslation();
 
@@ -77,7 +79,10 @@ export const MobileMenu = ({
           <div className="flex items-center justify-between p-5 border-b border-gray-200 dark:border-gray-800">
             <Link
               to="/"
-              onClick={onClose}
+              onClick={(e) => {
+                onLogoClick(e);
+                onClose();
+              }}
               className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg"
               aria-label="SkyAcademy Home"
             >
