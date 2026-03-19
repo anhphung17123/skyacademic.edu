@@ -35,9 +35,16 @@ export const Contact = () => {
                 <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
                   {t('contact.callUsDesc')}
                 </p>
-                <a href={`tel:${CONTACT_INFO.phone}`} className="text-primary-600 dark:text-primary-400 font-semibold hover:underline text-lg transition-colors">
-                  {CONTACT_INFO.phoneFormatted}
-                </a>
+                <div className="space-y-1">
+                  <a href={`tel:${CONTACT_INFO.phone}`} className="block text-primary-600 dark:text-primary-400 font-semibold hover:underline text-lg transition-colors">
+                    {CONTACT_INFO.phoneFormatted}
+                  </a>
+                  {CONTACT_INFO.phone2Formatted && (
+                    <a href={`tel:${CONTACT_INFO.phone2}`} className="block text-primary-600 dark:text-primary-400 font-semibold hover:underline text-lg transition-colors">
+                      {CONTACT_INFO.phone2Formatted}
+                    </a>
+                  )}
+                </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">{t('contact.phoneWhatsAppZalo')}</p>
               </div>
 

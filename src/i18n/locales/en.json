@@ -67,12 +67,18 @@
         "buttonVi": "Khám Phá Sách"
       },
       "resources": {
-        "title": "Free Learning Resources",
-        "titleVi": "Tài Nguyên Học Tập Miễn Phí",
-        "description": "Worksheets, slides, PDFs and more",
-        "descriptionVi": "File bài học, slides, PDF miễn phí",
+        "title": "SKY SHARES – Community Classes (Free)",
+        "titleVi": "SKY SHARES – Lớp Cộng Đồng (Miễn Phí)",
+        "description": "Hi, I'm Ms. Xuân. We're creating free materials for self-study communication and IELTS, suitable for all ages. Materials will be shared on June 1st. Join our groups via the links below.",
+        "descriptionVi": "Xin chào, mình là cô Xuân. Mình và giáo viên người Mỹ đang làm tài liệu miễn phí hỗ trợ tự học giao tiếp và IELTS. Tài liệu dễ áp dụng cho cả trẻ em và người lớn. Mình sẽ gửi khóa học vào 1.6 (Quốc tế Thiếu nhi). Mong muốn lớn nhất là giúp mọi người học tiếng Anh dễ dàng hơn.",
         "button": "See Resources",
-        "buttonVi": "Xem Tài Nguyên"
+        "buttonVi": "Xem Tài Nguyên",
+        "linkSkyshares": "Khóa học – Sky Share (Cô Xuân)",
+        "linkLanguageClub": "My English Club",
+        "joinGroup": "Join group",
+        "joinGroupVi": "Tham gia nhóm",
+        "joinWhatsApp": "WhatsApp",
+        "joinZalo": "Zalo"
       }
     },
     "cta": {
@@ -970,7 +976,7 @@
         "desc": "If you have any questions about this Privacy Policy or wish to exercise your rights, please contact us.",
         "items": [
           "Email: skyacademy210@gmail.com",
-          "Phone/WhatsApp/Zalo: (+84) 901 959 142",
+          "Phone/WhatsApp/Zalo: (+84) 901 959 142, 079 749 0540",
           "Location: Da Nang, Vietnam",
           "Facebook: https://www.facebook.com/skyacademy0/",
           "YouTube: https://www.youtube.com/@skyacademy0"
@@ -1066,7 +1072,7 @@
         "desc": "Our support team is here to help you with any questions or issues.",
         "items": [
           "Email: skyacademy210@gmail.com",
-          "Phone/WhatsApp/Zalo: (+84) 901 959 142",
+          "Phone/WhatsApp/Zalo: (+84) 901 959 142, 079 749 0540",
           "Location: Da Nang, Vietnam",
           "Facebook: https://www.facebook.com/skyacademy0/",
           "YouTube: https://www.youtube.com/@skyacademy0"
