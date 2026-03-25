@@ -12,6 +12,7 @@ export interface BookDto {
   cover_images?: Record<string, string[]>;
   preview_images?: Record<string, string[]>;
   price: number;
+  sale_price: number;
   currency: string;
   category: string;
   category_vi?: string;

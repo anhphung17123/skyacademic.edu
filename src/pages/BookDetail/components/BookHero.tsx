@@ -167,6 +167,7 @@ export function BookHero({
               <div className="mb-4">
                 <PriceDisplay
                   price={book.price}
+                  salePrice={book.salePrice}
                   currency={book.currency}
                   variant="large"
                   showLabel={true}

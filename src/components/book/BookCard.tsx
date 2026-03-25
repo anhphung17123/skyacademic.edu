@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Star, BookOpen, Eye, Smartphone, Package, ArrowRight } from 'lucide-react';
+import { Star, BookOpen, Eye, Smartphone, Package, ArrowRight, Flame } from 'lucide-react';
 import type { Book, BookProduct } from '@/types';
 import { Button } from '@/components/ui/Button';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,9 @@ export const BookCard = memo(({ book }: BookCardProps) => {
   const description =
     currentLang === 'vi' && book.descriptionVi ? book.descriptionVi : book.description;
   const category = currentLang === 'vi' && book.categoryVi ? book.categoryVi : book.category;
+
+  const hasDiscount = book.salePrice > 0 && book.salePrice < book.price;
+  const discountPercent = hasDiscount ? Math.round(((book.price - book.salePrice) / book.price) * 100) : 0;
 
   const formatBadge = {
     physical: { icon: Package, label: t('books.physical'), color: 'bg-accent-primary/10 text-accent-primary dark:bg-accent-primary-dark/20 dark:text-accent-primary-dark' },
@@ -58,6 +61,16 @@ export const BookCard = memo(({ book }: BookCardProps) => {
           </button>
         </div>
         
+        {/* Sale badge */}
+        {hasDiscount && (
+          <div className="absolute top-3 left-3 z-10">
+            <div className="flex items-center gap-1 bg-gradient-to-r from-red-500 to-orange-500 text-white text-lg font-bold px-3 py-1.5 rounded-full shadow-lg shadow-red-500/30">
+              <Flame className="w-3.5 h-3.5" />
+              -{discountPercent}%
+            </div>
+          </div>
+        )}
+
         {/* Stock warning */}
         {book.stock !== undefined && book.stock < 10 && book.stock > 0 && (
           <div className="absolute bottom-3 left-3 z-10">
@@ -133,21 +146,22 @@ export const BookCard = memo(({ book }: BookCardProps) => {
         )}
 
         {/* Price and CTA */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <PriceDisplay
             price={book.price}
+            salePrice={book.salePrice}
             currency={book.currency}
             variant="small"
             showLabel={false}
           />
-          
-          <Button 
-            variant="ghost" 
-            size="sm" 
+
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => {
               navigate(`/books/${book.slug}`);
             }}
-            className="!px-3 hover:bg-gray-100 dark:hover:bg-gray-700 group/btn"
+            className="!px-3 hover:bg-gray-100 dark:hover:bg-gray-700 group/btn shrink-0"
           >
             <span className="hidden sm:inline mr-1">{t('common.details')}</span>
             <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />

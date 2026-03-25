@@ -20,6 +20,7 @@ export interface Book {
   descriptionVi?: string;
   tableOfContents?: TableOfContentsItem[];
   price: number;
+  salePrice: number;
   currency?: string;
   language?: Language;
   pages?: number;
