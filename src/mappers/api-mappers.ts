@@ -79,6 +79,7 @@ export const mapBookDtoToBook = (dto: BookDto, tableOfContents: TableOfContentsI
     descriptionEn: dto.description_en,
     descriptionVi: dto.description_vi,
     price: dto.price,
+    salePrice: dto.sale_price,
     currency: dto.currency,
     language,
     format,
